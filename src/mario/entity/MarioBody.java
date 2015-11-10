@@ -6,6 +6,7 @@ package mario.entity;
 import java.util.List;
 
 import javafx.geometry.Point2D;
+import mario.common.MarioAction;
 import mario.common.MarioState;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
@@ -13,56 +14,39 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	private int currentHealth = 1;
 	private int defaultHealth = 3;
 	private MarioState state = MarioState.SmallMario;
+	
+	private double invincibilityTimestamp = 0f;
+	
+	private Point2D wantedMovement;
+	private MarioAction wantedAction;
 
 	@Override
 	public void damage(int amount) {
+	    if (!isInvincible())
+	        return;
+
 		if (this.currentHealth < amount) {
-			this.currentHealth -= amount;
-			
-			switch(this.currentHealth) {
-			case 0:
-				this.state = MarioState.DeadMario;
-				break;
-				
-			case 1:
-				this.state = MarioState.SmallMario;
-				break;
-			case 2:
-				this.state = MarioState.SuperMario;
-				break;
-			case 3:
-				this.state = MarioState.FireMario;
-				break;
-			default:
-				break;
-			}
+			this.currentHealth = 0;
+		} else {
+		    this.currentHealth -= amount;
 		}
+		
+		updateState();
 
 	}
 
 	@Override
 	public void damage(int amount, Entity source) {
-		if (this.currentHealth < amount) {
-			this.currentHealth -= amount;
-			
-			switch(this.currentHealth) {
-			case 0:
-				this.state = MarioState.DeadMario;
-				break;
-				
-			case 1:
-				this.state = MarioState.SmallMario;
-				break;
-			case 2:
-				this.state = MarioState.SuperMario;
-				break;
-			case 3:
-				this.state = MarioState.FireMario;
-				break;
-			default:
-				break;
-			}
-		}
+	    if (!isInvincible())
+            return;
+
+	    if (this.currentHealth < amount) {
+            this.currentHealth = 0;  
+        } else {
+            this.currentHealth -= amount;
+        }
+        
+        updateState();
 	}
 
 	@Override
@@ -72,27 +56,15 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void setHealth(int health) {
-		if (health > 0 && health < this.maxHealth) {
+		if (health >= 0 && health <= this.maxHealth) {
 			this.currentHealth = health;
 			
-			switch(this.currentHealth) {
-			case 0:
-				this.state = MarioState.DeadMario;
-				break;
-				
-			case 1:
-				this.state = MarioState.SmallMario;
-				break;
-			case 2:
-				this.state = MarioState.SuperMario;
-				break;
-			case 3:
-				this.state = MarioState.FireMario;
-				break;
-			default:
-				break;
-			}
+			updateState();
 		}
+	}
+	
+	public void kill() {
+	    setHealth(0);
 	}
 
 	@Override
@@ -104,6 +76,12 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	public void setMaxHealth(int maxHealth) {
 		if (maxHealth > 0) {
 			this.maxHealth = maxHealth;
+			
+			if (this.currentHealth > this.maxHealth) {
+				this.currentHealth = this.maxHealth;
+				
+				updateState();
+			}
 		}
 
 	}
@@ -115,31 +93,33 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void heal(int amount) {
-		// TODO Auto-generated method stub
+		if (amount > 0) {
+			this.currentHealth += amount;
+
+			updateState();
+		}
 
 	}
 
 	@Override
 	public boolean isInvincible() {
-		// TODO Auto-generated method stub
+		if (this.invincibilityTimestamp > System.currentTimeMillis()/1000f) {
+		    return true;
+		}
+
 		return false;
 	}
 
 	@Override
-	public void setInvincible(boolean isInvincible) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public double getNoDamageTimestamp() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.invincibilityTimestamp;
 	}
 
 	@Override
 	public void setNoDamageTimestamp(double timestamp) {
-		// TODO Auto-generated method stub
+		if (timestamp > System.currentTimeMillis()/1000f) {
+		    this.invincibilityTimestamp = timestamp;
+		}
 
 	}
 
@@ -151,14 +131,44 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void move(Point2D vector) {
-		// TODO Auto-generated method stub
-
+		this.wantedMovement = vector;
 	}
 
 	@Override
-	public void act(int action) {
-		// TODO Auto-generated method stub
+	public void act(int a) {
+	    if (a > 0 && a < MarioAction.values().length)
+	        this.wantedAction = MarioAction.values()[a];
 
 	}
+	
+	public MarioState getState() {
+		return this.state;
+	}
 
+	public void updateState() {
+		switch(this.currentHealth) {
+		case 0:
+			this.state = MarioState.DeadMario;
+			break;
+		case 1:
+			this.state = MarioState.SmallMario;
+			break;
+		case 2:
+			this.state = MarioState.SuperMario;
+			break;
+		case 3:
+			this.state = MarioState.FireMario;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public Point2D getWantedMovement() {
+	    return this.wantedMovement;
+	}
+	
+	public MarioAction getWantedAction() {
+	    return this.wantedAction;
+	}
 }
