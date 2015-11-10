@@ -38,7 +38,7 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
 
     @Override
     public void act(int action) {
-        // A basic enemy do nothing
+        // A basic enemy does nothing.
     }
     
     @Override
@@ -48,7 +48,7 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
 
     @Override
     public int getWantedAction() {
-        return 0; // An enemy don't want to act.
+        return 0; // An enemy doesn't want to act.
     }
 
     @Override
