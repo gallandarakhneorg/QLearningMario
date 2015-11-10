@@ -7,6 +7,10 @@ import javafx.geometry.Point2D;
 public interface AgentBody {
 	public List<Entity> getPerception();
 	
+	public void setPerception(List<Entity> perception);
+	
+	public double getPerceptionDistance();
+	
 	public void move(Point2D vector);
 	
 	public void act(int action);

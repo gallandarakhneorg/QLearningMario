@@ -1,17 +1,13 @@
 package mario.entity;
 
-import java.util.List;
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 import javafx.geometry.Point2D;
-import mario.common.Orientation;
 
 public class Entity {
 	Point2D location;
-	Orientation orientation;
 	
-	public void setOrientation(Orientation orientation) {
-		this.orientation = orientation;
-	}
 	public void setLocation(Point2D location) {
 		this.location = location;
 	}
@@ -19,12 +15,9 @@ public class Entity {
 	public Point2D getLocation() {
 		return this.location;
 	}
-	
-	public Orientation getOrientation() {
-		return this.orientation;
-	}
-	
-	public List<Entity> getNearbyEntities() {
-		return null;
-	}
+
+    public double distance(Entity entity) {
+        return sqrt(pow(this.location.getX() - entity.getLocation().getX(), 2)
+                + pow(this.location.getY() - entity.getLocation().getY(), 2));
+    }
 }
