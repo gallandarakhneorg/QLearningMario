@@ -2,5 +2,5 @@ package mario.entity;
 
 
 public interface Solid {
-    // Here to signal to World instance that the Entity can't be crossed
+    // Implements to signal that the Entity cannot be crossed
 }
