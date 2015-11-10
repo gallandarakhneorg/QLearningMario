@@ -4,6 +4,5 @@ public enum MarioState {
 	DeadMario,
 	SmallMario,
 	SuperMario,
-	FireMario,
-	InvincibleMario;
+	FireMario;
 }
