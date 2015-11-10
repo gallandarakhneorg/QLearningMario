@@ -1,5 +1,9 @@
 package mario.entity;
 
 public interface Collectable {
-    void collect(Entity entity);
+    public void collect(Entity entity);
+
+    public boolean isCollected();
+
+    public Entity getCollecter();
 }
