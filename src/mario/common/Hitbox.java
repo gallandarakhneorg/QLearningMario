@@ -6,6 +6,8 @@ public class Hitbox {
     private double height;
     private double width;
     
+    public static final Hitbox nullHitbox = new Hitbox(0, 0, 0, 0);
+
     public Hitbox(double x, double y, double height, double width) {
         this.x = x;
         this.y = y;
