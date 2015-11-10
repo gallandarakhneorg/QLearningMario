@@ -18,8 +18,6 @@ public interface Damageable {
 	public void heal(int amount);
 	
 	public boolean isInvincible();
-	
-	public void setInvincible(boolean isInvincible);
 
 	public double getNoDamageTimestamp();
 	
