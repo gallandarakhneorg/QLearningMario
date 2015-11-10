@@ -5,6 +5,8 @@ public interface Damageable {
 	
 	public void damage(int amount, Entity source);
 	
+	public void kill();
+	
 	public int getHealth();
 	
 	public void setHealth(int health);

@@ -3,6 +3,7 @@
  */
 package mario.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
@@ -19,6 +20,8 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	
 	private Point2D wantedMovement;
 	private MarioAction wantedAction;
+
+	private List<Entity> perception = new ArrayList<>();
 
 	@Override
 	public void damage(int amount) {
@@ -48,6 +51,11 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
         
         updateState();
 	}
+	
+	@Override
+    public void kill() {
+        setHealth(0);
+    }
 
 	@Override
 	public int getHealth() {
@@ -61,10 +69,6 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 			
 			updateState();
 		}
-	}
-	
-	public void kill() {
-	    setHealth(0);
 	}
 
 	@Override
@@ -125,9 +129,18 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public List<Entity> getPerception() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.perception;
 	}
+	
+	@Override
+    public void setPerception(List<Entity> perception) {
+	    this.perception = perception;
+    }
+
+    @Override
+    public double getPerceptionDistance() {
+        return 20f;
+    }
 
 	@Override
 	public void move(Point2D vector) {
