@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
+
 import mario.common.MarioAction;
 import mario.common.MarioState;
 
@@ -154,34 +155,27 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	}
 	
+	@Override
+    public Point2D getWantedMovement() {
+        return this.wantedMovement;
+    }
+    
+    @Override
+    public int getWantedAction() {
+        return this.wantedAction.ordinal();
+    }
+	
 	public MarioState getState() {
 		return this.state;
 	}
 
 	public void updateState() {
-		switch(this.currentHealth) {
-		case 0:
-			this.state = MarioState.DeadMario;
-			break;
-		case 1:
-			this.state = MarioState.SmallMario;
-			break;
-		case 2:
-			this.state = MarioState.SuperMario;
-			break;
-		case 3:
-			this.state = MarioState.FireMario;
-			break;
-		default:
-			break;
+		if (this.currentHealth <= 0) {
+		    this.state = MarioState.values()[0];
+		} else if (this.currentHealth >= 3) {
+		    this.state = MarioState.values()[3];
+		} else {
+		    this.state = MarioState.values()[this.currentHealth];
 		}
-	}
-
-	public Point2D getWantedMovement() {
-	    return this.wantedMovement;
-	}
-	
-	public MarioAction getWantedAction() {
-	    return this.wantedAction;
 	}
 }

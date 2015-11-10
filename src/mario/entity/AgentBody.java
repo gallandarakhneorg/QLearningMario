@@ -14,4 +14,8 @@ public interface AgentBody {
 	public void move(Point2D vector);
 	
 	public void act(int action);
+
+	public Point2D getWantedMovement();
+
+	public int getWantedAction();
 }
