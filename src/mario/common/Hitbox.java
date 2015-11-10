@@ -19,16 +19,32 @@ public class Hitbox {
         return this.x;
     }
     
+    public void setX(double x) {
+    	this.x = x;
+    }
+    
     public double getY() {
         return this.y;
+    }
+    
+    public void setY(double y) {
+    	this.y = y;
     }
     
     public double getHeight() {
         return this.height;
     }
     
+    public void setHeight(double h) {
+    	this.height = h;
+    }
+    
     public double getWidth() {
         return this.width;
+    }
+    
+    public void setWidth(double w) {
+    	this.width = w;
     }
     
     public boolean contains(double x1, double y1) {
