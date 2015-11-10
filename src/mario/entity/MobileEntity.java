@@ -3,7 +3,7 @@ package mario.entity;
 import javafx.geometry.Point2D;
 import mario.common.Orientation;
 
-public class MobileEntity {
+public class MobileEntity extends Entity {
 	private Point2D velocity;
 	private boolean isOnGround;
 	private Orientation orientation;
