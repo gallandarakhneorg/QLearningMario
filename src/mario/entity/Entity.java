@@ -24,6 +24,10 @@ public class Entity {
     }
     
     public Hitbox getHitbox() {
+    	// Update Hitbox location.
+    	this.currentHitbox.setX(this.location.getX());
+    	this.currentHitbox.setY(this.location.getY());
+    	
     	return this.currentHitbox;
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
-
+import mario.common.Hitbox;
 import mario.common.MarioAction;
 import mario.common.MarioState;
 
@@ -23,6 +23,14 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	private MarioAction wantedAction;
 
 	private List<Entity> perception = new ArrayList<>();
+	
+	// Hitboxes
+	private Hitbox smallHitbox = new Hitbox(0, 0, 1, 1);
+	private Hitbox bigHitbox = new Hitbox(0, 0, 1, 2);
+	
+	public MarioBody() {
+		this.currentHitbox = this.smallHitbox;
+	}
 
 	@Override
 	public void damage(int amount) {
@@ -36,7 +44,6 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 		}
 		
 		updateState();
-
 	}
 
 	@Override
@@ -176,6 +183,12 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 		    this.state = MarioState.values()[3];
 		} else {
 		    this.state = MarioState.values()[this.currentHealth];
+		}
+		
+		if (this.currentHealth == 1) {
+			this.currentHitbox = this.smallHitbox;
+		} else {
+			this.currentHitbox = this.bigHitbox;
 		}
 	}
 }
