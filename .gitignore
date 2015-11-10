@@ -30,6 +30,7 @@ target
 # Temp files
 *.bak
 *~
+*.swp
 workspace
 
 #Others
