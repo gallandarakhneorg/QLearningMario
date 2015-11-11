@@ -6,7 +6,7 @@ public class Hitbox {
     private double height;
     private double width;
 
-    public Hitbox(double height, double width) {
+    public Hitbox(double width, double height) {
         this.height = height;
         this.width = width;
     }
