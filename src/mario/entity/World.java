@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Polygon;
 
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
@@ -18,13 +19,7 @@ public class World extends Observable {
                 AgentBody agentBody = ((AgentBody) entity);
 
                 // Compute the AgentBody's perception.
-                List<Entity> perception = new ArrayList<>();
-                for (Entity otherEntity : this.entities) {
-                    if (entity.distance(otherEntity) < agentBody.getPerceptionDistance())
-                        perception.add(entity);
-                }
-
-                agentBody.setPerception(perception);
+                agentBody.setPerception(getNearbyEntities(entity, agentBody.getPerceptionDistance()));
             }
         }
 	}
@@ -62,6 +57,7 @@ public class World extends Observable {
 												 mobileEntity.getVelocity().getY() + this.gravity));
 		}
 		
+		List<Entity> entitiesOnWay = getEntitiesOnWay(mobileEntity);
 		// TODO: prevent the mobileEntity from crossing Solids. 
 		
 		mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + mobileEntity.getVelocity().getX() / this.updatesPerSecond,
@@ -70,5 +66,56 @@ public class World extends Observable {
 
 	public void addEntity(Entity entity) {
 	    this.entities.add(entity);
+	}
+
+	@SuppressWarnings("boxing")
+    private List<Entity> getEntitiesOnWay(MobileEntity entity) {
+	    double positionX = entity.getLocation().getX();
+	    double positionY = entity.getLocation().getY();
+        double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
+        double newPositionY = positionY + entity.getVelocity().getY() / this.updatesPerSecond;
+
+
+        Polygon polygon = new Polygon();
+
+        double Left = Math.min(positionX, newPositionX);
+        double Right = Math.max(positionX, newPositionX);
+        double Down = Math.min(positionY, newPositionY);
+        double Top = Math.max(positionY, newPositionY);
+        
+        polygon.getPoints().addAll(new Double[]{
+            Left, Down,
+            Left + entity.getHitbox().getWidth(), Down,
+            Right, Top + entity.getHitbox().getHeight(),
+            Right, Top,
+            Right - entity.getHitbox().getWidth(), Top,
+            Left, Down - entity.getHitbox().getHeight()});
+        
+        List<Entity> nearbyEntities = getNearbyEntities(entity, entity.getLocation().distance(newPositionX, newPositionY));
+        
+        int i = 0;
+        while (i < nearbyEntities.size()) {
+            if (nearbyEntities.get(i) instanceof Solid
+                    && polygon.intersects(nearbyEntities.get(i).getLocation().getX(),
+                            nearbyEntities.get(i).getLocation().getY(),
+                            nearbyEntities.get(i).getHitbox().getWidth(),
+                            nearbyEntities.get(i).getHitbox().getHeight())) {
+                ++i;
+            } else {
+                nearbyEntities.remove(nearbyEntities.get(i));
+            }
+        }
+        
+        return nearbyEntities;
+    }
+	
+	public List<Entity> getNearbyEntities(Entity entity, double distance) {
+        List<Entity> nearbyEntities = new ArrayList<>();
+        for (Entity otherEntity : this.entities) {
+            if (entity.distance(otherEntity) < distance)
+                nearbyEntities.add(entity);
+        }
+        
+        return nearbyEntities;
 	}
 }
