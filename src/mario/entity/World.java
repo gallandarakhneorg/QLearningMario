@@ -67,4 +67,8 @@ public class World extends Observable {
 		mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + mobileEntity.getVelocity().getX() / this.updatesPerSecond,
 											 mobileEntity.getLocation().getY() + mobileEntity.getVelocity().getY() / this.updatesPerSecond));
 	}
+
+	public void addEntity(Entity entity) {
+	    this.entities.add(entity);
+	}
 }
