@@ -10,6 +10,7 @@ import javafx.geometry.Point2D;
 import mario.common.Hitbox;
 import mario.common.MarioAction;
 import mario.common.MarioState;
+import mario.common.Orientation;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
 	// Hitboxes
@@ -30,6 +31,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	
 	public MarioBody() {
 		this.currentHitbox = MarioBody.smallHitbox;
+		setOrientation(Orientation.Right);
 	}
 
 	@Override

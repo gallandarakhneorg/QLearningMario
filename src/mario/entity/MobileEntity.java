@@ -6,7 +6,7 @@ import mario.common.Orientation;
 public class MobileEntity extends Entity {
 	private Point2D velocity;
 	private boolean isOnGround;
-	private Orientation orientation;
+	private Orientation orientation = Orientation.Left;
 	
 	public void setVelocity(Point2D velocity) {
 		this.velocity = velocity;
