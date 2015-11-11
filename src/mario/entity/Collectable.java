@@ -5,5 +5,5 @@ public interface Collectable {
 
     public boolean isCollected();
 
-    public Entity getCollecter();
+    public Entity getCollector();
 }

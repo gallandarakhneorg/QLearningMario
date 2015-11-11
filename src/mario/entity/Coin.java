@@ -6,7 +6,7 @@ public class Coin extends Entity implements Collectable {
 	private static final Hitbox hitbox = new Hitbox(1, 1);
 	
     private boolean isCollected = false;
-    private Entity collecter = null;
+    private Entity collector = null;
 
     public Coin() {
         this.currentHitbox = Coin.hitbox; 
@@ -15,7 +15,7 @@ public class Coin extends Entity implements Collectable {
     @Override
     public void collect(Entity entity) {
         this.isCollected = true;
-        this.collecter = entity;
+        this.collector = entity;
     }
     
     @Override
@@ -24,8 +24,8 @@ public class Coin extends Entity implements Collectable {
     }
     
     @Override
-    public Entity getCollecter() {
-        return this.collecter;
+    public Entity getCollector() {
+        return this.collector;
     }
 
 }
