@@ -24,10 +24,20 @@ public class Entity {
     }
     
     public Hitbox getHitbox() {
-    	// Update Hitbox location.
-    	this.currentHitbox.setX(this.location.getX());
-    	this.currentHitbox.setY(this.location.getY());
-    	
     	return this.currentHitbox;
+    }
+    
+    public boolean collide(Point2D pt) {
+        return this.location.getX() < pt.getX()
+            && this.location.getX() + this.currentHitbox.getWidth() > pt.getX()
+            && this.location.getY() < pt.getY()
+            && this.location.getY() + this.currentHitbox.getHeight() > pt.getY();
+    }
+    
+    public boolean collide(Entity entity) {
+        return this.location.getX() < entity.getLocation().getX() + entity.getHitbox().getWidth()
+            && this.location.getX() + this.currentHitbox.getWidth() > entity.getLocation().getX()
+            && this.location.getY() + this.currentHitbox.getHeight() > entity.getLocation().getY()
+            && this.location.getY() < entity.getLocation().getY() + entity.getHitbox().getHeight();
     }
 }

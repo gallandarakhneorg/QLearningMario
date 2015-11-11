@@ -12,6 +12,10 @@ import mario.common.MarioAction;
 import mario.common.MarioState;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
+	// Hitboxes
+	static private final Hitbox smallHitbox = new Hitbox(1, 1);
+	static private final Hitbox bigHitbox = new Hitbox(1, 2);
+	
 	private int maxHealth = 3;
 	private int currentHealth = 1;
 	private int defaultHealth = 3;
@@ -24,12 +28,8 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	private List<Entity> perception = new ArrayList<>();
 	
-	// Hitboxes
-	private Hitbox smallHitbox = new Hitbox(0, 0, 1, 1);
-	private Hitbox bigHitbox = new Hitbox(0, 0, 1, 2);
-	
 	public MarioBody() {
-		this.currentHitbox = this.smallHitbox;
+		this.currentHitbox = MarioBody.smallHitbox;
 	}
 
 	@Override
@@ -95,7 +95,6 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 				updateState();
 			}
 		}
-
 	}
 
 	@Override
@@ -186,9 +185,9 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 		}
 		
 		if (this.currentHealth == 1) {
-			this.currentHitbox = this.smallHitbox;
+			this.currentHitbox = MarioBody.smallHitbox;
 		} else {
-			this.currentHitbox = this.bigHitbox;
+			this.currentHitbox = MarioBody.bigHitbox;
 		}
 	}
 }

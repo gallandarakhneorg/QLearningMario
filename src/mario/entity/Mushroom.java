@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
+import mario.common.Hitbox;
 
 public class Mushroom extends MobileEntity implements AgentBody, Collectable {
+	private static final Hitbox hitbox = new Hitbox(1, 1);
+	
     private boolean isCollected = false;
     private Entity collecter;
     private List<Entity> perception = new ArrayList<>();
     private Point2D wantedMovement;
 
+    public Mushroom() {
+        this.currentHitbox = Mushroom.hitbox; 
+    }
+    
     @Override
     public void collect(Entity entity) {
         this.isCollected = true;

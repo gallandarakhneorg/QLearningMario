@@ -3,7 +3,9 @@ package mario.entity;
 import mario.common.Hitbox;
 
 public class PirahnaPlant extends Enemy {
+	private static final Hitbox hitbox = new Hitbox(1, 1.5);
+	
     public PirahnaPlant() {
-        this.currentHitbox = new Hitbox(0, 0, 1, 1.5); 
+        this.currentHitbox = PirahnaPlant.hitbox; 
     }
 }
