@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import mario.common.Orientation;
 
 public class MobileEntity extends Entity {
-	private Point2D velocity = new Point2D(0, 0);
+	private Point2D velocity = Point2D.ZERO;
 	private Point2D maxVelocity = new Point2D(3, 3);
 	private Point2D maxAcceleration = new Point2D(3, 3);
 	
