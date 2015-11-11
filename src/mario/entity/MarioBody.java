@@ -13,9 +13,11 @@ import mario.common.MarioState;
 import mario.common.Orientation;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
+	public static final Point2D maxVelocity = new Point2D(6, 3);
+	
 	// Hitboxes
-	static private final Hitbox smallHitbox = new Hitbox(1, 1);
-	static private final Hitbox bigHitbox = new Hitbox(1, 2);
+	private static final Hitbox smallHitbox = new Hitbox(1, 1);
+	private static final Hitbox bigHitbox = new Hitbox(1, 2);
 	
 	private int maxHealth = 3;
 	private int currentHealth = 1;
@@ -31,7 +33,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	
 	public MarioBody() {
 		this.currentHitbox = MarioBody.smallHitbox;
-		setOrientation(Orientation.Right);
+		setMaxVelocity(MarioBody.maxVelocity);
 	}
 
 	@Override

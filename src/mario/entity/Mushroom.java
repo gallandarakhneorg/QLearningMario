@@ -7,6 +7,8 @@ import javafx.geometry.Point2D;
 import mario.common.Hitbox;
 
 public class Mushroom extends MobileEntity implements AgentBody, Collectable {
+	public static final Point2D maxVelocity = new Point2D(2.4, 3);
+	
 	private static final Hitbox hitbox = new Hitbox(1, 1);
 	
     private boolean isCollected = false;
@@ -15,7 +17,8 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
     private Point2D wantedAcceleration;
 
     public Mushroom() {
-        this.currentHitbox = Mushroom.hitbox; 
+        this.currentHitbox = Mushroom.hitbox;
+        setMaxVelocity(Mushroom.maxVelocity);
     }
     
     @Override
