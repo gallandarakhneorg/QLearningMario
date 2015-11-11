@@ -10,6 +10,10 @@ public class Scheduler {
     private World world;
     private List<Agent> agents = new ArrayList<>();
     
+    public Scheduler(World world) {
+        this.world = world;
+    }
+
     public void run() {
         while (true) {
             this.world.computePerceptions();
