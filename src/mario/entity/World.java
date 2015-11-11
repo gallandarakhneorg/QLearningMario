@@ -57,7 +57,7 @@ public class World extends Observable {
 												 mobileEntity.getVelocity().getY() + this.gravity));
 		}
 		
-		List<Entity> entitiesOnWay = getEntitiesOnWay(mobileEntity);
+		List<Entity> entitiesOnWay = getEntitiesOnTheWay(mobileEntity);
 		// TODO: prevent the mobileEntity from crossing Solids. 
 		
 		mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + mobileEntity.getVelocity().getX() / this.updatesPerSecond,
@@ -69,7 +69,7 @@ public class World extends Observable {
 	}
 
 	@SuppressWarnings("boxing")
-    private List<Entity> getEntitiesOnWay(MobileEntity entity) {
+    private List<Entity> getEntitiesOnTheWay(MobileEntity entity) {
 	    double positionX = entity.getLocation().getX();
 	    double positionY = entity.getLocation().getY();
         double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
@@ -82,14 +82,26 @@ public class World extends Observable {
         double Right = Math.max(positionX, newPositionX);
         double Down = Math.min(positionY, newPositionY);
         double Top = Math.max(positionY, newPositionY);
-        
-        polygon.getPoints().addAll(new Double[]{
-            Left, Down,
-            Left + entity.getHitbox().getWidth(), Down,
-            Right, Top + entity.getHitbox().getHeight(),
-            Right, Top,
-            Right - entity.getHitbox().getWidth(), Top,
-            Left, Down - entity.getHitbox().getHeight()});
+  
+        if (positionY < newPositionY && positionX > newPositionX
+                || positionY > newPositionY && positionX < newPositionX) {
+            polygon.getPoints().addAll(new Double[]{
+                    Left, Down - entity.getHitbox().getWidth(),
+                    Right - entity.getHitbox().getWidth(), Top,
+                    Right, Top,
+                    Right, Top + entity.getHitbox().getHeight(),
+                    Left + entity.getHitbox().getWidth(), Down,
+                    Left, Down
+            });
+        } else {
+            polygon.getPoints().addAll(new Double[]{
+                    Left, Top,
+                    Left + entity.getHitbox().getWidth(), Top,
+                    Right, Down - entity.getHitbox().getHeight(),
+                    Right, Down,
+                    Right - entity.getHitbox().getWidth(), Down,
+                    Left, Top + entity.getHitbox().getHeight()});
+           }
         
         List<Entity> nearbyEntities = getNearbyEntities(entity, entity.getLocation().distance(newPositionX, newPositionY));
         
