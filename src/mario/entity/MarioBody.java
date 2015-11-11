@@ -10,7 +10,6 @@ import javafx.geometry.Point2D;
 import mario.common.Hitbox;
 import mario.common.MarioAction;
 import mario.common.MarioState;
-import mario.common.Orientation;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
 	public static final Point2D maxVelocity = new Point2D(6, 3);
