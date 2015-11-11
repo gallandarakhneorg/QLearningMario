@@ -13,13 +13,22 @@ public class MobileEntity extends Entity {
 	private Orientation orientation = Orientation.Left;
 	
 	public void setVelocity(Point2D velocity) {
-		this.velocity = velocity;
+		double velocityX = velocity.getX();
+		double velocityY = velocity.getY();
 		
-		if (this.velocity.getX() < 0) {
+		if (Math.abs(velocityX) > getMaxVelocity().getX())
+			velocityX = velocityX / Math.abs(velocityX) * getMaxVelocity().getX();
+
+		if (Math.abs(velocityY) > getMaxVelocity().getY())
+			velocityY = velocityY / Math.abs(velocityY) * getMaxVelocity().getY();
+		
+		if (velocityX < 0) {
 			this.orientation = Orientation.Left;
-		} else {
+		} else if (velocityX > 0) {
 			this.orientation = Orientation.Right;
 		}
+		
+		this.velocity = new Point2D(velocityX, velocityY);
 	}
 	
 	public Point2D getVelocity() {
