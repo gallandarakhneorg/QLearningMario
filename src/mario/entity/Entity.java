@@ -7,7 +7,7 @@ import javafx.geometry.Point2D;
 import mario.common.Hitbox;
 
 public class Entity {
-	private Point2D location; // 1.f = 1 meter
+	private Point2D location = Point2D.ZERO; // 1.f = 1 meter
 	protected Hitbox currentHitbox = Hitbox.nullHitbox;
 
 	public void setLocation(Point2D location) {
