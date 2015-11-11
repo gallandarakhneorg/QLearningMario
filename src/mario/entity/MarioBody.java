@@ -24,7 +24,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	
 	private double invincibilityTimestamp = 0f;
 	
-	private Point2D wantedMovement;
+	private Point2D wantedAcceleration;
 	private MarioAction wantedAction;
 
 	private List<Entity> perception = new ArrayList<>();
@@ -133,7 +133,6 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 		if (timestamp > System.currentTimeMillis()/1000f) {
 		    this.invincibilityTimestamp = timestamp;
 		}
-
 	}
 
 	@Override
@@ -152,20 +151,20 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
     }
 
 	@Override
-	public void move(Point2D vector) {
-		this.wantedMovement = vector;
+	public void askAcceleration(Point2D vector) {
+		this.wantedAcceleration = vector;
 	}
 
 	@Override
-	public void act(int a) {
+	public void askAction(int a) {
 	    if (a > 0 && a < MarioAction.values().length)
 	        this.wantedAction = MarioAction.values()[a];
 
 	}
 	
 	@Override
-    public Point2D getWantedMovement() {
-        return this.wantedMovement;
+    public Point2D getWantedAcceleration() {
+        return this.wantedAcceleration;
     }
     
     @Override

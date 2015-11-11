@@ -11,11 +11,11 @@ public interface AgentBody {
 	
 	public double getPerceptionDistance();
 	
-	public void move(Point2D vector);
+	public void askAcceleration(Point2D vector);
 	
-	public void act(int action);
+	public void askAction(int action);
 
-	public Point2D getWantedMovement();
+	public Point2D getWantedAcceleration();
 
 	public int getWantedAction();
 }

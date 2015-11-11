@@ -12,7 +12,7 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
     private boolean isCollected = false;
     private Entity collector;
     private List<Entity> perception = new ArrayList<>();
-    private Point2D wantedMovement;
+    private Point2D wantedAcceleration;
 
     public Mushroom() {
         this.currentHitbox = Mushroom.hitbox; 
@@ -50,18 +50,18 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
     }
 
     @Override
-    public void move(Point2D vector) {
-        this.wantedMovement = vector;
+    public void askAcceleration(Point2D vector) {
+        this.wantedAcceleration = vector;
     }
 
     @Override
-    public void act(int action) {
+    public void askAction(int action) {
         // A mushroom doesn't have any brain.
     }
 
     @Override
-    public Point2D getWantedMovement() {
-        return this.wantedMovement;
+    public Point2D getWantedAcceleration() {
+        return this.wantedAcceleration;
     }
 
     @Override
