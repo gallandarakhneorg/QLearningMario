@@ -79,8 +79,8 @@ public class World extends Observable {
         Polygon polygon = new Polygon();
 
         double Left = Math.min(positionX, newPositionX);
-        double Right = Math.max(positionX, newPositionX);
-        double Down = Math.min(positionY, newPositionY);
+        double Right = Math.max(positionX, newPositionX) + entity.getHitbox().getWidth();
+        double Down = Math.min(positionY, newPositionY) + entity.getHitbox().getHeight();
         double Top = Math.max(positionY, newPositionY);
   
         if (positionY < newPositionY && positionX > newPositionX
