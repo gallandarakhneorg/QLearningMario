@@ -3,7 +3,7 @@ package mario.entity;
 import mario.common.BlockType;
 import mario.common.Hitbox;
 
-public class Block extends Entity {
+public class Block extends Entity implements Solid {
 	private static final Hitbox hitbox = new Hitbox(1, 1);
 	
 	private BlockType type;

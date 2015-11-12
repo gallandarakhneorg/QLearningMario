@@ -27,6 +27,18 @@ public class World extends Observable {
     public List<Entity> getEntities() {
         return this.entities;
     }
+    
+	public List<Entity> getNearbyEntities(Entity entity, double distance) {
+        List<Entity> nearbyEntities = new ArrayList<>();
+        for (Entity otherEntity : this.entities) {
+            if (entity.distance(otherEntity) < distance)
+                nearbyEntities.add(otherEntity);
+        }
+        
+        nearbyEntities.remove(entity);
+        
+        return nearbyEntities;
+	}
 
 	public void update() {
 		for (Entity entity : this.entities) {
@@ -103,7 +115,9 @@ public class World extends Observable {
                     Left, Top + entity.getHitbox().getHeight()});
            }
         
-        List<Entity> nearbyEntities = getNearbyEntities(entity, entity.getLocation().distance(newPositionX, newPositionY));
+        List<Entity> nearbyEntities = getNearbyEntities(entity,
+        		entity.getLocation().distance(newPositionX + entity.getHitbox().getWidth(),
+        				newPositionY + entity.getHitbox().getHeight()));
         
         int i = 0;
         while (i < nearbyEntities.size()) {
@@ -114,20 +128,10 @@ public class World extends Observable {
                             nearbyEntities.get(i).getHitbox().getHeight())) {
                 ++i;
             } else {
-                nearbyEntities.remove(nearbyEntities.get(i));
+                nearbyEntities.remove(i);
             }
         }
         
         return nearbyEntities;
     }
-	
-	public List<Entity> getNearbyEntities(Entity entity, double distance) {
-        List<Entity> nearbyEntities = new ArrayList<>();
-        for (Entity otherEntity : this.entities) {
-            if (entity.distance(otherEntity) < distance)
-                nearbyEntities.add(entity);
-        }
-        
-        return nearbyEntities;
-	}
 }
