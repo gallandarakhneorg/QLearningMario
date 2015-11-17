@@ -45,6 +45,13 @@ public class World extends Observable {
 			if (entity instanceof MobileEntity)
 				updateMobileEntity((MobileEntity)entity);
 		}
+		
+		notifyObservers(this.entities);
+	}
+	
+	public void addEntity(Entity entity) {
+	    this.entities.add(entity);
+	    notifyObservers(entity);
 	}
 	
 	private void updateMobileEntity(MobileEntity mobileEntity) {
@@ -74,10 +81,6 @@ public class World extends Observable {
 		
 		mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + mobileEntity.getVelocity().getX() / this.updatesPerSecond,
 											 mobileEntity.getLocation().getY() + mobileEntity.getVelocity().getY() / this.updatesPerSecond));
-	}
-
-	public void addEntity(Entity entity) {
-	    this.entities.add(entity);
 	}
 
 	@SuppressWarnings("boxing")
