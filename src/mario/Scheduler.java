@@ -8,7 +8,7 @@ import mario.entity.World;
 
 public class Scheduler {
     private World world;
-    private List<Agent> agents = new ArrayList<>();
+    private List<Agent<?>> agents = new ArrayList<>();
     
     public Scheduler(World world) {
         this.world = world;
@@ -23,7 +23,7 @@ public class Scheduler {
     }
     
     private void updateAgents() {
-        for (Agent agent : this.agents) {
+        for (Agent<?> agent : this.agents) {
             agent.update();
         }
     }

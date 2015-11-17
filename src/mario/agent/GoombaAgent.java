@@ -8,7 +8,7 @@ import mario.entity.Enemy;
 import mario.entity.Entity;
 import mario.entity.Goomba;
 
-public class GoombaAgent implements Agent {
+public class GoombaAgent extends Agent<Goomba> {
     private Goomba body;
 
     public GoombaAgent(Goomba body) {
@@ -36,7 +36,7 @@ public class GoombaAgent implements Agent {
     }
 
     @Override
-    public AgentBody getBody() {
+    public Goomba getBody() {
         return this.body;
     }
 

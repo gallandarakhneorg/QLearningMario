@@ -2,8 +2,12 @@ package mario.agent;
 
 import mario.entity.AgentBody;
 
-public interface Agent {
-    public void update();
+public abstract class Agent<B extends AgentBody> {
+    private B body;
+
+    public abstract void update();
     
-    public AgentBody getBody();
+    public B getBody() {
+        return this.body;
+    }
 }
