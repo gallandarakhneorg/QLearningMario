@@ -25,8 +25,8 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	
 	private double invincibilityTimestamp = 0f;
 	
-	private Point2D wantedAcceleration;
-	private MarioAction wantedAction;
+	private Point2D wantedAcceleration = Point2D.ZERO;
+	private MarioAction wantedAction = null;
 
 	private List<Entity> perception = new ArrayList<>();
 	

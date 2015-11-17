@@ -12,7 +12,7 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
     
     private double invincibilityTimestamp = 0f;
     
-    private Point2D wantedAcceleration;
+    private Point2D wantedAcceleration = Point2D.ZERO;
 
     private List<Entity> perception = new ArrayList<>();
   
