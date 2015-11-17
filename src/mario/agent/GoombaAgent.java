@@ -3,7 +3,6 @@ package mario.agent;
 import java.util.List;
 
 import javafx.geometry.Point2D;
-import mario.entity.AgentBody;
 import mario.entity.Enemy;
 import mario.entity.Entity;
 import mario.entity.Goomba;
