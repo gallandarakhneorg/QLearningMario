@@ -2,7 +2,7 @@ package mario.entity;
 
 import mario.common.BlockType;
 
-public class PrizeBlock extends Block implements Damageable, Solid {
+public class PrizeBlock extends Block implements Damageable {
 	private Entity surprise = null;
 	private boolean empty = false;
 	

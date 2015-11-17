@@ -2,7 +2,7 @@ package mario.entity;
 
 import mario.common.BlockType;
 
-public final class BrickBlock extends Block implements Damageable, Solid {
+public final class BrickBlock extends Block implements Damageable {
 	private boolean isDestroyed = true;
 
 	public BrickBlock() {
