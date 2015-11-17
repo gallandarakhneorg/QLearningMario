@@ -6,7 +6,7 @@ import static java.lang.Math.sqrt;
 import javafx.geometry.Point2D;
 import mario.common.Hitbox;
 
-public class Entity {
+public class Entity implements Cloneable {
 	private Point2D location = Point2D.ZERO; // 1.f = 1 meter
 	protected Hitbox currentHitbox = Hitbox.nullHitbox;
 
@@ -56,4 +56,17 @@ public class Entity {
             && this.location.getY() + this.currentHitbox.getHeight() > entity.getLocation().getY()
             && this.location.getY() < entity.getLocation().getY() + entity.getHitbox().getHeight();
     }
+    
+    @Override
+	public Entity clone() {
+    	Entity o = null;
+		try {
+			o = ((Entity) super.clone());
+		} catch(CloneNotSupportedException cnse) {
+			// Shouldn't happen since Cloneable is implemented.
+			cnse.printStackTrace(System.err);
+		}
+
+		return o;
+	}
 }

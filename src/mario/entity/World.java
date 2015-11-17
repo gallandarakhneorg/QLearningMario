@@ -46,11 +46,14 @@ public class World extends Observable {
 				updateMobileEntity((MobileEntity)entity);
 		}
 		
+		setChanged();
 		notifyObservers(this.entities);
 	}
 	
 	public void addEntity(Entity entity) {
 	    this.entities.add(entity);
+	    
+	    setChanged();
 	    notifyObservers(entity);
 	}
 	
