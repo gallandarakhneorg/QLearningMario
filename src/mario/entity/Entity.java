@@ -27,6 +27,22 @@ public class Entity {
     	return this.currentHitbox;
     }
     
+    public double getLeftBound() {
+    	return this.location.getX();
+    }
+    
+    public double getRightBound() {
+    	 return this.location.getX() + this.currentHitbox.getWidth();
+    }
+    
+    public double getBottomBound() {
+    	return this.location.getY() + this.currentHitbox.getHeight();
+    }
+    
+    public double getTopBound() {
+    	return this.location.getY();
+    }
+    
     public boolean collide(Point2D pt) {
         return this.location.getX() < pt.getX()
             && this.location.getX() + this.currentHitbox.getWidth() > pt.getX()
