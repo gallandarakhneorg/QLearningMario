@@ -8,35 +8,27 @@ import mario.entity.Entity;
 import mario.entity.Goomba;
 
 public class GoombaAgent extends Agent<Goomba> {
-    private Goomba body;
-
     public GoombaAgent(Goomba body) {
-        this.body = body;
-    }
+		super(body);
+	}
 
-    @Override
+	@Override
     public void update() {
-        List<Entity> entities = this.body.getPerception();
+        List<Entity> entities = getBody().getPerception();
         
-        if (this.body.getVelocity() == Point2D.ZERO) {
-            this.body.askAcceleration(new Point2D(-4.8f, 0));
+        if (getBody().getVelocity() == Point2D.ZERO) {
+        	getBody().askAcceleration(new Point2D(-4.8f, 0));
             return;
         }
 
         for (Entity entity : entities) {
-            if (entity instanceof Enemy && entity.collide(this.body)) {
-                if (this.body.getVelocity().getX() < 0) {
-                    this.body.askAcceleration(new Point2D(Goomba.maxAcceleration.getX(), 0f));
+            if (entity instanceof Enemy && entity.collide(getBody())) {
+                if (getBody().getVelocity().getX() < 0) {
+                	getBody().askAcceleration(new Point2D(Goomba.maxAcceleration.getX(), 0f));
                 } else {
-                    this.body.askAcceleration(new Point2D(-Goomba.maxAcceleration.getX(), 0f));
+                	getBody().askAcceleration(new Point2D(-Goomba.maxAcceleration.getX(), 0f));
                 }
             }
         }
     }
-
-    @Override
-    public Goomba getBody() {
-        return this.body;
-    }
-
 }

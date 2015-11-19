@@ -13,17 +13,15 @@ public class World extends Observable {
 	private double gravity = 9.8;
 
 	public void computePerceptions() {
-		synchronized (this.entities) {
-	        for (Entity entity : this.entities) {
-	            if (entity instanceof AgentBody)
-	            {
-	                AgentBody agentBody = ((AgentBody) entity);
+	    for (Entity entity : this.entities) {
+	        if (entity instanceof AgentBody)
+	        {
+	            AgentBody agentBody = ((AgentBody) entity);
 	
-	                // Compute the AgentBody's perception.
-	                agentBody.setPerception(getNearbyEntities(entity, agentBody.getPerceptionDistance()));
-	            }
+	            // Compute the AgentBody's perception.
+	            agentBody.setPerception(getNearbyEntities(entity, agentBody.getPerceptionDistance()));
 	        }
-		}
+	    }
 	}
 
     public List<Entity> getEntities() {
