@@ -5,18 +5,13 @@ import java.util.concurrent.Executors;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import mario.common.BlockType;
-import mario.entity.Block;
 import mario.entity.Entity;
-import mario.entity.Goomba;
-import mario.entity.MarioBody;
 import mario.entity.World;
 import mario.ui.MarioGUI;
 
@@ -48,23 +43,10 @@ public class Game extends Application {
 			world.addObserver(scheduler);
 			executor.execute(scheduler);
 			
-			// ========== For testing purpose ================
-			Entity block;
-			for (int i = 0; i < 16; i++) {
-				block = new Block(BlockType.GroundRock);
-				block.setLocation(new Point2D(i, 14));
-				world.addEntity(block);
+			// Loading a level.
+			for (Entity entity : LevelLoader.loadLevelFromPng("./resources/levels/test_level.png")) { //$NON-NLS-1$
+				world.addEntity(entity);
 			}
-			
-			MarioBody mario = new MarioBody();
-			mario.setLocation(new Point2D(1, 0));
-			mario.heal(1);
-			world.addEntity(mario);
-			
-			Goomba goomba = new Goomba();
-			goomba.setLocation(new Point2D(13, 1));
-			world.addEntity(goomba);
-			// ================================================
 			
 			executor.shutdown();
 			
