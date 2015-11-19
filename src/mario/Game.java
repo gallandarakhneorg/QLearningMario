@@ -33,6 +33,11 @@ public class Game extends Application {
 			
 			World world = new World();
 			
+			// Loading a level.
+			for (Entity entity : LevelLoader.loadLevelFromPng("./resources/levels/test_level.png")) { //$NON-NLS-1$
+				world.addEntity(entity);
+			}
+			
 			MarioGUI gui = new MarioGUI(gc);
 			world.addObserver(gui);
 			gui.start();
@@ -42,11 +47,6 @@ public class Game extends Application {
 			Scheduler scheduler = new Scheduler(world);
 			world.addObserver(scheduler);
 			executor.execute(scheduler);
-			
-			// Loading a level.
-			for (Entity entity : LevelLoader.loadLevelFromPng("./resources/levels/test_level.png")) { //$NON-NLS-1$
-				world.addEntity(entity);
-			}
 			
 			executor.shutdown();
 			
