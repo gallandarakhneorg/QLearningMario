@@ -7,7 +7,9 @@ import java.util.Observer;
 
 import mario.agent.Agent;
 import mario.agent.GoombaAgent;
+import mario.agent.MarioAgent;
 import mario.entity.Goomba;
+import mario.entity.MarioBody;
 import mario.entity.World;
 
 public class Scheduler implements Runnable, Observer {
@@ -66,6 +68,10 @@ public class Scheduler implements Runnable, Observer {
 		if (arg instanceof Goomba) {
 			System.out.println("Added GoombaAgent."); //$NON-NLS-1$
 			GoombaAgent agent = new GoombaAgent((Goomba) arg);
+			this.agents.add(agent);
+		} else if (arg instanceof MarioBody) {
+			System.out.println("Added MarioAgent."); //$NON-NLS-1$
+			MarioAgent agent = new MarioAgent((MarioBody) arg);
 			this.agents.add(agent);
 		}
 	}
