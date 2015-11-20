@@ -12,6 +12,8 @@ import mario.entity.Block;
 import mario.entity.Entity;
 import mario.entity.Goomba;
 import mario.entity.MarioBody;
+import mario.entity.Mushroom;
+import mario.entity.PrizeBlock;
 
 public class LevelLoader {
 	public static List<Entity> loadLevelFromPng(String fileName) {
@@ -40,6 +42,10 @@ public class LevelLoader {
 					MarioBody mario = new MarioBody();
 					mario.setLocation(new Point2D(i, j));
 					entities.add(mario);
+				} else if (color.equals(Color.YELLOW)) {
+					PrizeBlock pblock = new PrizeBlock(new Mushroom());
+					pblock.setLocation(new Point2D(i, j));
+					entities.add(pblock);
 				}
 			}
 		}
