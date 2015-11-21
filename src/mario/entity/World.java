@@ -10,7 +10,8 @@ import javafx.scene.shape.Polygon;
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
-	private double gravity = 9.8;
+	private double gravity = 0.1;
+	long startTime = -1;
 
 	public void computePerceptions() {
 	    for (Entity entity : this.entities) {
@@ -41,6 +42,8 @@ public class World extends Observable {
 	}
 
 	public void update() {
+		if (this.startTime < 0)
+			this.startTime = System.currentTimeMillis();
 		for (Entity entity : this.entities) {
 			if (entity instanceof MobileEntity)
 				updateMobileEntity((MobileEntity)entity);
@@ -58,37 +61,97 @@ public class World extends Observable {
 	}
 	
 	private void updateMobileEntity(MobileEntity mobileEntity) {
-		if (mobileEntity instanceof AgentBody) {
-			AgentBody agentBody = (AgentBody)mobileEntity;
-			double accelerationX = agentBody.getWantedAcceleration().getX();
-			double accelerationY = agentBody.getWantedAcceleration().getY();
-			
-			if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
+		double accelerationX, accelerationY, speedX, speedY, movementX, movementY;
+
+        if (mobileEntity instanceof AgentBody) {
+        	AgentBody agentBody = (AgentBody)mobileEntity;
+        	accelerationX = agentBody.getWantedAcceleration().getX();
+        	accelerationY = agentBody.getWantedAcceleration().getY() + this.gravity;
+        	
+        	if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
 				accelerationX = accelerationX / Math.abs(accelerationX) * mobileEntity.getMaxAcceleration().getX();
 			
 			if (Math.abs(accelerationY) > mobileEntity.getMaxAcceleration().getY())
 				accelerationY = accelerationY / Math.abs(accelerationY) * mobileEntity.getMaxAcceleration().getY();
-			
-			mobileEntity.setVelocity(new Point2D(mobileEntity.getVelocity().getX() + accelerationX,
-												 mobileEntity.getVelocity().getY() + accelerationY + this.gravity));
-			
-			// Reset agent's wanted acceleration to zero.
-			agentBody.askAcceleration(Point2D.ZERO);
-		} else {
-			mobileEntity.setVelocity(new Point2D(mobileEntity.getVelocity().getX(),
-												 mobileEntity.getVelocity().getY() + this.gravity));
+
+        	speedX = mobileEntity.getVelocity().getX() + accelerationX;
+        	speedY = mobileEntity.getVelocity().getY() + accelerationY;
+        	
+        	mobileEntity.setVelocity(new Point2D(speedX, speedY));
+
+        	movementX = speedX / this.updatesPerSecond;
+        	movementY = speedY / this.updatesPerSecond;
+
+        } else {
+        	accelerationX = 0;
+        	accelerationY = this.gravity;
+        	
+        	speedX = mobileEntity.getVelocity().getX() + accelerationX;
+        	speedY = mobileEntity.getVelocity().getY() + accelerationY;
+        	
+        	movementX = speedX / this.updatesPerSecond;
+        	movementY = speedY / this.updatesPerSecond;
+        }
+        
+        List<Entity> entityOnTheWay = getEntitiesOnTheWay(mobileEntity);
+
+        for (Entity entity : entityOnTheWay) {
+			if (segmentIntersect(mobileEntity.getLeftBound(), mobileEntity.getRightBound(),
+					entity.getLeftBound(), entity.getRightBound())) {
+				if (speedY > 0) {
+					if (mobileEntity.getBottomBound() - entity.getTopBound() < movementY) {
+						movementY = mobileEntity.getBottomBound() - entity.getTopBound();
+						speedY = 0;
+						mobileEntity.setVelocity(new Point2D(speedX, speedY));
+					}
+				} else {
+					if (Math.abs(entity.getBottomBound() - mobileEntity.getTopBound()) < Math.abs(movementY)) {
+						movementY = entity.getBottomBound() - mobileEntity.getTopBound();
+						if (movementY > 0) {
+							movementY = - movementY;
+						} else {
+							movementY = 0;
+						}
+
+						speedY = 0;
+						mobileEntity.setVelocity(new Point2D(speedX, speedY));
+					}
+				}
+			}
+
+			if (segmentIntersect(mobileEntity.getTopBound(), mobileEntity.getBottomBound(), entity.getTopBound(), entity.getBottomBound())) {
+				if (speedX > 0) {
+					if (Math.abs(entity.getLeftBound() - mobileEntity.getRightBound()) < Math.abs(movementX)) {
+						movementX = entity.getLeftBound() - mobileEntity.getRightBound();
+						speedX = 0;
+						mobileEntity.setVelocity(new Point2D(speedX, speedY));
+					}
+				} else {
+					if (Math.abs(mobileEntity.getLeftBound() - entity.getRightBound()) < Math.abs(movementX)) {
+						movementX = mobileEntity.getLeftBound() - entity.getRightBound();
+						if (movementX > 0) {
+							movementX = - movementX;
+						} else {
+							movementX = 0;
+						}
+
+						speedX = 0;
+						mobileEntity.setVelocity(new Point2D(speedX, speedY));
+					}
+				}
+			}
 		}
-		
-		List<Entity> entitiesOnWay = getEntitiesOnTheWay(mobileEntity);
-		// TODO: prevent the mobileEntity from crossing Solids. 
-		
-		mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + mobileEntity.getVelocity().getX() / this.updatesPerSecond,
-											 mobileEntity.getLocation().getY() + mobileEntity.getVelocity().getY() / this.updatesPerSecond));
+        
+        mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + movementX, mobileEntity.getLocation().getY() + movementY));
+	}
+	
+	private boolean segmentIntersect(double x1, double x2, double y1, double y2) {
+		return x1 < y2 && x2 > y1;
 	}
 
 	@SuppressWarnings("boxing")
     private List<Entity> getEntitiesOnTheWay(MobileEntity entity) {
-	    double positionX = entity.getLocation().getX();
+		double positionX = entity.getLocation().getX();
 	    double positionY = entity.getLocation().getY();
         double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
         double newPositionY = positionY + entity.getVelocity().getY() / this.updatesPerSecond;
@@ -113,17 +176,17 @@ public class World extends Observable {
             });
         } else {
             polygon.getPoints().addAll(new Double[]{
-                    Left, Top,
+            		Left, Top,
                     Left + entity.getHitbox().getWidth(), Top,
                     Right, Down - entity.getHitbox().getHeight(),
                     Right, Down,
                     Right - entity.getHitbox().getWidth(), Down,
                     Left, Top + entity.getHitbox().getHeight()});
-           }
-        
-        List<Entity> nearbyEntities = getNearbyEntities(entity,
-        		entity.getLocation().distance(newPositionX + entity.getHitbox().getWidth(),
-        				newPositionY + entity.getHitbox().getHeight()));
+        }
+		
+		List<Entity> nearbyEntities = getNearbyEntities(entity,
+                entity.getLocation().distance(newPositionX + entity.getHitbox().getWidth(),
+                        newPositionY + entity.getHitbox().getHeight()));
         
         int i = 0;
         while (i < nearbyEntities.size()) {
@@ -141,3 +204,4 @@ public class World extends Observable {
         return nearbyEntities;
     }
 }
+
