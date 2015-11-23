@@ -10,7 +10,7 @@ import javafx.scene.shape.Polygon;
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
-	private double gravity = 0.1;
+	private double gravity = 0.9;
 	long startTime = -1;
 
 	public void computePerceptions() {
@@ -101,6 +101,11 @@ public class World extends Observable {
 				if (speedY > 0) {
 					if (mobileEntity.getBottomBound() - entity.getTopBound() < movementY) {
 						movementY = mobileEntity.getBottomBound() - entity.getTopBound();
+						if (movementY > 0) {
+							movementY = - movementY;
+						} else {
+							movementY = 0;
+						}
 						speedY = 0;
 						mobileEntity.setVelocity(new Point2D(speedX, speedY));
 					}
@@ -123,8 +128,6 @@ public class World extends Observable {
 				if (speedX > 0) {
 					if (Math.abs(entity.getLeftBound() - mobileEntity.getRightBound()) < Math.abs(movementX)) {
 						movementX = entity.getLeftBound() - mobileEntity.getRightBound();
-						speedX = 0;
-						mobileEntity.setVelocity(new Point2D(speedX, speedY));
 					}
 				} else {
 					if (Math.abs(mobileEntity.getLeftBound() - entity.getRightBound()) < Math.abs(movementX)) {
@@ -134,9 +137,6 @@ public class World extends Observable {
 						} else {
 							movementX = 0;
 						}
-
-						speedX = 0;
-						mobileEntity.setVelocity(new Point2D(speedX, speedY));
 					}
 				}
 			}
