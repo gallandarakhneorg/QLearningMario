@@ -10,7 +10,7 @@ public class MobileEntity extends Entity {
 	
 	private boolean isOnGround;
 	
-	private Orientation orientation = Orientation.Left;
+	private Orientation orientation = Orientation.Right;
 	
 	public void setVelocity(Point2D velocity) {
 		double velocityX = velocity.getX();
