@@ -10,8 +10,7 @@ import javafx.scene.shape.Polygon;
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
-	private double gravity = 0.1;
-	long startTime = -1;
+	private double gravity = 0.5;
 
 	public void computePerceptions() {
 	    for (Entity entity : this.entities) {
@@ -42,8 +41,6 @@ public class World extends Observable {
 	}
 
 	public void update() {
-		if (this.startTime < 0)
-			this.startTime = System.currentTimeMillis();
 		for (Entity entity : this.entities) {
 			if (entity instanceof MobileEntity)
 				updateMobileEntity((MobileEntity)entity);
@@ -62,13 +59,18 @@ public class World extends Observable {
 	
 	private void updateMobileEntity(MobileEntity mobileEntity) {
 		double accelerationX, accelerationY, speedX, speedY, movementX, movementY;
-		
-		mobileEntity.setOnGround(false);
 
 		if (mobileEntity instanceof AgentBody) {
         	AgentBody agentBody = (AgentBody)mobileEntity;
-        	accelerationX = agentBody.getWantedAcceleration().getX();
-        	accelerationY = agentBody.getWantedAcceleration().getY() + this.gravity;
+        	
+        	if (mobileEntity.isOnGround()) {
+        		accelerationX = agentBody.getWantedAcceleration().getX();
+        		accelerationY = agentBody.getWantedAcceleration().getY() + this.gravity;
+        	} else {
+        		accelerationX = agentBody.getWantedAcceleration().getX() / 100;
+        		accelerationY = this.gravity;
+        	}
+        	
 
         	if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
 				accelerationX = accelerationX / Math.abs(accelerationX) * mobileEntity.getMaxAcceleration().getX();
@@ -97,6 +99,8 @@ public class World extends Observable {
         	movementY = speedY / this.updatesPerSecond;
         }
         
+		mobileEntity.setOnGround(false);
+		
         List<Entity> entityOnTheWay = getEntitiesOnTheWay(mobileEntity);
 
         for (Entity entity : entityOnTheWay) {

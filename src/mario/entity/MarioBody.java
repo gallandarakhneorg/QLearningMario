@@ -12,7 +12,7 @@ import mario.common.MarioAction;
 import mario.common.MarioState;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
-	public static final Point2D maxVelocity = new Point2D(6, 3);
+	public static final Point2D maxVelocity = new Point2D(6, 16);
 	
 	// Hitboxes
 	private static final Hitbox smallHitbox = new Hitbox(1, 1);

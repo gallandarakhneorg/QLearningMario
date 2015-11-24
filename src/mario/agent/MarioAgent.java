@@ -1,5 +1,6 @@
 package mario.agent;
 
+import javafx.geometry.Point2D;
 import mario.entity.MarioBody;
 
 public class MarioAgent extends Agent<MarioBody> {
@@ -9,6 +10,6 @@ public class MarioAgent extends Agent<MarioBody> {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		getBody().askAcceleration(new Point2D(3, -20));
 	}
 }

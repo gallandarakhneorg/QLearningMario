@@ -6,9 +6,9 @@ import mario.common.Orientation;
 public class MobileEntity extends Entity {
 	private Point2D velocity = Point2D.ZERO;
 	private Point2D maxVelocity = new Point2D(3, 3);
-	private Point2D maxAcceleration = new Point2D(3, 3);
+	private Point2D maxAcceleration = new Point2D(3, 16);
 	
-	private boolean isOnGround;
+	private boolean isOnGround = true;
 	
 	private Orientation orientation = Orientation.Right;
 	

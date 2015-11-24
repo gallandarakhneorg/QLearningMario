@@ -43,7 +43,7 @@ public class Game extends Application {
 			world.addObserver(scheduler);
 			
 			// Loading a level.
-			for (Entity entity : LevelLoader.loadLevelFromPng("./resources/levels/test_level.png")) { //$NON-NLS-1$
+			for (Entity entity : LevelLoader.loadLevelFromPng("./resources/levels/levelA.png")) { //$NON-NLS-1$
 				world.addEntity(entity);
 			}
 			
