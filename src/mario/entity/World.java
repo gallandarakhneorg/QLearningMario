@@ -10,7 +10,7 @@ import javafx.scene.shape.Polygon;
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
-	private double gravity = 0.9;
+	private double gravity = 0.1;
 	long startTime = -1;
 
 	public void computePerceptions() {
@@ -62,12 +62,14 @@ public class World extends Observable {
 	
 	private void updateMobileEntity(MobileEntity mobileEntity) {
 		double accelerationX, accelerationY, speedX, speedY, movementX, movementY;
+		
+		mobileEntity.setOnGround(false);
 
-        if (mobileEntity instanceof AgentBody) {
+		if (mobileEntity instanceof AgentBody) {
         	AgentBody agentBody = (AgentBody)mobileEntity;
         	accelerationX = agentBody.getWantedAcceleration().getX();
         	accelerationY = agentBody.getWantedAcceleration().getY() + this.gravity;
-        	
+
         	if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
 				accelerationX = accelerationX / Math.abs(accelerationX) * mobileEntity.getMaxAcceleration().getX();
 			
@@ -81,6 +83,8 @@ public class World extends Observable {
 
         	movementX = speedX / this.updatesPerSecond;
         	movementY = speedY / this.updatesPerSecond;
+        	
+        	agentBody.askAcceleration(Point2D.ZERO);
 
         } else {
         	accelerationX = 0;
@@ -105,6 +109,7 @@ public class World extends Observable {
 							movementY = - movementY;
 						} else {
 							movementY = 0;
+							mobileEntity.setOnGround(true);
 						}
 
 						speedY = 0;
@@ -112,12 +117,6 @@ public class World extends Observable {
 				} else {
 					if (Math.abs(entity.getBottomBound() - mobileEntity.getTopBound()) < Math.abs(movementY)) {
 						movementY = entity.getBottomBound() - mobileEntity.getTopBound();
-						if (movementY > 0) {
-							movementY = - movementY;
-						} else {
-							movementY = 0;
-						}
-
 						speedY = 0;
 					}
 				}
