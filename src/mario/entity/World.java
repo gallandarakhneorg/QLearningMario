@@ -106,8 +106,8 @@ public class World extends Observable {
 						} else {
 							movementY = 0;
 						}
+
 						speedY = 0;
-						mobileEntity.setVelocity(new Point2D(speedX, speedY));
 					}
 				} else {
 					if (Math.abs(entity.getBottomBound() - mobileEntity.getTopBound()) < Math.abs(movementY)) {
@@ -119,15 +119,16 @@ public class World extends Observable {
 						}
 
 						speedY = 0;
-						mobileEntity.setVelocity(new Point2D(speedX, speedY));
 					}
 				}
+				mobileEntity.setVelocity(new Point2D(speedX, speedY));
 			}
 
 			if (segmentIntersect(mobileEntity.getTopBound(), mobileEntity.getBottomBound(), entity.getTopBound(), entity.getBottomBound())) {
 				if (speedX > 0) {
 					if (Math.abs(entity.getLeftBound() - mobileEntity.getRightBound()) < Math.abs(movementX)) {
 						movementX = entity.getLeftBound() - mobileEntity.getRightBound();
+						speedX = 0;
 					}
 				} else {
 					if (Math.abs(mobileEntity.getLeftBound() - entity.getRightBound()) < Math.abs(movementX)) {
@@ -137,15 +138,19 @@ public class World extends Observable {
 						} else {
 							movementX = 0;
 						}
+
+						speedX = 0;
 					}
 				}
+
+				mobileEntity.setVelocity(new Point2D(speedX, speedY));
 			}
 		}
         
         mobileEntity.setLocation(new Point2D(mobileEntity.getLocation().getX() + movementX, mobileEntity.getLocation().getY() + movementY));
 	}
 	
-	private boolean segmentIntersect(double x1, double x2, double y1, double y2) {
+	private static boolean segmentIntersect(double x1, double x2, double y1, double y2) {
 		return x1 < y2 && x2 > y1;
 	}
 
