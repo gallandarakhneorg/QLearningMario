@@ -56,7 +56,7 @@ public class Game extends Application {
 			URL resource = Resources.getResource(getClass(), "/levels/levelA.png");
 			assert (resource != null);
 			// FIXME: Rename "loadLevelFromPng" to "loadLevelFromImage" if you're using a generic ImageIO api.
-			for (Entity entity : LevelLoader.loadLevelFromPng(resource)) {
+			for (Entity entity : LevelLoader.loadLevelFromImage(resource)) {
 				world.addEntity(entity);
 			}
 			

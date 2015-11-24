@@ -16,22 +16,12 @@ import fr.utbm.tc.qlearningmario.mario.entity.MarioBody;
 import fr.utbm.tc.qlearningmario.mario.entity.Mushroom;
 import fr.utbm.tc.qlearningmario.mario.entity.PrizeBlock;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 
 public class LevelLoader {
-	// FIXME: A filename is not a string (you are not a "f**g C developer"); use File, URL (best is URL) 
-	public static List<Entity> loadLevelFromPng(URL fileName) throws IOException {
+	
+	public static List<Entity> loadLevelFromImage(URL fileName) throws IOException {
 		List<Entity> entities = new ArrayList<>();
-		
-		// Create image object.
-//		Image image = new Image(fileName.toString()); //$NON-NLS-1$
-//		PixelReader preader = image.getPixelReader();
-		
-		// FIXME: Why cast to int? => Invalid API usage. See below for ImageIO use.
-//		int width = ((int) image.getWidth());
-//		int height = ((int) image.getHeight());
 		
 		BufferedImage image = ImageIO.read(fileName);
 		
