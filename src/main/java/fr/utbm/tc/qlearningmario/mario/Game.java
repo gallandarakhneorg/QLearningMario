@@ -53,7 +53,7 @@ public class Game extends Application {
 			// Loading a level.
 			// FIXME: This is the bad way to access to resources. Use an API that is searching on the classpath.
 			// FIXME: The name of the resource msut be ALWAYS given with the Unix FS/URL standard => slashs. The resource API will translate to backslashs automatically on Windows. 
-			URL resource = Resources.getResource(getClass(), "/levels/levelA.png");
+			URL resource = Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/levels/levelA.png"); //$NON-NLS-1$
 			assert (resource != null);
 			// FIXME: Rename "loadLevelFromPng" to "loadLevelFromImage" if you're using a generic ImageIO api.
 			for (Entity entity : LevelLoader.loadLevelFromImage(resource)) {
@@ -65,19 +65,12 @@ public class Game extends Application {
 			executor.shutdown();
 			
 			primaryStage.show();
-			
-			// FIXME: Use Lamda expressions. It make the code smaller and easier to read.
+
 			primaryStage.setOnCloseRequest(
 					(WindowEvent we) -> {
-						//FIXME: Avoid usage of System.out, System.err, or System.in. Use Logger
-						this.log.info(Locale.getString(Game.this.getClass(), "closing.stage"));
-			            //  System.out.println("Stage is closing"); //$NON-NLS-1$
-			              scheduler.stop();
-			          });
-//				new EventHandler<WindowEvent>() {
-//			          @Override
-//			          public void handle(WindowEvent we) 
-//			    }
+						this.log.info(Locale.getString(Game.this.getClass(), "closing.stage")); //$NON-NLS-1$
+						scheduler.stop();
+					});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
