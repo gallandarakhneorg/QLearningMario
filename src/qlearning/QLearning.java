@@ -33,12 +33,12 @@ public class QLearning<Problem extends QProblem> {
 				
 		currentState = this.problem.getCurrentState();
 		
-		for(int i=0; i<numberOfIterations; ++i) {
-			if (this.randomGenerator.nextFloat()<this.problem.getNu()) {
+		for(int i=0; i < numberOfIterations; ++i) {
+			if (this.randomGenerator.nextFloat() < this.problem.getNu()) {
 				currentState = this.problem.getRandomState();
 			}
 			
-			if (this.randomGenerator.nextFloat()<this.problem.getRho()) {
+			if (this.randomGenerator.nextFloat() < this.problem.getRho()) {
 				action = this.problem.getRandomAction(currentState);
 			}
 			else {
