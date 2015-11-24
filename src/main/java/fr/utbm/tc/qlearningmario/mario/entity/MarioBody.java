@@ -6,21 +6,23 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.arakhne.afc.vmutil.locale.Locale;
+
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import fr.utbm.tc.qlearningmario.mario.common.MarioAction;
 import fr.utbm.tc.qlearningmario.mario.common.MarioState;
 import javafx.geometry.Point2D;
 
 public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
-	public static final Point2D maxVelocity = new Point2D(6, 16);
+	public static final Point2D maxVelocity;
 	
 	// Hitboxes
-	private static final Hitbox smallHitbox = new Hitbox(1, 1);
-	private static final Hitbox bigHitbox = new Hitbox(1, 2);
+	private static final Hitbox smallHitbox;
+	private static final Hitbox bigHitbox;
 	
-	private int maxHealth = 3;
+	private static final int defaultHealth;
+	private int maxHealth = defaultHealth;
 	private int currentHealth = 1;
-	private int defaultHealth = 3;
 	private MarioState state = MarioState.SmallMario;
 	
 	private double invincibilityTimestamp = 0f;
@@ -30,6 +32,24 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	private List<Entity> perception = new ArrayList<>();
 	
+	static {
+		double x = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.x")); //$NON-NLS-1$
+        double y = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.y")); //$NON-NLS-1$
+        
+        double smallHeight = Double.parseDouble(Locale.getString(MarioBody.class, "small.height")); //$NON-NLS-1$
+        double smallWidth = Double.parseDouble(Locale.getString(MarioBody.class, "small.width")); //$NON-NLS-1$
+        
+        smallHitbox = new Hitbox(smallWidth, smallHeight);
+        
+        double bigHeight = Double.parseDouble(Locale.getString(MarioBody.class, "big.height")); //$NON-NLS-1$
+        double bigWidth = Double.parseDouble(Locale.getString(MarioBody.class, "big.width")); //$NON-NLS-1$
+        
+        bigHitbox = new Hitbox(bigWidth, bigHeight);
+
+        maxVelocity = new Point2D(x, y);
+        defaultHealth = Integer.parseInt(Locale.getString(MarioBody.class, "default.health")); //$NON-NLS-1$
+	}
+
 	public MarioBody() {
 		this.currentHitbox = MarioBody.smallHitbox;
 		setMaxVelocity(MarioBody.maxVelocity);
