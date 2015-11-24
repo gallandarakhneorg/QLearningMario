@@ -60,7 +60,7 @@ public class Scheduler implements Runnable, Observer {
     
     private void updateAgents() {
         for (Agent<?> agent : this.agents) {
-            agent.update();
+            agent.live();
         }
     }
 

@@ -12,21 +12,21 @@ public class GoombaAgent extends Agent<Goomba> {
 	}
 
 	@Override
-    public void update() {       
+    public void live() {       
         if (getBody().getVelocity().getX() == 0.f) {
         	if (getBody().getOrientation() == Orientation.Left) {
-        		getBody().askAcceleration(new Point2D(Goomba.maxAcceleration.getX(), 0));
+        		getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
         	} else {
-        		getBody().askAcceleration(new Point2D(-Goomba.maxAcceleration.getX(), 0));
+        		getBody().askAcceleration(new Point2D(-getBody().getMaxAcceleration().getX(), 0));
         	}
             return;
         }
         for (Entity entity : getBody().getPerception()) {
             if (entity instanceof Enemy && getBody().collide(entity)) {
             	if (entity.getLocation().getX() < getBody().getLocation().getX()) {
-            		getBody().askAcceleration(new Point2D(Goomba.maxAcceleration.getX(), 0));
+            		getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
             	} else {
-            		getBody().askAcceleration(new Point2D(-Goomba.maxAcceleration.getX(), 0));
+            		getBody().askAcceleration(new Point2D(-getBody().getMaxAcceleration().getX(), 0));
             	}
             }
         }

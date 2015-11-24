@@ -3,11 +3,19 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.arakhne.afc.vmutil.locale.Locale;
+
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
 public class Mushroom extends MobileEntity implements AgentBody, Collectable {
-	public static final Point2D maxVelocity = new Point2D(2.4, 3);
+	static final Point2D maxVelocity;
+	
+	static {
+        double x = Double.parseDouble(Locale.getString(Mushroom.class, "max.velocity.x")); //$NON-NLS-1$
+        double y = Double.parseDouble(Locale.getString(Mushroom.class, "max.velocity.y")); //$NON-NLS-1$
+        maxVelocity = new Point2D(x, y);
+	}
 	
 	private static final Hitbox hitbox = new Hitbox(1, 1);
 	

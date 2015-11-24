@@ -15,9 +15,7 @@ import javafx.scene.paint.Color;
 
 // FIXME: Observer is too old => no generic. Replace by EventListener or ad-hoc interface.
 public class MarioGUI extends AnimationTimer implements Observer {
-	// FIXME: final
 	private final GraphicsContext gc;
-	// FIXME: final
 	private final List<Entity> entities = new ArrayList<>();
 	
 	private Point2D cameraPos = Point2D.ZERO;

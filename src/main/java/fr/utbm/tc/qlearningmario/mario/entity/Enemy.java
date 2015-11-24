@@ -3,13 +3,14 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.arakhne.afc.vmutil.locale.Locale;
+
 import javafx.geometry.Point2D;
 
 public class Enemy extends MobileEntity implements Damageable, AgentBody {
-	// FIXME: Numeric literals must be put in constants.
-    private int maxHealth = 1;
-    private int currentHealth = 1;
-    private int defaultHealth = 1;
+	private int defaultMaxHealth = Integer.parseInt(Locale.getString(Enemy.class, "default.max.health")); //$NON-NLS-1$
+    private int maxHealth = this.defaultMaxHealth;
+    private int currentHealth = this.maxHealth;
     
     private double invincibilityTimestamp = 0f;
     
@@ -109,7 +110,7 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
 
     @Override
     public void resetMaxHealth() {
-       this.maxHealth = this.defaultHealth;
+       this.maxHealth = this.defaultMaxHealth;
       if (this.currentHealth > this.maxHealth) {
           this.currentHealth = this.maxHealth;
       }

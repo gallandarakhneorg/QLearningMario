@@ -13,8 +13,7 @@ public class MobileEntity extends Entity {
 	private Orientation orientation = Orientation.Right;
 	
 	public void setVelocity(Point2D velocity) {
-		// FIXME: Put message in assertion when possible.
-		assert (velocity != null) : "You must give a null velocity object";
+		assert (velocity != null) : "You must give a non-null velocity object"; //$NON-NLS-1$
 		double velocityX = velocity.getX();
 		double velocityY = velocity.getY();
 		
@@ -24,6 +23,7 @@ public class MobileEntity extends Entity {
 		if (Math.abs(velocityY) > getMaxVelocity().getY())
 			velocityY = velocityY / Math.abs(velocityY) * getMaxVelocity().getY();
 		
+		// Update orientation.
 		if (velocityX < 0) {
 			this.orientation = Orientation.Left;
 		} else if (velocityX > 0) {

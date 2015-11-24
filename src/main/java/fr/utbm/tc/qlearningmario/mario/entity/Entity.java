@@ -7,7 +7,7 @@ import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
 public class Entity implements Cloneable {
-	private Point2D location = Point2D.ZERO; // 1.f = 1 meter
+	private Point2D location = Point2D.ZERO; // 1.0 = 1 meter
 	protected Hitbox currentHitbox = Hitbox.nullHitbox;
 
 	public void setLocation(Point2D location) {

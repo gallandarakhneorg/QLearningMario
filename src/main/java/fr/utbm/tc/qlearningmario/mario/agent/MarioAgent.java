@@ -9,7 +9,7 @@ public class MarioAgent extends Agent<MarioBody> {
 	}
 
 	@Override
-	public void update() {
+	public void live() {
 		getBody().askAcceleration(new Point2D(3, -20));
 	}
 }

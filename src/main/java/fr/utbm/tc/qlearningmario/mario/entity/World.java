@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import org.arakhne.afc.vmutil.locale.Locale;
+
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class World extends Observable {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
-	private double gravity = 0.5;
+	private double gravity = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 
 	public void computePerceptions() {
 	    for (Entity entity : this.entities) {

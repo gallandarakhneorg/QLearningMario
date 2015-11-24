@@ -9,7 +9,6 @@ import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.World;
 import fr.utbm.tc.qlearningmario.mario.ui.MarioGUI;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
