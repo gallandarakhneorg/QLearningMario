@@ -15,4 +15,9 @@ public class Goomba extends Enemy {
         setMaxVelocity(Goomba.maxVelocity);
         setMaxAcceleration(Goomba.maxAcceleration);
     }
+    
+    @Override
+    public double getPerceptionDistance() {
+    	return 1.f;
+    }
 }
