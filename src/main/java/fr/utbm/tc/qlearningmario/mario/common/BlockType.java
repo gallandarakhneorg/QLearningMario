@@ -10,6 +10,4 @@ public enum BlockType {
 	PipeBodyRight,
 	GroundRock,
 	SteelBlock;
-	
-	// FIXME: This is a C-like enumeration. May we benefit from a real object-oriented enumeration?
 }
