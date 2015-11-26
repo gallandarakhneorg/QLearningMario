@@ -13,6 +13,17 @@
 			<artifactId>vmutils</artifactId>
 			<version>12.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.arakhne.afc.core</groupId>
+            <artifactId>math</artifactId>
+			<version>12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -33,11 +44,6 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.17</version>
 				<dependencies>
-					<dependency>
-						<groupId>io.sarl</groupId>
-						<artifactId>io.sarl.checkstyle</artifactId>
-						<version>${project.version}</version>
-					</dependency>
 					<dependency>
 						<groupId>com.puppycrawl.tools</groupId>
 						<artifactId>checkstyle</artifactId>
