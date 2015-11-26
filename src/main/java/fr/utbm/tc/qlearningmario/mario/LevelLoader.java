@@ -28,12 +28,12 @@ public class LevelLoader {
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
 				int rgba = image.getRGB(i, j);
-				Color color = new Color(
-						((rgba >> 16) & 0xFF) / 255.,
-						((rgba >> 8) & 0xFF) / 255.,
-						(rgba & 0xFF) / 255.,
-						((rgba >> 24) & 0xFF) / 255.);
-				
+				Color color = Color.rgb(
+						(rgba >> 16) & 0xFF,
+						(rgba >> 8) & 0xFF,
+						rgba & 0xFF,
+						(rgba >> 24) & 0xFF);
+
 				if (color.equals(Color.BLACK)) {
 					Block block = new Block(BlockType.GroundRock);
 					block.setLocation(new Point2D(i, j));
