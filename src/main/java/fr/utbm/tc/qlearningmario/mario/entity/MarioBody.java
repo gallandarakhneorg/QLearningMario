@@ -57,7 +57,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void damage(int amount) {
-	    if (!isInvincible())
+	    if (isInvincible())
 	        return;
 
 		if (this.currentHealth < amount) {
@@ -71,7 +71,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void damage(int amount, Entity source) {
-	    if (!isInvincible())
+	    if (isInvincible())
             return;
 
 	    if (this.currentHealth < amount) {
@@ -128,7 +128,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	@Override
 	public void heal(int amount) {
 		if (amount > 0) {
-			this.currentHealth += amount;
+			this.currentHealth = Math.min(this.maxHealth, this.currentHealth + amount);
 
 			updateState();
 		}
@@ -197,16 +197,8 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 		return this.state;
 	}
 
-	// FIXME: Replace by Observer?
-	// FIXME: Really public?
-	public void updateState() {
-		if (this.currentHealth <= 0) {
-		    this.state = MarioState.values()[0];
-		} else if (this.currentHealth >= 3) {
-		    this.state = MarioState.values()[3];
-		} else {
-		    this.state = MarioState.values()[this.currentHealth];
-		}
+	private void updateState() {
+		this.state = MarioState.fromHealth(this.currentHealth);
 		
 		if (this.currentHealth == 1) {
 			this.currentHitbox = MarioBody.smallHitbox;
