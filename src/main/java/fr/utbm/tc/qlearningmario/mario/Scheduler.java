@@ -11,13 +11,17 @@ import org.arakhne.afc.vmutil.locale.Locale;
 import fr.utbm.tc.qlearningmario.mario.agent.Agent;
 import fr.utbm.tc.qlearningmario.mario.agent.GoombaAgent;
 import fr.utbm.tc.qlearningmario.mario.agent.MarioAgent;
+import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.Goomba;
 import fr.utbm.tc.qlearningmario.mario.entity.MarioBody;
 import fr.utbm.tc.qlearningmario.mario.entity.World;
+import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent;
+import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent.Type;
+import fr.utbm.tc.qlearningmario.mario.entity.WorldListener;
 
-public class Scheduler implements Runnable, Observer {
+public class Scheduler implements Runnable, WorldListener {
     private World world;
-    private List<Agent<?>> agents = new ArrayList<>();
+    private List<Agent<?>> agents = new ArrayList<>(); // TODO: use HashMap instead of List.
     private boolean running = true;
     private int updatesPerSecond = 60;
     
@@ -69,15 +73,20 @@ public class Scheduler implements Runnable, Observer {
     }
 
 	@Override
-	public void update(Observable o, Object arg) {
-		if (arg instanceof Goomba) {
-			this.log.info(Locale.getString(Scheduler.this.getClass(), "added.goomba")); //$NON-NLS-1$
-			GoombaAgent agent = new GoombaAgent((Goomba) arg);
-			this.agents.add(agent);
-		} else if (arg instanceof MarioBody) {
-			this.log.info(Locale.getString(Scheduler.this.getClass(), "added.mario")); //$NON-NLS-1$
-			MarioAgent agent = new MarioAgent((MarioBody) arg);
-			this.agents.add(agent);
+	public void update(WorldEvent e) {
+		if (e.getType() == Type.ENTITY_ADDED) {
+			Entity entity = e.getEntity();
+			if (entity instanceof Goomba) {
+				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.goomba")); //$NON-NLS-1$
+				GoombaAgent agent = new GoombaAgent((Goomba) entity);
+				this.agents.add(agent);
+			} else if (entity instanceof MarioBody) {
+				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.mario")); //$NON-NLS-1$
+				MarioAgent agent = new MarioAgent((MarioBody) entity);
+				this.agents.add(agent);
+			}
+		} else if (e.getType() == Type.ENTITY_REMOVED) {
+			// TODO: if the entity is an AgentBody, remove the corresponding Agent from this.agents. 
 		}
 	}
 }

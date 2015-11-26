@@ -1,18 +1,22 @@
 package fr.utbm.tc.qlearningmario.mario.entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
+import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent.Type;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
-public class World extends Observable {
+public class World {
 	private List<Entity> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
 	private double gravity = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
+	
+	private final List<WorldListener> listeners = new ArrayList<>();
 
 	public void computePerceptions() {
 	    for (Entity entity : this.entities) {
@@ -43,20 +47,25 @@ public class World extends Observable {
 	}
 
 	public void update() {
-		for (Entity entity : this.entities) {
-			if (entity instanceof MobileEntity)
-				updateMobileEntity((MobileEntity)entity);
+		Iterator<Entity> iterator = this.entities.iterator();
+		while (iterator.hasNext()) {
+			Entity entity = iterator.next();
+			
+			// TODO: add isDead to Damageable.
+			if (entity instanceof Damageable && ((Damageable) entity).getHealth() == 0) {
+				iterator.remove();
+				fireEntityRemoved(entity);
+			} else if (entity instanceof MobileEntity) {
+				updateMobileEntity((MobileEntity) entity);
+			}
 		}
 		
-		setChanged();
-		notifyObservers(this.entities);
+		fireWorldUpdate();
 	}
 	
 	public void addEntity(Entity entity) {
 	    this.entities.add(entity);
-	    
-	    setChanged();
-	    notifyObservers(entity);
+	    fireEntityAdded(entity);
 	}
 	
 	private void updateMobileEntity(MobileEntity mobileEntity) {
@@ -112,7 +121,7 @@ public class World extends Observable {
 					if (mobileEntity.getBottomBound() - entity.getTopBound() < movementY) {
 						movementY = mobileEntity.getBottomBound() - entity.getTopBound();
 						if (movementY > 0) {
-							movementY = - movementY;
+							movementY = -movementY;
 						} else {
 							movementY = 0;
 							mobileEntity.setOnGround(true);
@@ -213,5 +222,39 @@ public class World extends Observable {
         
         return nearbyEntities;
     }
+	
+	public void addWorldListener(WorldListener worldListener) {
+		assert(worldListener != null);
+		this.listeners.add(worldListener);
+	}
+	
+	public void removeWorldListener(WorldListener worldListener) {
+		assert(worldListener != null);
+		this.listeners.remove(worldListener);
+	}
+	
+	private void fireEvent(WorldEvent e) {
+		WorldListener[] tab = new WorldListener[this.listeners.size()];
+		this.listeners.toArray(tab);
+		
+		for (WorldListener worldListener : tab) {
+			worldListener.update(e);
+		}
+	}
+	
+	private void fireWorldUpdate() {
+		WorldEvent e = new WorldEvent(this, Type.WORLD_UPDATE);
+		fireEvent(e);
+	}
+	
+	private void fireEntityAdded(Entity entity) {
+		WorldEvent e = new WorldEvent(this, entity, Type.ENTITY_ADDED);
+		fireEvent(e);
+	}
+	
+	private void fireEntityRemoved(Entity entity) {
+		WorldEvent e = new WorldEvent(this, entity, Type.ENTITY_REMOVED);
+		fireEvent(e);
+	}
 }
 

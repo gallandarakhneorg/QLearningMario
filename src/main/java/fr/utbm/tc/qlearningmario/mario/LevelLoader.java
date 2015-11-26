@@ -32,7 +32,7 @@ public class LevelLoader {
 						(rgba >> 16) & 0xFF,
 						(rgba >> 8) & 0xFF,
 						rgba & 0xFF,
-						(rgba >> 24) & 0xFF);
+						((rgba >> 24) & 0xFF) / 255.);
 
 				if (color.equals(Color.BLACK)) {
 					Block block = new Block(BlockType.GroundRock);

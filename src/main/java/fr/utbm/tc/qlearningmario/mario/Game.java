@@ -40,13 +40,13 @@ public class Game extends Application {
 			World world = new World();
 			
 			MarioGUI gui = new MarioGUI(gc);
-			world.addObserver(gui);
+			world.addWorldListener(gui);
 			gui.start();
 			
 	        ExecutorService executor = Executors.newFixedThreadPool(5);
 			
 			Scheduler scheduler = new Scheduler(world);
-			world.addObserver(scheduler);
+			world.addWorldListener(scheduler);
 			
 			// Loading a level.
 			URL resource = Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/levels/levelA.png"); //$NON-NLS-1$
