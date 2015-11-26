@@ -3,7 +3,7 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 public interface Damageable {
 	public void damage(int amount);
 	
-	public void damage(int amount, Entity source);
+	public void damage(int amount, Entity<?> source);
 	
 	public void kill();
 	

@@ -4,7 +4,7 @@ import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 import org.arakhne.afc.vmutil.locale.Locale;
 
-public class Billball extends Enemy {
+public class Billball extends Enemy<Billball> {
 	public static final Point2D maxVelocity;
 	
 	static {

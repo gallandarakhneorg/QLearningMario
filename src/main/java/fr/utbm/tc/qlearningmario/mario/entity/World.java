@@ -3,7 +3,6 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
@@ -12,14 +11,14 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class World {
-	private List<Entity> entities = new ArrayList<>();
+	private List<Entity<?>> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
 	private double gravity = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 	
 	private final List<WorldListener> listeners = new ArrayList<>();
 
 	public void computePerceptions() {
-	    for (Entity entity : this.entities) {
+	    for (Entity<?> entity : this.entities) {
 	        if (entity instanceof AgentBody)
 	        {
 	            AgentBody agentBody = ((AgentBody) entity);
@@ -30,13 +29,13 @@ public class World {
 	    }
 	}
 
-    public List<Entity> getEntities() {
+    public List<Entity<?>> getEntities() {
         return this.entities;
     }
     
-	public List<Entity> getNearbyEntities(Entity entity, double distance) {
-        List<Entity> nearbyEntities = new ArrayList<>();
-        for (Entity otherEntity : this.entities) {
+	public List<Entity<?>> getNearbyEntities(Entity<?> entity, double distance) {
+        List<Entity<?>> nearbyEntities = new ArrayList<>();
+        for (Entity<?> otherEntity : this.entities) {
             if (entity.distance(otherEntity) < distance)
                 nearbyEntities.add(otherEntity);
         }
@@ -47,28 +46,28 @@ public class World {
 	}
 
 	public void update() {
-		Iterator<Entity> iterator = this.entities.iterator();
+		Iterator<Entity<?>> iterator = this.entities.iterator();
 		while (iterator.hasNext()) {
-			Entity entity = iterator.next();
+			Entity<?> entity = iterator.next();
 			
 			// TODO: add isDead to Damageable.
 			if (entity instanceof Damageable && ((Damageable) entity).getHealth() == 0) {
 				iterator.remove();
 				fireEntityRemoved(entity);
 			} else if (entity instanceof MobileEntity) {
-				updateMobileEntity((MobileEntity) entity);
+				updateMobileEntity((MobileEntity<?>) entity);
 			}
 		}
 		
 		fireWorldUpdate();
 	}
 	
-	public void addEntity(Entity entity) {
+	public void addEntity(Entity<?> entity) {
 	    this.entities.add(entity);
 	    fireEntityAdded(entity);
 	}
 	
-	private void updateMobileEntity(MobileEntity mobileEntity) {
+	private void updateMobileEntity(MobileEntity<?> mobileEntity) {
 		double accelerationX, accelerationY, speedX, speedY, movementX, movementY;
 
 		if (mobileEntity instanceof AgentBody) {
@@ -112,9 +111,9 @@ public class World {
         
 		mobileEntity.setOnGround(false);
 		
-        List<Entity> entityOnTheWay = getEntitiesOnTheWay(mobileEntity);
+        List<Entity<?>> entityOnTheWay = getEntitiesOnTheWay(mobileEntity);
 
-        for (Entity entity : entityOnTheWay) {
+        for (Entity<?> entity : entityOnTheWay) {
 			if (segmentIntersect(mobileEntity.getLeftBound(), mobileEntity.getRightBound(),
 					entity.getLeftBound(), entity.getRightBound())) {
 				if (speedY > 0) {
@@ -169,7 +168,7 @@ public class World {
 	}
 
 	@SuppressWarnings("boxing")
-    private List<Entity> getEntitiesOnTheWay(MobileEntity entity) {
+    private List<Entity<?>> getEntitiesOnTheWay(MobileEntity<?> entity) {
 		double positionX = entity.getLocation().getX();
 	    double positionY = entity.getLocation().getY();
         double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
@@ -203,7 +202,7 @@ public class World {
                     Left, Top + entity.getHitbox().getHeight()});
         }
 		
-		List<Entity> nearbyEntities = getNearbyEntities(entity,
+		List<Entity<?>> nearbyEntities = getNearbyEntities(entity,
                 entity.getLocation().distance(newPositionX + entity.getHitbox().getWidth(),
                         newPositionY + entity.getHitbox().getHeight()));
         
@@ -247,12 +246,12 @@ public class World {
 		fireEvent(e);
 	}
 	
-	private void fireEntityAdded(Entity entity) {
+	private void fireEntityAdded(Entity<?> entity) {
 		WorldEvent e = new WorldEvent(this, entity, Type.ENTITY_ADDED);
 		fireEvent(e);
 	}
 	
-	private void fireEntityRemoved(Entity entity) {
+	private void fireEntityRemoved(Entity<?> entity) {
 		WorldEvent e = new WorldEvent(this, entity, Type.ENTITY_REMOVED);
 		fireEvent(e);
 	}

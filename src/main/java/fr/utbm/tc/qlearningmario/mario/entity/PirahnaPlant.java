@@ -5,7 +5,7 @@ import org.arakhne.afc.vmutil.locale.Locale;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
-public class PirahnaPlant extends Enemy {
+public class PirahnaPlant extends Enemy<PirahnaPlant> {
 	public static final Point2D maxVelocity;
 	
 	static {

@@ -2,7 +2,7 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 
 import fr.utbm.tc.qlearningmario.mario.common.BlockType;
 
-public final class BrickBlock extends Block implements Damageable {
+public final class BrickBlock extends Block<BrickBlock> implements Damageable {
 	private boolean isDestroyed = true;
 
 	public BrickBlock() {
@@ -15,13 +15,12 @@ public final class BrickBlock extends Block implements Damageable {
 	}
 
 	@Override
-	public void damage(int amount, Entity source) {
+	public void damage(int amount, Entity<?> source) {
 		this.kill();
 	}
 
 	@Override
 	public void kill() {
-		// FIXME: synchronized?
 		this.isDestroyed = true;
 	}
 	

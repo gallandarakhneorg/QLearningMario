@@ -5,7 +5,7 @@ import org.arakhne.afc.vmutil.locale.Locale;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
-public class Goomba extends Enemy {
+public class Goomba extends Enemy<Goomba> {
 	static final Point2D maxVelocity;
 	static final Point2D maxAcceleration;
 	

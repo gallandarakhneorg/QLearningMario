@@ -2,8 +2,6 @@ package fr.utbm.tc.qlearningmario.mario;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Logger;
 
 import org.arakhne.afc.vmutil.locale.Locale;
@@ -75,7 +73,7 @@ public class Scheduler implements Runnable, WorldListener {
 	@Override
 	public void update(WorldEvent e) {
 		if (e.getType() == Type.ENTITY_ADDED) {
-			Entity entity = e.getEntity();
+			Entity<?> entity = e.getEntity();
 			if (entity instanceof Goomba) {
 				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.goomba")); //$NON-NLS-1$
 				GoombaAgent agent = new GoombaAgent((Goomba) entity);

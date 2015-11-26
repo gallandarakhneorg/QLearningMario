@@ -8,7 +8,7 @@ import org.arakhne.afc.vmutil.locale.Locale;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
-public class Mushroom extends MobileEntity implements AgentBody, Collectable {
+public class Mushroom extends MobileEntity<Mushroom> implements AgentBody, Collectable {
 	static final Point2D maxVelocity;
 	
 	static {
@@ -20,8 +20,8 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
 	private static final Hitbox hitbox = new Hitbox(1, 1);
 	
     private boolean isCollected = false;
-    private Entity collector;
-    private List<Entity> perception = new ArrayList<>();
+    private Entity<?> collector;
+    private List<Entity<?>> perception = new ArrayList<>();
     private Point2D wantedAcceleration;
 
     public Mushroom() {
@@ -30,7 +30,7 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
     }
     
     @Override
-    public void collect(Entity entity) {
+    public void collect(Entity<?> entity) {
         this.isCollected = true;
         this.collector = entity;
     }
@@ -41,17 +41,17 @@ public class Mushroom extends MobileEntity implements AgentBody, Collectable {
     }
 
     @Override
-    public Entity getCollector() {
+    public Entity<?> getCollector() {
         return this.collector;
     }
 
     @Override
-    public List<Entity> getPerception() {
+    public List<Entity<?>> getPerception() {
         return this.perception;
     }
 
     @Override
-    public void setPerception(List<Entity> perception) {
+    public void setPerception(List<Entity<?>> perception) {
         this.perception = perception;
     }
 

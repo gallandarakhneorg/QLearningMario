@@ -2,16 +2,17 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 
 import fr.utbm.tc.qlearningmario.mario.common.BlockType;
 
-public class PrizeBlock extends Block implements Damageable {
-	private Entity surprise = null;
-	private boolean empty = false;
+public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
+	private Entity<?> surprise;
+	private boolean empty;
 	
-	public PrizeBlock(Entity surprise) {
+	public PrizeBlock(Entity<?> surprise) {
 		super(BlockType.PrizeBlock);
+		assert(surprise != null);
 		this.surprise = surprise;
 	}
 	
-	public Entity getSurprise() {
+	public Entity<?> getSurprise() {
 		return this.surprise;
 	}
 	
@@ -21,7 +22,7 @@ public class PrizeBlock extends Block implements Damageable {
 	}
 
 	@Override
-	public void damage(int amount, Entity source) {
+	public void damage(int amount, Entity<?> source) {
 		this.kill();
 	}
 
@@ -77,5 +78,12 @@ public class PrizeBlock extends Block implements Damageable {
 	@Override
 	public void setNoDamageTimestamp(double timestamp) {
 		// A block doesn't have any noDamageTimestamp.
+	}
+	
+	@Override
+	public PrizeBlock clone() {
+		PrizeBlock clone = super.clone();
+		clone.surprise = (Entity<?>) this.surprise.clone();
+		return clone;
 	}
 }

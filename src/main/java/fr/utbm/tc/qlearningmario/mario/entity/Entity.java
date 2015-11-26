@@ -6,7 +6,7 @@ import static java.lang.Math.sqrt;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
-public class Entity implements Cloneable {
+public class Entity<T> implements fr.utbm.tc.qlearningmario.mario.common.Cloneable<T> {
 	private Point2D location = Point2D.ZERO; // 1.0 = 1 meter
 	protected Hitbox currentHitbox = Hitbox.nullHitbox;
 
@@ -18,7 +18,7 @@ public class Entity implements Cloneable {
 		return this.location;
 	}
 
-    public double distance(Entity entity) {
+    public double distance(Entity<?> entity) {
         return sqrt(pow(this.location.getX() - entity.getLocation().getX(), 2)
                 + pow(this.location.getY() - entity.getLocation().getY(), 2));
     }
@@ -50,21 +50,21 @@ public class Entity implements Cloneable {
             && this.location.getY() + this.currentHitbox.getHeight() > pt.getY();
     }
     
-    public boolean collide(Entity entity) {
+    public boolean collide(Entity<?> entity) {
         return this.location.getX() < entity.getLocation().getX() + entity.getHitbox().getWidth()
             && this.location.getX() + this.currentHitbox.getWidth() > entity.getLocation().getX()
             && this.location.getY() + this.currentHitbox.getHeight() > entity.getLocation().getY()
             && this.location.getY() < entity.getLocation().getY() + entity.getHitbox().getHeight();
     }
     
-    @Override
-	public Entity clone() {
-    	Entity o = null;
+    @SuppressWarnings("unchecked")
+	@Override
+	public T clone() {
+    	T o = null;
 		try {
-			o = ((Entity) super.clone());
-		} catch(CloneNotSupportedException cnse) {
+			o = ((T) super.clone());
+		} catch(@SuppressWarnings("unused") CloneNotSupportedException cnse) {
 			// Shouldn't happen since Cloneable is implemented.
-			cnse.printStackTrace(System.err);
 		}
 
 		return o;

@@ -3,7 +3,7 @@ package fr.utbm.tc.qlearningmario.mario.entity;
 import fr.utbm.tc.qlearningmario.mario.common.Orientation;
 import javafx.geometry.Point2D;
 
-public class MobileEntity extends Entity {
+public class MobileEntity<T> extends Entity<T> {
 	private Point2D velocity = Point2D.ZERO;
 	private Point2D maxVelocity = new Point2D(3, 3);
 	private Point2D maxAcceleration = new Point2D(3, 16);

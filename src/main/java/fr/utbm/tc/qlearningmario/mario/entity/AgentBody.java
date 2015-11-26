@@ -7,10 +7,10 @@ import javafx.geometry.Point2D;
 // FIXME: Provide two interfaces: for the agent side, one for the simulator side.
 public interface AgentBody {
 	// FIXME: only in agent side
-	public List<Entity> getPerception();
+	public List<Entity<?>> getPerception();
 	
 	// FIXME: only in simulator side
-	public void setPerception(List<Entity> perception);
+	public void setPerception(List<Entity<?>> perception);
 	
 	// FIXME: only in agent side
 	public double getPerceptionDistance();

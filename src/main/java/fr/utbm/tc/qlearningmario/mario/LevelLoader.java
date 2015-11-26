@@ -20,8 +20,8 @@ import javafx.scene.paint.Color;
 
 public class LevelLoader {
 	
-	public static List<Entity> loadLevelFromImage(URL fileName) throws IOException {
-		List<Entity> entities = new ArrayList<>();
+	public static List<Entity<?>> loadLevelFromImage(URL fileName) throws IOException {
+		List<Entity<?>> entities = new ArrayList<>();
 		
 		BufferedImage image = ImageIO.read(fileName);
 		
@@ -35,7 +35,7 @@ public class LevelLoader {
 						((rgba >> 24) & 0xFF) / 255.);
 
 				if (color.equals(Color.BLACK)) {
-					Block block = new Block(BlockType.GroundRock);
+					Block<?> block = new Block<>(BlockType.GroundRock);
 					block.setLocation(new Point2D(i, j));
 					entities.add(block);
 				} else if (color.equals(Color.RED)) {

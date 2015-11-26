@@ -13,7 +13,7 @@ import fr.utbm.tc.qlearningmario.mario.common.MarioAction;
 import fr.utbm.tc.qlearningmario.mario.common.MarioState;
 import javafx.geometry.Point2D;
 
-public final class MarioBody extends MobileEntity implements AgentBody, Damageable {
+public final class MarioBody extends MobileEntity<MarioBody> implements AgentBody, Damageable {
 	public static final Point2D maxVelocity;
 	
 	// Hitboxes
@@ -30,7 +30,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	private Point2D wantedAcceleration = Point2D.ZERO;
 	private MarioAction wantedAction = null;
 
-	private List<Entity> perception = new ArrayList<>();
+	private List<Entity<?>> perception = new ArrayList<>();
 	
 	static {
 		double x = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.x")); //$NON-NLS-1$
@@ -70,7 +70,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	}
 
 	@Override
-	public void damage(int amount, Entity source) {
+	public void damage(int amount, Entity<?> source) {
 	    if (isInvincible())
             return;
 
@@ -122,7 +122,7 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 
 	@Override
 	public void resetMaxHealth() {
-		this.maxHealth = this.defaultHealth;
+		this.maxHealth = defaultHealth;
 	}
 
 	@Override
@@ -157,12 +157,12 @@ public final class MarioBody extends MobileEntity implements AgentBody, Damageab
 	}
 
 	@Override
-	public List<Entity> getPerception() {
+	public List<Entity<?>> getPerception() {
 		return this.perception;
 	}
 	
 	@Override
-    public void setPerception(List<Entity> perception) {
+    public void setPerception(List<Entity<?>> perception) {
 	    this.perception = perception;
     }
 

@@ -7,7 +7,7 @@ import org.arakhne.afc.vmutil.locale.Locale;
 
 import javafx.geometry.Point2D;
 
-public class Enemy extends MobileEntity implements Damageable, AgentBody {
+public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody {
 	private int defaultMaxHealth = Integer.parseInt(Locale.getString(Enemy.class, "default.max.health")); //$NON-NLS-1$
     private int maxHealth = this.defaultMaxHealth;
     private int currentHealth = this.maxHealth;
@@ -16,15 +16,15 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
     
     private Point2D wantedAcceleration = Point2D.ZERO;
 
-    private List<Entity> perception = new ArrayList<>();
+    private List<Entity<?>> perception = new ArrayList<>();
   
     @Override
-    public List<Entity> getPerception() {
+    public List<Entity<?>> getPerception() {
         return this.perception;
     }
 
     @Override
-    public void setPerception(List<Entity> perception) {
+    public void setPerception(List<Entity<?>> perception) {
         this.perception = perception;
     }
 
@@ -66,7 +66,7 @@ public class Enemy extends MobileEntity implements Damageable, AgentBody {
     }
 
     @Override
-    public void damage(int amount, Entity source) {
+    public void damage(int amount, Entity<?> source) {
         if (!isInvincible())
             return;
 

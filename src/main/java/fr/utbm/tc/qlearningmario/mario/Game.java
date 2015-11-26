@@ -51,7 +51,7 @@ public class Game extends Application {
 			// Loading a level.
 			URL resource = Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/levels/levelA.png"); //$NON-NLS-1$
 			assert (resource != null);
-			for (Entity entity : LevelLoader.loadLevelFromImage(resource)) {
+			for (Entity<?> entity : LevelLoader.loadLevelFromImage(resource)) {
 				world.addEntity(entity);
 			}
 			

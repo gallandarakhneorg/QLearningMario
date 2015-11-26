@@ -21,7 +21,7 @@ public class GoombaAgent extends Agent<Goomba> {
         	}
             return;
         }
-        for (Entity entity : getBody().getPerception()) {
+        for (Entity<?> entity : getBody().getPerception()) {
             if (entity instanceof Enemy && getBody().collide(entity)) {
             	if (entity.getLocation().getX() < getBody().getLocation().getX()) {
             		getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
