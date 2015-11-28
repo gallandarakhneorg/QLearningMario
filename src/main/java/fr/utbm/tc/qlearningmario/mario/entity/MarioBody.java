@@ -25,6 +25,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	private int maxHealth = defaultHealth;
 	private int currentHealth = 1;
 	private MarioState state = MarioState.SMALL_MARIO;
+	private static final double perceptionDistance;
 
 	private double invincibilityTimestamp = 0f;
 
@@ -49,6 +50,8 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 
 		maxVelocity = new Point2D(x, y);
 		defaultHealth = Integer.parseInt(Locale.getString(MarioBody.class, "default.health")); //$NON-NLS-1$
+
+		perceptionDistance = Double.parseDouble(Locale.getString(MarioBody.class, "perception.distance")); //$NON-NLS-1$
 	}
 
 	public MarioBody() {
@@ -174,7 +177,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 
 	@Override
 	public double getPerceptionDistance() {
-		return 20f;
+		return perceptionDistance;
 	}
 
 	@Override
