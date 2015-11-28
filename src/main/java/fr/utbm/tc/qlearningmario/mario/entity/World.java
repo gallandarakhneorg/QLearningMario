@@ -203,18 +203,18 @@ public class World {
                 entity.getLocation().distance(newPositionX + entity.getHitbox().getWidth(),
                         newPositionY + entity.getHitbox().getHeight()));
         
-        int i = 0;
-        while (i < nearbyEntities.size()) {
-            if (nearbyEntities.get(i) instanceof Solid
-                    && polygon.intersects(nearbyEntities.get(i).getLocation().getX(),
-                            nearbyEntities.get(i).getLocation().getY(),
-                            nearbyEntities.get(i).getHitbox().getWidth(),
-                            nearbyEntities.get(i).getHitbox().getHeight())) {
-                ++i;
-            } else {
-                nearbyEntities.remove(i);
-            }
-        }
+        Iterator<Entity<?>> iterator = nearbyEntities.iterator();
+		while (iterator.hasNext()) {
+			Entity<?> currentEntity = iterator.next();
+
+			if (!(currentEntity instanceof Solid)
+                    || !(polygon.intersects(currentEntity.getLocation().getX(),
+                    		currentEntity.getLocation().getY(),
+                    		currentEntity.getHitbox().getWidth(),
+                    		currentEntity.getHitbox().getHeight()))) {
+				iterator.remove();
+			}
+		}
         
         return nearbyEntities;
     }
