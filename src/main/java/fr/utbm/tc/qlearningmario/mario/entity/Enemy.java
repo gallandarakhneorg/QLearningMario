@@ -81,6 +81,11 @@ public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody {
     public void kill() {
        this.currentHealth = 0;
     }
+    
+	@Override
+	public boolean isDead() {
+		return this.currentHealth == 0;
+	}
 
     @Override
     public int getHealth() {
@@ -145,5 +150,4 @@ public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody {
         }
 
     }
-
 }

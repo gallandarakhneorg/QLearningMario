@@ -24,6 +24,11 @@ public final class BrickBlock extends Block<BrickBlock> implements Damageable {
 		this.isDestroyed = true;
 	}
 	
+	@Override
+	public boolean isDead() {
+		return this.isDestroyed;
+	}
+	
 	public boolean isDestroyed() {
 		return this.isDestroyed;
 	}

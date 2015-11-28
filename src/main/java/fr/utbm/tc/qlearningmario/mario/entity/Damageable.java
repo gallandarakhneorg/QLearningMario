@@ -1,27 +1,29 @@
 package fr.utbm.tc.qlearningmario.mario.entity;
 
 public interface Damageable {
-	public void damage(int amount);
+	void damage(int amount);
 	
-	public void damage(int amount, Entity<?> source);
+	void damage(int amount, Entity<?> source);
 	
-	public void kill();
+	void kill();
 	
-	public int getHealth();
+	boolean isDead();
 	
-	public void setHealth(int health);
+	int getHealth();
 	
-	public int getMaxHealth();
+	void setHealth(int health);
 	
-	public void setMaxHealth(int maxHealth);
+	int getMaxHealth();
 	
-	public void resetMaxHealth();
+	void setMaxHealth(int maxHealth);
 	
-	public void heal(int amount);
+	void resetMaxHealth();
 	
-	public boolean isInvincible();
+	void heal(int amount);
+	
+	boolean isInvincible();
 
-	public double getNoDamageTimestamp();
+	double getNoDamageTimestamp();
 	
-	public void setNoDamageTimestamp(double timestamp);
+	void setNoDamageTimestamp(double timestamp);
 }

@@ -87,6 +87,11 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
     public void kill() {
         setHealth(0);
     }
+	
+	@Override
+	public boolean isDead() {
+		return this.currentHealth == 0;
+	}
 
 	@Override
 	public int getHealth() {

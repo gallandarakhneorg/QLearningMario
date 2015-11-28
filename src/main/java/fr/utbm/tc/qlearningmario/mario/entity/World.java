@@ -50,8 +50,7 @@ public class World {
 		while (iterator.hasNext()) {
 			Entity<?> entity = iterator.next();
 			
-			// TODO: add isDead to Damageable.
-			if (entity instanceof Damageable && ((Damageable) entity).getHealth() == 0) {
+			if (entity instanceof Damageable && ((Damageable) entity).isDead()) {
 				iterator.remove();
 				fireEntityRemoved(entity);
 			} else if (entity instanceof MobileEntity) {

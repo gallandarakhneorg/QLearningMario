@@ -31,6 +31,11 @@ public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
 		this.empty = true;
 	}
 	
+	@Override
+	public boolean isDead() {
+		return this.empty;
+	}
+	
 	public boolean isEmpty() {
 		return this.empty;
 	}
