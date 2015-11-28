@@ -17,11 +17,21 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.util.Comparator;
 
+/** Comparator of QAction.
+ *
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
 public class QActionNumberComparator implements Comparator<QAction> {
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int compare(QAction a, QAction b) {
 		return a.toInt() - b.toInt();

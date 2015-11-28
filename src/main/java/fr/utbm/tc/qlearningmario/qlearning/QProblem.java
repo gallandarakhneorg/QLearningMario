@@ -17,30 +17,80 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.io.Serializable;
 import java.util.List;
 
+/** This is the abstraction of a Q-Learning problem.
+ *
+ * @author jerome
+ *
+ */
 public interface QProblem extends Cloneable, Serializable {
 
-	public float getAlpha();
+	/** Return the learning rate.
+	 *
+	 * @return alpha
+	 */
+	float getAlpha();
 
-	public float getGamma();
+	/** Return the discount factor.
+	 *
+	 * @return gamma
+	 */
+	float getGamma();
 
-	public float getRho();
+	/** Return a part of the exploration factor, this part allow Q-Learning algorithm to choose a random action.
+	 *
+	 * @return rho
+	 */
+	float getRho();
 
-	public float getNu();
+	/** Return a part of the exploration factor, this part allow Q-Learning algorithm to choose a random state.
+	 *
+	 * @return nu
+	 */
+	float getNu();
 
-	public List<QState> getStates();
+	/** Return all the states.
+	 *
+	 * @return a list of states.
+	 */
+	List<QState> getStates();
 
-	public QState getCurrentState();
+	/** Return the current state.
+	 *
+	 * @return the current state
+	 */
+	QState getCurrentState();
 
-	public QState getRandomState();
+	/** Return a random state.
+	 *
+	 * @return a random state
+	 */
+	QState getRandomState();
 
-	public List<QAction> getActions(QState state);
+	/** Return actions availaible in the given state.
+	 *
+	 * @param state : a state
+	 * @return a list of actions
+	 */
+	List<QAction> getActions(QState state);
 
-	public QAction getRandomAction(QState state);
+	/** Return a random action depending on the given state.
+	 *
+	 * @param state : a state
+	 * @return a random action.
+	 */
+	QAction getRandomAction(QState state);
 
-	public QFeedback takeAction(QState state, QAction action);
+	/** Take the action executed from the given state and compute a feedback
+	 *
+	 * @param state : a state
+	 * @param action : an action available in the given state.
+	 * @return the feedback of the action in the given state.
+	 */
+	QFeedback takeAction(QState state, QAction action);
 }

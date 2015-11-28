@@ -17,15 +17,19 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 /**
- * @param <T> Used to Count object
+ *
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
  */
 abstract class Counter {
 	private final int id;
 
-	public Counter() {
+	Counter() {
 		this.id = getNumberOfObject();
 		incrementNumberOfObject();
 	}

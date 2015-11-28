@@ -17,10 +17,22 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.io.Serializable;
 
+/** Base interface for QAction and QBase.
+ *
+ * @author Jérôme BOULMIER
+ * @version 0.0.1
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
 interface QBase extends Cloneable, Serializable {
-	public int toInt();
+	/** Used to represent a QAction or a QState.
+	 *
+	 * @return the representation of the Q-Action/Q-State.
+	 */
+	int toInt();
 }

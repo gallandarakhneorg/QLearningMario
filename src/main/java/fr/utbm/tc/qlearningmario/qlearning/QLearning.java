@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.util.ArrayList;
@@ -26,25 +27,42 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
 
+/** Q-Learning core algorithm.
+ *
+ * @param <Problem> is the type of the problem.
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
 public class QLearning<Problem extends QProblem> {
 	private final Random randomGenerator = new Random();
+
 	private final Map<QState, Map<QAction, Float>> qValues = new TreeMap<>(new QStateNumberComparator());
+
 	private final Problem problem;
 
+	/** Constructor.
+	 *
+	 * @param problem : problem to learn on.
+	 */
 	@SuppressWarnings("boxing")
 	public QLearning(Problem problem) {
 		this.problem = problem;
 
 		for (QState state : problem.getStates()) {
-			Map<QAction, Float> m = new TreeMap<>(new QActionNumberComparator());
-			this.qValues.put(state, m);
+			Map<QAction, Float> temp = new TreeMap<>(new QActionNumberComparator());
+			this.qValues.put(state, temp);
 
-			for(QAction action : problem.getActions(state)) {
-				m.put(action, 0f);
+			for (QAction action : problem.getActions(state)) {
+				temp.put(action, 0f);
 			}
 		}
 	}
 
+	/** Algorithm learn with this method.
+	 *
+	 * @param numberOfIterations : Number of iterations to execute this time.
+	 */
 	public void learn(int numberOfIterations) {
 		QState currentState;
 		QAction action;
@@ -52,15 +70,14 @@ public class QLearning<Problem extends QProblem> {
 
 		currentState = this.problem.getCurrentState();
 
-		for(int i=0; i < numberOfIterations; ++i) {
+		for (int i = 0; i < numberOfIterations; ++i) {
 			if (this.randomGenerator.nextFloat() < this.problem.getNu()) {
 				currentState = this.problem.getRandomState();
 			}
 
 			if (this.randomGenerator.nextFloat() < this.problem.getRho()) {
 				action = this.problem.getRandomAction(currentState);
-			}
-			else {
+			} else {
 				action = getBestAction(currentState);
 			}
 
@@ -70,32 +87,47 @@ public class QLearning<Problem extends QProblem> {
 		}
 	}
 
+	/** Update the Q-Learning graph.
+	 *
+	 * @param state : state from which the feedback is given.
+	 * @param action : action to evaluate in the given state.
+	 * @return return a feedback of the action in the given state.
+	 */
 	private QFeedback getFeedback(QState state, QAction action) {
 		QFeedback result = this.problem.takeAction(state, action);
 
 		QAction bestNextAction = getBestAction(result.getNewState());
 		float bestNextActionValue = getQValue(result.getNewState(), bestNextAction);
 
-		float qValue = (1f - this.problem.getAlpha()) * getQValue(state, action) + this.problem.getAlpha() * (result.getScore() + this.problem.getGamma() * bestNextActionValue);
+		float qValue = (1f - this.problem.getAlpha())
+				* getQValue(state, action)
+				+ this.problem.getAlpha()
+				* (result.getScore()
+						+ this.problem.getGamma()
+						* bestNextActionValue);
 
 		setQValue(state, action, qValue);
 		return result;
 	}
 
+	/** Replies the best action or a random action if there is several best actions.
+	 *
+	 * @param state : a state
+	 * @return the best action.
+	 */
 	@SuppressWarnings("boxing")
 	public QAction getBestAction(QState state) {
-		Map<QAction,Float> qValuesState = this.qValues.get(state);
+		Map<QAction, Float> qValuesState = this.qValues.get(state);
 		List<QAction> bestActions = new ArrayList<>();
 		float bestScore = Float.NEGATIVE_INFINITY;
 
-		for (Entry<QAction,Float> entry : qValuesState.entrySet()) {
+		for (Entry<QAction, Float> entry : qValuesState.entrySet()) {
 			if (entry.getValue() > bestScore) {
 				bestScore = entry.getValue();
 
 				bestActions.clear();
 				bestActions.add(entry.getKey());
-			}
-			else if (entry.getValue() == bestScore) {
+			} else if (entry.getValue() == bestScore) {
 				bestActions.add(entry.getKey());
 			}
 		}
@@ -103,10 +135,18 @@ public class QLearning<Problem extends QProblem> {
 		return bestActions.get(this.randomGenerator.nextInt(bestActions.size()));
 	}
 
+	/** Return the Q-Value corresponding to the given state and action.
+	 *
+	 * @param state : a state
+	 * @param action : an action
+	 * @return the qValue.
+	 */
 	public float getQValue(QState state, QAction action) {
 		Float qValue = this.qValues.get(state).get(action);
-		if (qValue == null)
+
+		if (qValue == null) {
 			return 0f;
+		}
 
 		return qValue.floatValue();
 	}

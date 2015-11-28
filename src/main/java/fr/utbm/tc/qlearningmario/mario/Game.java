@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario;
 
 import java.net.URL;
@@ -38,7 +39,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/** Main class of the application.
+ *
+ * @author Benoît CORTIER
+ *
+ */
 public class Game extends Application {
+	private static final int SCENE_HEIGHT;
+
+	private static final int SCENE_WIDTH;
+
+	private static final int NUMBER_OF_THREAD = 5;
+
+	static {
+		SCENE_WIDTH = Integer.parseInt(Locale.getString(Game.class, "scene.width")); //$NON-NLS-1$
+		SCENE_HEIGHT = Integer.parseInt(Locale.getString(Game.class, "scene.height")); //$NON-NLS-1$
+	}
 
 	private final Logger log = Logger.getLogger(Game.class.getName());
 
@@ -47,12 +63,12 @@ public class Game extends Application {
 		try {
 			BorderPane root = new BorderPane();
 
-			Scene scene = new Scene(root, 256, 240);
+			Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle(Locale.getString(getClass(), "frame.title")); //$NON-NLS-1$
 
-			Canvas canvas = new Canvas(256, 240);
+			Canvas canvas = new Canvas(SCENE_WIDTH, SCENE_HEIGHT);
 			root.getChildren().add(canvas);
 
 			GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -63,8 +79,6 @@ public class Game extends Application {
 			world.addWorldListener(gui);
 			gui.start();
 
-			ExecutorService executor = Executors.newFixedThreadPool(5);
-
 			Scheduler scheduler = new Scheduler(world);
 			world.addWorldListener(scheduler);
 
@@ -74,6 +88,8 @@ public class Game extends Application {
 			for (Entity<?> entity : LevelLoader.loadLevelFromImage(resource)) {
 				world.addEntity(entity);
 			}
+
+			ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_THREAD);
 
 			// Run the scheduler.
 			executor.execute(scheduler);
@@ -86,7 +102,7 @@ public class Game extends Application {
 						this.log.info(Locale.getString(Game.this.getClass(), "closing.stage")); //$NON-NLS-1$
 						scheduler.stop();
 					});
-		} catch(Exception e) {
+		} catch (Exception e) {
 			this.log.severe(e.toString());
 		}
 	}

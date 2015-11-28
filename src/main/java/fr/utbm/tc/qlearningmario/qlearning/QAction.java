@@ -17,34 +17,54 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
+/** Q-Action, used to represent an action.
+ *
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
 public class QAction extends Counter implements QBase {
 	private static int numberOfQAction = 0;
+
 	private static final long serialVersionUID = 3721996842862787542L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int toInt() {
 		return getID();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public QAction clone() {
-		QAction o = null;
+		QAction clone = null;
 		try {
-			o = ((QAction) super.clone());
-		} catch(CloneNotSupportedException cnse) {
-			cnse.printStackTrace(System.err);
+			clone = ((QAction) super.clone());
+		} catch (@SuppressWarnings("unused") CloneNotSupportedException cnse) {
+			//
 		}
 
-		return o;
+		return clone;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected int getNumberOfObject() {
 		return numberOfQAction;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void incrementNumberOfObject() {
 		++numberOfQAction;

@@ -17,11 +17,21 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.util.Comparator;
 
-public class QStateNumberComparator implements Comparator<QState>{
+/** Comparator of QState.
+ *
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
+public class QStateNumberComparator implements Comparator<QState> {
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int compare(QState a, QState b) {
 		return a.toInt() - b.toInt();
