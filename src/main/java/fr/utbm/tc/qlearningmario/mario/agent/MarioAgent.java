@@ -20,9 +20,14 @@
 package fr.utbm.tc.qlearningmario.mario.agent;
 
 import fr.utbm.tc.qlearningmario.mario.entity.MarioBody;
+import fr.utbm.tc.qlearningmario.qlearning.QAction;
+import fr.utbm.tc.qlearningmario.qlearning.QLearning;
 import javafx.geometry.Point2D;
 
 public class MarioAgent extends Agent<MarioBody> {
+	private MarioProblem problem = new MarioProblem();
+	private QLearning<MarioProblem> qlearning = new QLearning<>(this.problem);
+
 	public MarioAgent(MarioBody body) {
 		super(body);
 	}
@@ -31,6 +36,18 @@ public class MarioAgent extends Agent<MarioBody> {
 	public void live() {
 		super.live();
 
-		getBody().askAcceleration(new Point2D(3, -20));
+		this.problem.translateCurrentState(getBody(), getBody().getPerception());
+		this.qlearning.learn(5);
+
+		QAction qAction = this.qlearning.getBestAction(this.problem.getCurrentState());
+		MarioProblem.Action action = MarioProblem.Action.fromQAction(qAction);
+
+		if (action == MarioProblem.Action.JUMP) {
+			getBody().askAcceleration(new Point2D(0, -getBody().getMaxAcceleration().getY()));
+		} else if (action == MarioProblem.Action.MOVE_LEFT) {
+			getBody().askAcceleration(new Point2D(-getBody().getMaxAcceleration().getX(), 0));
+		} else if (action == MarioProblem.Action.MOVE_RIGHT) {
+			getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
+		}
 	}
 }
