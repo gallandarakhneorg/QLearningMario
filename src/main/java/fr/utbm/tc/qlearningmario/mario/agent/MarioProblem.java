@@ -72,11 +72,13 @@ public class MarioProblem implements QProblem {
 	}
 
 	private enum FeedbackScore {
-		VERY_GOOD_SCORE(2f),
-		GOOD_SCORE(1f),
-		IDDLE_SCORE(0f),
-		BAD_SCORE(-1f),
-		VERY_BAD_SCORE(-2f);
+		VERY_GOOD(2f),
+		GOOD(1f),
+		SLIGHT_GOOD(0.5f),
+		NEUTRAL(0f),
+		SLIGHT_BAD(-0.5f),
+		BAD(-1f),
+		VERY_BAD(-2f);
 
 		private float value;
 
@@ -89,7 +91,7 @@ public class MarioProblem implements QProblem {
 		}
 	}
 
-	private static final int nbSquaresPerState = 9;
+	private static final int nbSquaresPerState = 10;
 
 	private final Random randomGenerator = new Random();
 
@@ -111,17 +113,17 @@ public class MarioProblem implements QProblem {
 
 	@Override
 	public float getAlpha() {
-		return .6f;
+		return .5f;
 	}
 
 	@Override
 	public float getGamma() {
-		return .6f;
+		return .5f;
 	}
 
 	@Override
 	public float getRho() {
-		return .4f;
+		return .3f;
 	}
 
 	@Override
@@ -159,18 +161,21 @@ public class MarioProblem implements QProblem {
 	public QFeedback takeAction(QState state, QAction action) {
 		List<SquareState> sStates = getSquareStatesFromQState(state);
 
-		float score = FeedbackScore.IDDLE_SCORE.getValue();
+		float score = FeedbackScore.NEUTRAL.getValue();
 
 		switch (Action.fromQAction(action)) {
 		case MOVE_LEFT:
 			if (sStates.get(4) == SquareState.VOID) {
 				if (sStates.get(7) == SquareState.VOID) {
-					score = FeedbackScore.BAD_SCORE.getValue();
+					score = FeedbackScore.BAD.getValue();
+				} else {
+					score = FeedbackScore.SLIGHT_BAD.getValue();
 				}
 
 				// Mario bottom line
-				sStates.set(7, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
+				sStates.set(9, sStates.get(8));
 				sStates.set(8, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
+				sStates.set(7, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 
 				// Mario line
 				sStates.set(6, sStates.get(5));
@@ -184,23 +189,28 @@ public class MarioProblem implements QProblem {
 				sStates.set(0, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 			} else if (sStates.get(4) == SquareState.SOLID) {
 				if (sStates.get(5) == SquareState.ENEMY || sStates.get(1) == SquareState.ENEMY) {
-					score = FeedbackScore.BAD_SCORE.getValue();
+					score = FeedbackScore.BAD.getValue();
 				}
 			} else { // Enemy on the left.
-				score = FeedbackScore.VERY_BAD_SCORE.getValue();
+				score = FeedbackScore.VERY_BAD.getValue();
 			}
 			break;
 		case MOVE_RIGHT:
 			if (sStates.get(5) == SquareState.VOID) {
 				if (sStates.get(8) == SquareState.VOID) {
-					score = FeedbackScore.BAD_SCORE.getValue();
+					if (sStates.get(9) == SquareState.VOID) {
+						score = FeedbackScore.BAD.getValue();
+					} else {
+						score = FeedbackScore.VERY_BAD.getValue();
+					}
 				} else {
-					score = FeedbackScore.GOOD_SCORE.getValue();
+					score = FeedbackScore.SLIGHT_GOOD.getValue();
 				}
 
 				// Mario bottom line
 				sStates.set(7, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
-				sStates.set(8, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
+				sStates.set(8, sStates.get(9));
+				sStates.set(9, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 
 				// Mario line
 				sStates.set(3, sStates.get(4));
@@ -214,19 +224,16 @@ public class MarioProblem implements QProblem {
 				sStates.set(2, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 			} else if (sStates.get(5) == SquareState.SOLID) {
 				if (sStates.get(4) == SquareState.ENEMY || sStates.get(1) == SquareState.ENEMY) {
-					score = FeedbackScore.BAD_SCORE.getValue();
+					score = FeedbackScore.BAD.getValue();
 				}
 			} else { // Enemy on the right.
-				score = FeedbackScore.VERY_BAD_SCORE.getValue();
+				score = FeedbackScore.VERY_BAD.getValue();
 			}
 			break;
 		case JUMP:
 			if (sStates.get(1) == SquareState.VOID) {
-				if (sStates.get(4) == SquareState.ENEMY
-						|| sStates.get(5) == SquareState.ENEMY
-						|| sStates.get(4) == SquareState.SOLID
-						|| sStates.get(5) == SquareState.SOLID) {
-					score = FeedbackScore.GOOD_SCORE.getValue();
+				if (sStates.get(4) == SquareState.ENEMY || sStates.get(5) == SquareState.ENEMY) {
+					score = FeedbackScore.SLIGHT_GOOD.getValue();
 				}
 
 				// Mario left column
@@ -239,29 +246,27 @@ public class MarioProblem implements QProblem {
 				sStates.set(1, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 
 				// Mario right column
+				sStates.set(9, sStates.get(6));
 				sStates.set(8, sStates.get(5));
 				sStates.set(5, sStates.get(2));
-				sStates.set(6, sStates.get(6));
+				sStates.set(6, sStates.get(2));
 				sStates.set(2, SquareState.fromId(this.randomGenerator.nextInt(SquareState.values().length - 1)));
 			} else if (sStates.get(1) == SquareState.SOLID) {
 				if (sStates.get(4) == SquareState.ENEMY || sStates.get(5) == SquareState.ENEMY) {
-					score = FeedbackScore.BAD_SCORE.getValue();
+					score = FeedbackScore.BAD.getValue();
 				}
 			} else { // Enemy on the top.
-				score = FeedbackScore.VERY_BAD_SCORE.getValue();
+				score = FeedbackScore.VERY_BAD.getValue();
 			}
 			break;
 		case NONE:
+			if (sStates.get(5) == SquareState.ENEMY || sStates.get(4) == SquareState.ENEMY || sStates.get(1) == SquareState.ENEMY) {
+				score = FeedbackScore.BAD.getValue();
+			}
 			break;
 		default:
 			break;
 		}
-
-		/*
-		System.out.println("=========================");
-		System.out.println(sStates.get(0) + " " + sStates.get(1) + " " + sStates.get(2));
-		System.out.println(sStates.get(3) + " " + sStates.get(4) + " " + sStates.get(5) + " " + sStates.get(6));
-		System.out.println(sStates.get(7) + " " + sStates.get(8)); */
 
 		return new QFeedback(this.states[getQStateNumberFromSquareStates(sStates)], score);
 	}
@@ -270,15 +275,16 @@ public class MarioProblem implements QProblem {
 		List<SquareState> sStates = new ArrayList<>(nbSquaresPerState);
 
 		double[][] zones = new double[][] {
-			{-3., -6., 4., 3.}, // x, y, height, width
-			{0., -6., 4., 1.},
-			{1., -6., 4., 3.},
+			{-3., -6., 3., 4.}, // x, y, width, height
+			{0., -6., 1., 4.},
+			{1., -6., 3., 4.},
 			{-3., -2., 2., 2.},
-			{-1., -2., 2., 1.},
-			{1., -2., 2., 1.},
+			{-1., -2., 1., 2.},
+			{1., -2., 1., 2.},
 			{2., -2., 2., 2.},
-			{-1., 0., 5., 1.},
-			{1., 0., 5., 1.}
+			{-1., 0., 1., 5.},
+			{1., 0., 1., 5.},
+			{2., 0., 2., 5.}
 		};
 
 		Entity<?> nearest;
@@ -299,7 +305,7 @@ public class MarioProblem implements QProblem {
 	}
 
 	private static boolean zoneContainsEntity(double ZoneX, double ZoneY,
-			double ZoneHeight, double ZoneWidth,
+			double ZoneWidth, double ZoneHeight,
 			Entity<?> entity) {
 		return ZoneX < entity.getLocation().getX() + entity.getHitbox().getWidth()
 				&& ZoneX + ZoneWidth > entity.getLocation().getX()
@@ -308,12 +314,12 @@ public class MarioProblem implements QProblem {
 	}
 
 	private static Entity<?> getNearestEntityInZone(double ZoneX, double ZoneY,
-			double ZoneHeight, double ZoneWidth,
+			double ZoneWidth, double ZoneHeight,
 			MarioBody mario, List<Entity<?>> entities) {
 		Entity<?> nearest = null;
 
 		for (Entity<?> entity : entities) {
-			if (zoneContainsEntity(ZoneX, ZoneY, ZoneHeight, ZoneWidth, entity)) {
+			if (zoneContainsEntity(ZoneX, ZoneY, ZoneWidth, ZoneHeight, entity)) {
 				if (nearest == null || mario.distance(entity) < mario.distance(nearest)) {
 					nearest = entity;
 				}

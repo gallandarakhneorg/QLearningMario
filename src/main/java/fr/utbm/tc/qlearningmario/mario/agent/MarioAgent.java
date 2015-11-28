@@ -48,6 +48,8 @@ public class MarioAgent extends Agent<MarioBody> {
 			getBody().askAcceleration(new Point2D(-getBody().getMaxAcceleration().getX(), 0));
 		} else if (action == MarioProblem.Action.MOVE_RIGHT) {
 			getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
+		} else {
+			getBody().askAcceleration(new Point2D(-getBody().getVelocity().getX(), 0));
 		}
 	}
 }
