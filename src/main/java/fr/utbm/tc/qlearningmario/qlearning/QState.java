@@ -17,35 +17,54 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
+/** Q-State, used to represent a state of the world.
+ *
+ * @author Jérôme BOULMIER.
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
 public class QState extends Counter implements QBase {
 	private static int numberOfQState;
 
 	private static final long serialVersionUID = -1506512375211501871L;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int toInt() {
 		return getID();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public QState clone() {
-		QState o = null;
+		QState clone = null;
 		try {
-			o = ((QState) super.clone());
-		} catch(CloneNotSupportedException cnse) {
-			cnse.printStackTrace(System.err);
+			clone = ((QState) super.clone());
+		} catch (@SuppressWarnings("unused") CloneNotSupportedException cnse) {
+			//
 		}
 
-		return o;
+		return clone;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected int getNumberOfObject() {
 		return numberOfQState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void incrementNumberOfObject() {
 		++numberOfQState;

@@ -17,25 +17,46 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.qlearning;
 
 import java.io.Serializable;
 
-public class QFeedback implements Cloneable, Serializable{
-
+/** Represent the result of an action
+ *
+ * @author Jérôme BOULMIER
+ * @mavengroupid fr.utbm.tc.tz20
+ * @mavenartifactid QLearningMario
+ */
+public class QFeedback implements Cloneable, Serializable {
 	private static final long serialVersionUID = 2250229614069647240L;
 
 	private final float score;
+
 	private final QState newState;
 
+	/** Constructor.
+	 *
+	 * @param newState : new state after having take an action.
+	 * @param score : score of the action.
+	 */
 	public QFeedback(QState newState, float score) {
 		this.newState = newState;
 		this.score = score;
 	}
+
+	/** Return the score.
+	 *
+	 * @return the score
+	 */
 	public float getScore() {
 		return this.score;
 	}
 
+	/** Return the new state.
+	 *
+	 * @return the new state.
+	 */
 	public QState getNewState() {
 		return this.newState;
 	}
