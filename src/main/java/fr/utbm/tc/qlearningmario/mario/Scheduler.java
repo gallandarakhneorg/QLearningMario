@@ -1,7 +1,8 @@
 package fr.utbm.tc.qlearningmario.mario;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.arakhne.afc.vmutil.locale.Locale;
@@ -19,7 +20,7 @@ import fr.utbm.tc.qlearningmario.mario.entity.WorldListener;
 
 public class Scheduler implements Runnable, WorldListener {
     private World world;
-    private List<Agent<?>> agents = new ArrayList<>(); // TODO: use HashMap instead of List.
+    private Map<Integer, Agent<?>> agents = new HashMap<>();
     private boolean running = true;
     private int updatesPerSecond = 60;
     
@@ -65,11 +66,12 @@ public class Scheduler implements Runnable, WorldListener {
     }
     
     private void updateAgents() {
-        for (Agent<?> agent : this.agents) {
-            agent.live();
+        for (Entry<Integer, Agent<?>> agent : this.agents.entrySet()) {
+        	agent.getValue().live();
         }
     }
 
+	@SuppressWarnings("boxing")
 	@Override
 	public void update(WorldEvent e) {
 		if (e.getType() == Type.ENTITY_ADDED) {
@@ -77,14 +79,14 @@ public class Scheduler implements Runnable, WorldListener {
 			if (entity instanceof Goomba) {
 				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.goomba")); //$NON-NLS-1$
 				GoombaAgent agent = new GoombaAgent((Goomba) entity);
-				this.agents.add(agent);
+				this.agents.put(entity.getID(), agent);
 			} else if (entity instanceof MarioBody) {
 				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.mario")); //$NON-NLS-1$
 				MarioAgent agent = new MarioAgent((MarioBody) entity);
-				this.agents.add(agent);
+				this.agents.put(entity.getID(), agent);
 			}
 		} else if (e.getType() == Type.ENTITY_REMOVED) {
-			// TODO: if the entity is an AgentBody, remove the corresponding Agent from this.agents. 
+			this.agents.remove(e.getEntity().getID());
 		}
 	}
 }

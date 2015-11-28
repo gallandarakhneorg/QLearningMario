@@ -10,6 +10,18 @@ public class Entity<T> implements fr.utbm.tc.qlearningmario.mario.common.Cloneab
 	private Point2D location = Point2D.ZERO; // 1.0 = 1 meter
 	protected Hitbox currentHitbox = Hitbox.nullHitbox;
 
+	private static int numberOfEntities = 0;
+	private final int ID;
+
+	public Entity() {
+		this.ID = numberOfEntities;
+		++numberOfEntities;
+	}
+
+	public int getID() {
+		return this.ID;
+	}
+
 	public void setLocation(Point2D location) {
 		this.location = location;
 	}
