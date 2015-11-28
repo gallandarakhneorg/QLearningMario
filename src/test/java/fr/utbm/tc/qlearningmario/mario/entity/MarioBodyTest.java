@@ -8,7 +8,7 @@ import fr.utbm.tc.qlearningmario.mario.common.MarioState;
 
 @SuppressWarnings("all")
 public class MarioBodyTest {
-
+ 
 	@Test
 	public void test() {
 		MarioBody mbody = new MarioBody();

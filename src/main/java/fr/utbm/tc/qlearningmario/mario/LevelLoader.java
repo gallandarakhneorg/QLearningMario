@@ -19,12 +19,12 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 public class LevelLoader {
-	
+
 	public static List<Entity<?>> loadLevelFromImage(URL fileName) throws IOException {
 		List<Entity<?>> entities = new ArrayList<>();
-		
+
 		BufferedImage image = ImageIO.read(fileName);
-		
+
 		for (int i = 0; i < image.getWidth(); i++) {
 			for (int j = 0; j < image.getHeight(); j++) {
 				int rgba = image.getRGB(i, j);
@@ -53,7 +53,7 @@ public class LevelLoader {
 				}
 			}
 		}
-		
+
 		return entities;
 	}
 }

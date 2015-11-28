@@ -19,57 +19,57 @@ import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent.Type;
 import fr.utbm.tc.qlearningmario.mario.entity.WorldListener;
 
 public class Scheduler implements Runnable, WorldListener {
-    private World world;
-    private Map<Integer, Agent<?>> agents = new HashMap<>();
-    private boolean running = true;
-    private int updatesPerSecond = 60;
-    
-    private final Logger log = Logger.getLogger(Scheduler.class.getName());
-    
-    public Scheduler(World world) {
-        this.world = world;
-    }
+	private World world;
+	private Map<Integer, Agent<?>> agents = new HashMap<>();
+	private boolean running = true;
+	private int updatesPerSecond = 60;
 
-    @Override
+	private final Logger log = Logger.getLogger(Scheduler.class.getName());
+
+	public Scheduler(World world) {
+		this.world = world;
+	}
+
+	@Override
 	public void run() {
-    	this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.started")); //$NON-NLS-1$
-    	
-    	long start_millis;
-    	long elapsed_millis;
-    	long sleep_millis;
-    	
-    	this.running = true;
-        while (this.running) {
-        	start_millis = System.currentTimeMillis();
-        	
-            this.world.computePerceptions();
-            updateAgents();
-            this.world.update();
-            
-            elapsed_millis = System.currentTimeMillis() - start_millis;
-            
-            sleep_millis = (1000 / this.updatesPerSecond) - elapsed_millis;
-            if (sleep_millis > 0) {
-	            try {
-            		Thread.sleep(sleep_millis);
+		this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.started")); //$NON-NLS-1$
+
+		long start_millis;
+		long elapsed_millis;
+		long sleep_millis;
+
+		this.running = true;
+		while (this.running) {
+			start_millis = System.currentTimeMillis();
+
+			this.world.computePerceptions();
+			updateAgents();
+			this.world.update();
+
+			elapsed_millis = System.currentTimeMillis() - start_millis;
+
+			sleep_millis = (1000 / this.updatesPerSecond) - elapsed_millis;
+			if (sleep_millis > 0) {
+				try {
+					Thread.sleep(sleep_millis);
 				} catch (InterruptedException e) {
 					this.log.severe(e.toString());
 				}
-            }
-        }
+			}
+		}
 
-        this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.ended")); //$NON-NLS-1$
-    }
-    
-    public void stop() {
-    	this.running = false;
-    }
-    
-    private void updateAgents() {
-        for (Entry<Integer, Agent<?>> agent : this.agents.entrySet()) {
-        	agent.getValue().live();
-        }
-    }
+		this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.ended")); //$NON-NLS-1$
+	}
+
+	public void stop() {
+		this.running = false;
+	}
+
+	private void updateAgents() {
+		for (Entry<Integer, Agent<?>> agent : this.agents.entrySet()) {
+			agent.getValue().live();
+		}
+	}
 
 	@SuppressWarnings("boxing")
 	@Override

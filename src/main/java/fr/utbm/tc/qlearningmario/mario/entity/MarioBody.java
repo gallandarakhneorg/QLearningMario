@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.utbm.tc.qlearningmario.mario.entity;
 
@@ -16,39 +16,39 @@ import javafx.geometry.Point2D;
 
 public final class MarioBody extends MobileEntity<MarioBody> implements AgentBody, Damageable, Body {
 	public static final Point2D maxVelocity;
-	
+
 	// Hitboxes
 	private static final Hitbox smallHitbox;
 	private static final Hitbox bigHitbox;
-	
+
 	private static final int defaultHealth;
 	private int maxHealth = defaultHealth;
 	private int currentHealth = 1;
 	private MarioState state = MarioState.SMALL_MARIO;
-	
+
 	private double invincibilityTimestamp = 0f;
-	
+
 	private Point2D wantedAcceleration = Point2D.ZERO;
 	private MarioAction wantedAction = null;
 
 	private List<Entity<?>> perception = new ArrayList<>();
-	
+
 	static {
 		double x = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.x")); //$NON-NLS-1$
-        double y = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.y")); //$NON-NLS-1$
-        
-        double smallHeight = Double.parseDouble(Locale.getString(MarioBody.class, "small.height")); //$NON-NLS-1$
-        double smallWidth = Double.parseDouble(Locale.getString(MarioBody.class, "small.width")); //$NON-NLS-1$
-        
-        smallHitbox = new Hitbox(smallWidth, smallHeight);
-        
-        double bigHeight = Double.parseDouble(Locale.getString(MarioBody.class, "big.height")); //$NON-NLS-1$
-        double bigWidth = Double.parseDouble(Locale.getString(MarioBody.class, "big.width")); //$NON-NLS-1$
-        
-        bigHitbox = new Hitbox(bigWidth, bigHeight);
+		double y = Double.parseDouble(Locale.getString(MarioBody.class, "max.velocity.y")); //$NON-NLS-1$
 
-        maxVelocity = new Point2D(x, y);
-        defaultHealth = Integer.parseInt(Locale.getString(MarioBody.class, "default.health")); //$NON-NLS-1$
+		double smallHeight = Double.parseDouble(Locale.getString(MarioBody.class, "small.height")); //$NON-NLS-1$
+		double smallWidth = Double.parseDouble(Locale.getString(MarioBody.class, "small.width")); //$NON-NLS-1$
+
+		smallHitbox = new Hitbox(smallWidth, smallHeight);
+
+		double bigHeight = Double.parseDouble(Locale.getString(MarioBody.class, "big.height")); //$NON-NLS-1$
+		double bigWidth = Double.parseDouble(Locale.getString(MarioBody.class, "big.width")); //$NON-NLS-1$
+
+		bigHitbox = new Hitbox(bigWidth, bigHeight);
+
+		maxVelocity = new Point2D(x, y);
+		defaultHealth = Integer.parseInt(Locale.getString(MarioBody.class, "default.health")); //$NON-NLS-1$
 	}
 
 	public MarioBody() {
@@ -58,37 +58,37 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 
 	@Override
 	public void damage(int amount) {
-	    if (isInvincible())
-	        return;
+		if (isInvincible())
+			return;
 
 		if (this.currentHealth < amount) {
 			this.currentHealth = 0;
 		} else {
-		    this.currentHealth -= amount;
+			this.currentHealth -= amount;
 		}
-		
+
 		updateState();
 	}
 
 	@Override
 	public void damage(int amount, Entity<?> source) {
-	    if (isInvincible())
-            return;
+		if (isInvincible())
+			return;
 
-	    if (this.currentHealth < amount) {
-            this.currentHealth = 0;  
-        } else {
-            this.currentHealth -= amount;
-        }
-        
-        updateState();
+		if (this.currentHealth < amount) {
+			this.currentHealth = 0;
+		} else {
+			this.currentHealth -= amount;
+		}
+
+		updateState();
 	}
-	
+
 	@Override
-    public void kill() {
-        setHealth(0);
-    }
-	
+	public void kill() {
+		setHealth(0);
+	}
+
 	@Override
 	public boolean isDead() {
 		return this.currentHealth == 0;
@@ -103,7 +103,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	public void setHealth(int health) {
 		if (health >= 0 && health <= this.maxHealth) {
 			this.currentHealth = health;
-			
+
 			updateState();
 		}
 	}
@@ -117,10 +117,10 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	public void setMaxHealth(int maxHealth) {
 		if (maxHealth > 0) {
 			this.maxHealth = maxHealth;
-			
+
 			if (this.currentHealth > this.maxHealth) {
 				this.currentHealth = this.maxHealth;
-				
+
 				updateState();
 			}
 		}
@@ -144,7 +144,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	@Override
 	public boolean isInvincible() {
 		if (this.invincibilityTimestamp > System.currentTimeMillis()/1000f) {
-		    return true;
+			return true;
 		}
 
 		return false;
@@ -158,7 +158,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	@Override
 	public void setNoDamageTimestamp(double timestamp) {
 		if (timestamp > System.currentTimeMillis()/1000f) {
-		    this.invincibilityTimestamp = timestamp;
+			this.invincibilityTimestamp = timestamp;
 		}
 	}
 
@@ -166,16 +166,16 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	public List<Entity<?>> getPerception() {
 		return this.perception;
 	}
-	
-	@Override
-    public void setPerception(List<Entity<?>> perception) {
-	    this.perception = perception;
-    }
 
-    @Override
-    public double getPerceptionDistance() {
-        return 20f;
-    }
+	@Override
+	public void setPerception(List<Entity<?>> perception) {
+		this.perception = perception;
+	}
+
+	@Override
+	public double getPerceptionDistance() {
+		return 20f;
+	}
 
 	@Override
 	public void askAcceleration(Point2D vector) {
@@ -184,28 +184,28 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 
 	@Override
 	public void askAction(int a) {
-	    if (a > 0 && a < MarioAction.values().length)
-	        this.wantedAction = MarioAction.values()[a];
+		if (a > 0 && a < MarioAction.values().length)
+			this.wantedAction = MarioAction.values()[a];
 
 	}
-	
+
 	@Override
-    public Point2D getWantedAcceleration() {
-        return this.wantedAcceleration;
-    }
-    
-    @Override
-    public int getWantedAction() {
-        return this.wantedAction.ordinal();
-    }
-	
+	public Point2D getWantedAcceleration() {
+		return this.wantedAcceleration;
+	}
+
+	@Override
+	public int getWantedAction() {
+		return this.wantedAction.ordinal();
+	}
+
 	public MarioState getState() {
 		return this.state;
 	}
 
 	private void updateState() {
 		this.state = MarioState.fromHealth(this.currentHealth);
-		
+
 		if (this.currentHealth == 1) {
 			this.currentHitbox = MarioBody.smallHitbox;
 		} else {

@@ -9,9 +9,9 @@ public class QState extends Counter<QState> implements QBase {
 		return getID();
 	}
 
-    @Override
+	@Override
 	public QState clone() {
-    	QState o = null;
+		QState o = null;
 		try {
 			o = ((QState) super.clone());
 		} catch(CloneNotSupportedException cnse) {

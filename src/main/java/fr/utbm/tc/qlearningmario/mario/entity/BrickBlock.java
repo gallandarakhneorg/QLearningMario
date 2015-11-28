@@ -8,7 +8,7 @@ public final class BrickBlock extends Block<BrickBlock> implements Damageable {
 	public BrickBlock() {
 		super(BlockType.BRICK_BLOCK);
 	}
-	
+
 	@Override
 	public void damage(int amount) {
 		this.kill();
@@ -23,12 +23,12 @@ public final class BrickBlock extends Block<BrickBlock> implements Damageable {
 	public void kill() {
 		this.isDestroyed = true;
 	}
-	
+
 	@Override
 	public boolean isDead() {
 		return this.isDestroyed;
 	}
-	
+
 	public boolean isDestroyed() {
 		return this.isDestroyed;
 	}

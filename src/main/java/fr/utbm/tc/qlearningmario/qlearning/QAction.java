@@ -9,9 +9,9 @@ public class QAction extends Counter<QAction> implements QBase {
 		return getID();
 	}
 
-    @Override
+	@Override
 	public QAction clone() {
-    	QAction o = null;
+		QAction o = null;
 		try {
 			o = ((QAction) super.clone());
 		} catch(CloneNotSupportedException cnse) {

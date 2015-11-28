@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class MarioGUI extends AnimationTimer implements WorldListener {
 	private final GraphicsContext gc;
 	private final List<Entity<?>> entities = new ArrayList<>();
-	
+
 	private Point2D cameraPos = Point2D.ZERO;
 
 	public MarioGUI(GraphicsContext gc) {
@@ -27,7 +27,7 @@ public class MarioGUI extends AnimationTimer implements WorldListener {
 	public void handle(long now) {
 		this.gc.setFill(Color.WHITE);
 		this.gc.fillRect(0, 0, 256, 240);
-		
+
 		this.gc.setFill(Color.BLACK);
 		synchronized (this.entities) {
 			for (Entity<?> entity : this.entities) {

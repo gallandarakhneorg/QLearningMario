@@ -9,23 +9,23 @@ public class WorldEvent extends EventObject {
 		ENTITY_ADDED,
 		ENTITY_REMOVED
 	}
-	
+
 	private static final long serialVersionUID = 8762395640426505158L;
-	
+
 	private final Type eventType;
-	
+
 	private Entity<?> entity;
-	
+
 	public WorldEvent(World source, Type eventType) {
 		super(source);
 		this.eventType = eventType;
 	}
-	
+
 	public WorldEvent(World source, Entity<?> entity, Type eventType) {
 		this(source, eventType);
 		this.entity = entity;
 	}
-	
+
 	@Override
 	public World getSource() {
 		return (World) super.getSource();
@@ -34,7 +34,7 @@ public class WorldEvent extends EventObject {
 	public Entity<?> getEntity() {
 		return this.entity;
 	}
-	
+
 	public Type getType() {
 		return this.eventType;
 	}

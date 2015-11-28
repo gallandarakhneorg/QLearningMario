@@ -5,17 +5,17 @@ import fr.utbm.tc.qlearningmario.mario.common.BlockType;
 public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
 	private Entity<?> surprise;
 	private boolean empty;
-	
+
 	public PrizeBlock(Entity<?> surprise) {
 		super(BlockType.PRIZE_BLOCK);
 		assert(surprise != null);
 		this.surprise = surprise;
 	}
-	
+
 	public Entity<?> getSurprise() {
 		return this.surprise;
 	}
-	
+
 	@Override
 	public void damage(int amount) {
 		this.kill();
@@ -30,12 +30,12 @@ public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
 	public void kill() {
 		this.empty = true;
 	}
-	
+
 	@Override
 	public boolean isDead() {
 		return this.empty;
 	}
-	
+
 	public boolean isEmpty() {
 		return this.empty;
 	}
@@ -84,7 +84,7 @@ public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
 	public void setNoDamageTimestamp(double timestamp) {
 		// A block doesn't have any noDamageTimestamp.
 	}
-	
+
 	@Override
 	public PrizeBlock clone() {
 		PrizeBlock clone = super.clone();

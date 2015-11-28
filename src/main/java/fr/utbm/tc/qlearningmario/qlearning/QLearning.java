@@ -1,11 +1,11 @@
 package fr.utbm.tc.qlearningmario.qlearning;
 
-import java.util.Random;
-import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.TreeMap;
 
 public class QLearning<Problem extends QProblem> {
 	private final Random randomGenerator = new Random();
@@ -15,7 +15,7 @@ public class QLearning<Problem extends QProblem> {
 	@SuppressWarnings("boxing")
 	public QLearning(Problem problem) {
 		this.problem = problem;
-		
+
 		for (QState state : problem.getStates()) {
 			Map<QAction, Float> m = new TreeMap<>(new QActionNumberComparator());
 			this.qValues.put(state, m);
@@ -25,40 +25,40 @@ public class QLearning<Problem extends QProblem> {
 			}
 		}
 	}
-	
+
 	public void learn(int numberOfIterations) {
 		QState currentState;
 		QAction action;
 		QFeedback result;
-				
+
 		currentState = this.problem.getCurrentState();
-		
+
 		for(int i=0; i < numberOfIterations; ++i) {
 			if (this.randomGenerator.nextFloat() < this.problem.getNu()) {
 				currentState = this.problem.getRandomState();
 			}
-			
+
 			if (this.randomGenerator.nextFloat() < this.problem.getRho()) {
 				action = this.problem.getRandomAction(currentState);
 			}
 			else {
 				action = getBestAction(currentState);
 			}
-			
+
 			result = getFeedback(currentState, action);
-			
+
 			currentState = result.getNewState();
 		}
 	}
 
 	private QFeedback getFeedback(QState state, QAction action) {
 		QFeedback result = this.problem.takeAction(state, action);
-		
+
 		QAction bestNextAction = getBestAction(result.getNewState());
 		float bestNextActionValue = getQValue(result.getNewState(), bestNextAction);
-		
+
 		float qValue = (1f - this.problem.getAlpha()) * getQValue(state, action) + this.problem.getAlpha() * (result.getScore() + this.problem.getGamma() * bestNextActionValue);
-		
+
 		setQValue(state, action, qValue);
 		return result;
 	}
@@ -91,7 +91,7 @@ public class QLearning<Problem extends QProblem> {
 
 		return qValue.floatValue();
 	}
-	
+
 	@SuppressWarnings("boxing")
 	private void setQValue(QState state, QAction action, float qValue) {
 		this.qValues.get(state).put(action, qValue);
