@@ -16,7 +16,7 @@ public class GoombaAgent extends Agent<Goomba> {
 		super.live();
 
         if (getBody().getVelocity().getX() == 0.f) {
-        	if (getBody().getOrientation() == Orientation.Left) {
+        	if (getBody().getOrientation() == Orientation.LEFT) {
         		getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));
         	} else {
         		getBody().askAcceleration(new Point2D(-getBody().getMaxAcceleration().getX(), 0));

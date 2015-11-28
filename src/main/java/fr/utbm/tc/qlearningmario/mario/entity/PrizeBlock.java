@@ -7,7 +7,7 @@ public class PrizeBlock extends Block<PrizeBlock> implements Damageable {
 	private boolean empty;
 	
 	public PrizeBlock(Entity<?> surprise) {
-		super(BlockType.PrizeBlock);
+		super(BlockType.PRIZE_BLOCK);
 		assert(surprise != null);
 		this.surprise = surprise;
 	}

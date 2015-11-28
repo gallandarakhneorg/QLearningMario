@@ -6,7 +6,7 @@ public final class BrickBlock extends Block<BrickBlock> implements Damageable {
 	private boolean isDestroyed = true;
 
 	public BrickBlock() {
-		super(BlockType.BrickBlock);
+		super(BlockType.BRICK_BLOCK);
 	}
 	
 	@Override

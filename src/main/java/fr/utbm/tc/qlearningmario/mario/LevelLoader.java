@@ -35,7 +35,7 @@ public class LevelLoader {
 						((rgba >> 24) & 0xFF) / 255.);
 
 				if (color.equals(Color.BLACK)) {
-					Block<?> block = new Block<>(BlockType.GroundRock);
+					Block<?> block = new Block<>(BlockType.GROUND_ROCK);
 					block.setLocation(new Point2D(i, j));
 					entities.add(block);
 				} else if (color.equals(Color.RED)) {

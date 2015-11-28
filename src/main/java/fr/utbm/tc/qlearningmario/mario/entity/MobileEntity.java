@@ -10,7 +10,7 @@ public class MobileEntity<T> extends Entity<T> {
 	
 	private boolean isOnGround = true;
 	
-	private Orientation orientation = Orientation.Right;
+	private Orientation orientation = Orientation.LEFT;
 	
 	public void setVelocity(Point2D velocity) {
 		assert (velocity != null) : "You must give a non-null velocity object"; //$NON-NLS-1$
@@ -25,9 +25,9 @@ public class MobileEntity<T> extends Entity<T> {
 		
 		// Update orientation.
 		if (velocityX < 0) {
-			this.orientation = Orientation.Left;
+			this.orientation = Orientation.LEFT;
 		} else if (velocityX > 0) {
-			this.orientation = Orientation.Right;
+			this.orientation = Orientation.RIGHT;
 		}
 		
 		this.velocity = new Point2D(velocityX, velocityY);

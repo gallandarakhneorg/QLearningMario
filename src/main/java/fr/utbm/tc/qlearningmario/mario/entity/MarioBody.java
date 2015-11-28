@@ -24,7 +24,7 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 	private static final int defaultHealth;
 	private int maxHealth = defaultHealth;
 	private int currentHealth = 1;
-	private MarioState state = MarioState.SmallMario;
+	private MarioState state = MarioState.SMALL_MARIO;
 	
 	private double invincibilityTimestamp = 0f;
 	
