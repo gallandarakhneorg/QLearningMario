@@ -8,12 +8,13 @@ import java.util.List;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
+import fr.utbm.tc.qlearningmario.mario.agent.Body;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import fr.utbm.tc.qlearningmario.mario.common.MarioAction;
 import fr.utbm.tc.qlearningmario.mario.common.MarioState;
 import javafx.geometry.Point2D;
 
-public final class MarioBody extends MobileEntity<MarioBody> implements AgentBody, Damageable {
+public final class MarioBody extends MobileEntity<MarioBody> implements AgentBody, Damageable, Body {
 	public static final Point2D maxVelocity;
 	
 	// Hitboxes

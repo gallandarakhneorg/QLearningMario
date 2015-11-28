@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
+import fr.utbm.tc.qlearningmario.mario.agent.Body;
 import fr.utbm.tc.qlearningmario.mario.common.Hitbox;
 import javafx.geometry.Point2D;
 
-public class Mushroom extends MobileEntity<Mushroom> implements AgentBody, Collectable {
+public class Mushroom extends MobileEntity<Mushroom> implements AgentBody, Collectable, Body {
 	static final Point2D maxVelocity;
 	
 	static {

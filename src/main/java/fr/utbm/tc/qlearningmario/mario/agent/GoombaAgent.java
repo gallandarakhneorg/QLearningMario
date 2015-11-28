@@ -12,7 +12,9 @@ public class GoombaAgent extends Agent<Goomba> {
 	}
 
 	@Override
-    public void live() {       
+    public void live() {
+		super.live();
+
         if (getBody().getVelocity().getX() == 0.f) {
         	if (getBody().getOrientation() == Orientation.Left) {
         		getBody().askAcceleration(new Point2D(getBody().getMaxAcceleration().getX(), 0));

@@ -94,8 +94,6 @@ public class World {
 
         	movementX = speedX / this.updatesPerSecond;
         	movementY = speedY / this.updatesPerSecond;
-        	
-        	agentBody.askAcceleration(Point2D.ZERO);
 
         } else {
         	accelerationX = 0;

@@ -1,8 +1,8 @@
 package fr.utbm.tc.qlearningmario.mario.agent;
 
-import fr.utbm.tc.qlearningmario.mario.entity.AgentBody;
+import javafx.geometry.Point2D;
 
-public abstract class Agent<B extends AgentBody> {
+public abstract class Agent<B extends Body> {
     private final B body;
 
     public Agent(B body) {
@@ -10,7 +10,9 @@ public abstract class Agent<B extends AgentBody> {
         this.body = body;
     }
     
-    public abstract void live();
+    public void live() {
+    	this.body.askAcceleration(Point2D.ZERO);
+    }
     
     protected final B getBody() {
         return this.body;

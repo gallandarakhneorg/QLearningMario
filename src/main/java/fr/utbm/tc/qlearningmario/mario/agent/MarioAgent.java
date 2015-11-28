@@ -10,6 +10,8 @@ public class MarioAgent extends Agent<MarioBody> {
 
 	@Override
 	public void live() {
+		super.live();
+
 		getBody().askAcceleration(new Point2D(3, -20));
 	}
 }

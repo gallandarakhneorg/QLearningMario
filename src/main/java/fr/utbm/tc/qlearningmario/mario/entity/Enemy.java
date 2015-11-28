@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
+import fr.utbm.tc.qlearningmario.mario.agent.Body;
 import javafx.geometry.Point2D;
 
-public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody {
+public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody, Body {
 	private int defaultMaxHealth = Integer.parseInt(Locale.getString(Enemy.class, "default.max.health")); //$NON-NLS-1$
     private int maxHealth = this.defaultMaxHealth;
     private int currentHealth = this.maxHealth;
