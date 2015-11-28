@@ -22,16 +22,19 @@ package fr.utbm.tc.qlearningmario.qlearning;
 /**
  * @param <T> Used to Count object
  */
-class Counter<T extends Object> {
-	private static int numberOfT = 0;
+abstract class Counter {
 	private final int id;
 
 	public Counter() {
-		this.id = numberOfT;
-		++numberOfT;
+		this.id = getNumberOfObject();
+		incrementNumberOfObject();
 	}
 
 	protected int getID() {
 		return this.id;
 	}
+
+	protected abstract int getNumberOfObject();
+
+	protected abstract void incrementNumberOfObject();
 }

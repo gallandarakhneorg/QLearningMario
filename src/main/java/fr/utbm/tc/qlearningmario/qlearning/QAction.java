@@ -19,8 +19,8 @@
  *******************************************************************************/
 package fr.utbm.tc.qlearningmario.qlearning;
 
-public class QAction extends Counter<QAction> implements QBase {
-
+public class QAction extends Counter implements QBase {
+	private static int numberOfQAction = 0;
 	private static final long serialVersionUID = 3721996842862787542L;
 
 	@Override
@@ -38,5 +38,15 @@ public class QAction extends Counter<QAction> implements QBase {
 		}
 
 		return o;
+	}
+
+	@Override
+	protected int getNumberOfObject() {
+		return numberOfQAction;
+	}
+
+	@Override
+	protected void incrementNumberOfObject() {
+		++numberOfQAction;
 	}
 }

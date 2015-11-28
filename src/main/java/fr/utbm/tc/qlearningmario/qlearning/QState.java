@@ -19,7 +19,8 @@
  *******************************************************************************/
 package fr.utbm.tc.qlearningmario.qlearning;
 
-public class QState extends Counter<QState> implements QBase {
+public class QState extends Counter implements QBase {
+	private static int numberOfQState;
 
 	private static final long serialVersionUID = -1506512375211501871L;
 
@@ -38,5 +39,15 @@ public class QState extends Counter<QState> implements QBase {
 		}
 
 		return o;
+	}
+
+	@Override
+	protected int getNumberOfObject() {
+		return numberOfQState;
+	}
+
+	@Override
+	protected void incrementNumberOfObject() {
+		++numberOfQState;
 	}
 }
