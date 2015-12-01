@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario;
 
 import java.awt.image.BufferedImage;
@@ -37,8 +38,20 @@ import fr.utbm.tc.qlearningmario.mario.entity.PrizeBlock;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
+/** Contains static methods to load levels.
+ *
+ * @author Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
+ */
 public class LevelLoader {
 
+	/** Load the level from the given image.
+	 *
+	 * @param fileName : the image file's url.
+	 * @return a list of entities.
+	 * @throws IOException
+	 */
 	public static List<Entity<?>> loadLevelFromImage(URL fileName) throws IOException {
 		List<Entity<?>> entities = new ArrayList<>();
 
