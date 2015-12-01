@@ -17,22 +17,42 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario.agent;
 
 import javafx.geometry.Point2D;
 
+/** Agent abstract class.
+ *
+ * @param <B> : is the type of body.
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
+ */
 public abstract class Agent<B extends Body> {
 	private final B body;
 
+	/** Initialize the agent with the given body.
+	 *
+	 * @param body : the agent's body.
+	 */
 	public Agent(B body) {
 		assert (body != null);
 		this.body = body;
 	}
 
+	/** Makes the agent live.
+	 * By default this function reset the wanted acceleration to zero.
+	 * Should be overridden in superclasses.
+	 */
 	public void live() {
 		this.body.askAcceleration(Point2D.ZERO);
 	}
 
+	/** Return the agent's body.
+	 *
+	 * @return the body.
+	 */
 	protected final B getBody() {
 		return this.body;
 	}
