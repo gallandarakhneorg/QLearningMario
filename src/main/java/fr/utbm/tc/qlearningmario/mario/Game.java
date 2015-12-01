@@ -42,7 +42,8 @@ import javafx.stage.WindowEvent;
 /** Main class of the application.
  *
  * @author Benoît CORTIER
- *
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
  */
 public class Game extends Application {
 	private static final int SCENE_HEIGHT;
@@ -83,7 +84,7 @@ public class Game extends Application {
 			world.addWorldListener(scheduler);
 
 			// Loading a level.
-			URL resource = Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/levels/levelA.png"); //$NON-NLS-1$
+			URL resource = Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/levels/levelB.png"); //$NON-NLS-1$
 			assert (resource != null);
 			for (Entity<?> entity : LevelLoader.loadLevelFromImage(resource)) {
 				world.addEntity(entity);

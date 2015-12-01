@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario;
 
 import java.util.HashMap;
@@ -37,14 +38,29 @@ import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent;
 import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent.Type;
 import fr.utbm.tc.qlearningmario.mario.entity.WorldListener;
 
+/** Runnable class which handle world and agents.
+ *
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
+ */
 public class Scheduler implements Runnable, WorldListener {
+	private static final int ONE_SECOND_IN_MILLIS = 1000;
+
 	private World world;
+
 	private Map<Integer, Agent<?>> agents = new HashMap<>();
+
 	private boolean running = true;
-	private int updatesPerSecond = 60;
+
+	private int updatesPerSecond = Integer.parseInt(Locale.getString(Scheduler.class, "updates.per.second")); //$NON-NLS-1$
 
 	private final Logger log = Logger.getLogger(Scheduler.class.getName());
 
+	/** Initialize a new Scheduler with the given world.
+	 *
+	 * @param world : the world.
+	 */
 	public Scheduler(World world) {
 		this.world = world;
 	}
@@ -67,7 +83,7 @@ public class Scheduler implements Runnable, WorldListener {
 
 			elapsed_millis = System.currentTimeMillis() - start_millis;
 
-			sleep_millis = (1000 / this.updatesPerSecond) - elapsed_millis;
+			sleep_millis = (ONE_SECOND_IN_MILLIS / this.updatesPerSecond) - elapsed_millis;
 			if (sleep_millis > 0) {
 				try {
 					Thread.sleep(sleep_millis);
@@ -80,10 +96,14 @@ public class Scheduler implements Runnable, WorldListener {
 		this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.ended")); //$NON-NLS-1$
 	}
 
+	/** Stop the Scheduler.
+	 */
 	public void stop() {
 		this.running = false;
 	}
 
+	/** Update all agents.
+	 */
 	private void updateAgents() {
 		for (Entry<Integer, Agent<?>> agent : this.agents.entrySet()) {
 			agent.getValue().live();
@@ -92,9 +112,9 @@ public class Scheduler implements Runnable, WorldListener {
 
 	@SuppressWarnings("boxing")
 	@Override
-	public void update(WorldEvent e) {
-		if (e.getType() == Type.ENTITY_ADDED) {
-			Entity<?> entity = e.getEntity();
+	public void update(WorldEvent event) {
+		if (event.getType() == Type.ENTITY_ADDED) {
+			Entity<?> entity = event.getEntity();
 			if (entity instanceof Goomba) {
 				this.log.info(Locale.getString(Scheduler.this.getClass(), "added.goomba")); //$NON-NLS-1$
 				GoombaAgent agent = new GoombaAgent((Goomba) entity);
@@ -104,8 +124,8 @@ public class Scheduler implements Runnable, WorldListener {
 				MarioAgent agent = new MarioAgent((MarioBody) entity);
 				this.agents.put(entity.getID(), agent);
 			}
-		} else if (e.getType() == Type.ENTITY_REMOVED) {
-			this.agents.remove(e.getEntity().getID());
+		} else if (event.getType() == Type.ENTITY_REMOVED) {
+			this.agents.remove(event.getEntity().getID());
 		}
 	}
 }
