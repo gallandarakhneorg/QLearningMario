@@ -75,7 +75,7 @@ public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody, 
 
 	@Override
 	public void damage(int amount) {
-		if (!isInvincible())
+		if (isInvincible())
 			return;
 
 		if (this.currentHealth < amount) {
@@ -87,7 +87,7 @@ public class Enemy<T> extends MobileEntity<T> implements Damageable, AgentBody, 
 
 	@Override
 	public void damage(int amount, Entity<?> source) {
-		if (!isInvincible())
+		if (isInvincible())
 			return;
 
 		if (this.currentHealth < amount) {

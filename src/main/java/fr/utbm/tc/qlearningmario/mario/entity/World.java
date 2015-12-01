@@ -108,6 +108,24 @@ public class World {
 			speedX = mobileEntity.getVelocity().getX() + accelerationX;
 			speedY = mobileEntity.getVelocity().getY() + accelerationY;
 
+			// Handle damages between Mario and the enemies.
+			if (mobileEntity instanceof MarioBody) {
+				for (Entity<?> entity : getNearbyEntities(mobileEntity,
+						Math.max(mobileEntity.getHitbox().getHeight(),
+								mobileEntity.getHitbox().getWidth()))) {
+					if (entity instanceof Enemy) {
+						if (mobileEntity.collide(entity)) {
+							if (mobileEntity.getVelocity().getY() > 0) {
+								((Enemy<?>) entity).damage(1, mobileEntity);
+								speedY = -12.;
+							} else {
+								((MarioBody) mobileEntity).damage(1, entity);
+							}
+						}
+					}
+				}
+			}
+
 			mobileEntity.setVelocity(new Point2D(speedX, speedY));
 
 			movementX = speedX / this.updatesPerSecond;
