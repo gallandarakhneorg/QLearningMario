@@ -33,8 +33,8 @@ import javafx.scene.shape.Polygon;
 public class World {
 	private static final int UPDATES_PER_SECOND;
 	private List<Entity<?>> entities = new ArrayList<>();
-	private int updatesPerSecond = 60;
-	private double gravity = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
+
+	private static final double GRAVITY = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 
 	private final List<WorldListener> listeners = new ArrayList<>();
 
@@ -91,19 +91,19 @@ public class World {
 	}
 
 	private void updateMobileEntity(MobileEntity<?> mobileEntity) {
-		double accelerationX, accelerationY, speedX, speedY, movementX, movementY;
+		double accelerationX, accelerationY = 0, speedX, speedY, movementX, movementY;
 
 		if (mobileEntity instanceof AgentBody) {
 			AgentBody agentBody = (AgentBody)mobileEntity;
 
 			if (mobileEntity.isOnGround()) {
 				accelerationX = agentBody.getWantedAcceleration().getX();
-				accelerationY = agentBody.getWantedAcceleration().getY() + this.gravity;
+				accelerationY = agentBody.getWantedAcceleration().getY();
 			} else {
 				accelerationX = agentBody.getWantedAcceleration().getX() / 100;
-				accelerationY = this.gravity;
 			}
 
+			accelerationY += GRAVITY;
 
 			if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
 				accelerationX = accelerationX / Math.abs(accelerationX) * mobileEntity.getMaxAcceleration().getX();
@@ -134,20 +134,16 @@ public class World {
 
 			mobileEntity.setVelocity(new Point2D(speedX, speedY));
 
-			movementX = speedX / this.updatesPerSecond;
-			movementY = speedY / this.updatesPerSecond;
 			movementX = speedX / UPDATES_PER_SECOND;
 			movementY = speedY / UPDATES_PER_SECOND;
 
 		} else {
 			accelerationX = 0;
-			accelerationY = this.gravity;
+			accelerationY = GRAVITY;
 
 			speedX = mobileEntity.getVelocity().getX() + accelerationX;
 			speedY = mobileEntity.getVelocity().getY() + accelerationY;
 
-			movementX = speedX / this.updatesPerSecond;
-			movementY = speedY / this.updatesPerSecond;
 			movementX = speedX / UPDATES_PER_SECOND;
 			movementY = speedY / UPDATES_PER_SECOND;
 		}
@@ -214,8 +210,6 @@ public class World {
 	private List<Entity<?>> getEntitiesOnTheWay(MobileEntity<?> entity) {
 		double positionX = entity.getLocation().getX();
 		double positionY = entity.getLocation().getY();
-		double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
-		double newPositionY = positionY + entity.getVelocity().getY() / this.updatesPerSecond;
 		double newPositionX = positionX + entity.getVelocity().getX() / UPDATES_PER_SECOND;
 		double newPositionY = positionY + entity.getVelocity().getY() / UPDATES_PER_SECOND;
 
