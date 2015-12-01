@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario.agent;
 
 import fr.utbm.tc.qlearningmario.mario.common.Orientation;
@@ -25,11 +26,24 @@ import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.Goomba;
 import javafx.geometry.Point2D;
 
+/** Agent for Goomba
+ *
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
+ */
 public class GoombaAgent extends Agent<Goomba> {
+	/** Initialize the agent with a body.
+	 *
+	 * @param body : the body controlled by the agent.
+	 */
 	public GoombaAgent(Goomba body) {
 		super(body);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void live() {
 		super.live();
