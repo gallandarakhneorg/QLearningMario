@@ -31,11 +31,16 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class World {
+	private static final int UPDATES_PER_SECOND;
 	private List<Entity<?>> entities = new ArrayList<>();
 	private int updatesPerSecond = 60;
 	private double gravity = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 
 	private final List<WorldListener> listeners = new ArrayList<>();
+
+	static {
+		UPDATES_PER_SECOND = Integer.parseInt(Locale.getString(World.class, "updates.per.second")); //$NON-NLS-1$
+	}
 
 	public void computePerceptions() {
 		for (Entity<?> entity : this.entities) {
@@ -131,6 +136,8 @@ public class World {
 
 			movementX = speedX / this.updatesPerSecond;
 			movementY = speedY / this.updatesPerSecond;
+			movementX = speedX / UPDATES_PER_SECOND;
+			movementY = speedY / UPDATES_PER_SECOND;
 
 		} else {
 			accelerationX = 0;
@@ -141,6 +148,8 @@ public class World {
 
 			movementX = speedX / this.updatesPerSecond;
 			movementY = speedY / this.updatesPerSecond;
+			movementX = speedX / UPDATES_PER_SECOND;
+			movementY = speedY / UPDATES_PER_SECOND;
 		}
 
 		mobileEntity.setOnGround(false);
@@ -207,6 +216,8 @@ public class World {
 		double positionY = entity.getLocation().getY();
 		double newPositionX = positionX + entity.getVelocity().getX() / this.updatesPerSecond;
 		double newPositionY = positionY + entity.getVelocity().getY() / this.updatesPerSecond;
+		double newPositionX = positionX + entity.getVelocity().getX() / UPDATES_PER_SECOND;
+		double newPositionY = positionY + entity.getVelocity().getY() / UPDATES_PER_SECOND;
 
 
 		Polygon polygon = new Polygon();
