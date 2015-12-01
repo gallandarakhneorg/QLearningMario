@@ -24,8 +24,8 @@ import java.io.Serializable;
 
 /** Represent the result of an action
  *
- * @author Jérôme BOULMIER
- * @mavengroupid fr.utbm.tc.tz20
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
  * @mavenartifactid QLearningMario
  */
 public class QFeedback implements Cloneable, Serializable {
