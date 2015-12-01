@@ -17,6 +17,7 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario.agent;
 
 import java.util.List;
@@ -24,10 +25,28 @@ import java.util.List;
 import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import javafx.geometry.Point2D;
 
+/**
+ *
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
+ */
 public interface Body {
+	/** Return the perception of the body.
+	 *
+	 * @return the perception.
+	 */
 	List<Entity<?>> getPerception();
 
+	/** Set the wanted acceleration for this loop.
+	 *
+	 * @param vector : a 2D vector which represent the acceleration.
+	 */
 	void askAcceleration(Point2D vector);
 
+	/** Set the wanted action.
+	 *
+	 * @param action : an action that can be executed by the entity.
+	 */
 	void askAction(int action);
 }
