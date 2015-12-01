@@ -26,13 +26,18 @@ import java.util.List;
 
 import org.arakhne.afc.vmutil.locale.Locale;
 
+import fr.utbm.tc.qlearningmario.mario.Game;
 import fr.utbm.tc.qlearningmario.mario.entity.WorldEvent.Type;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Polygon;
 
 public class World {
 	private static final int UPDATES_PER_SECOND;
+
 	private List<Entity<?>> entities = new ArrayList<>();
+
+	private MarioBody mario;
+
 
 	private static final double GRAVITY = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 
@@ -87,10 +92,20 @@ public class World {
 
 	public void addEntity(Entity<?> entity) {
 		this.entities.add(entity);
+
+		if (entity instanceof MarioBody) {
+			this.mario = (MarioBody) entity;
+		}
+
 		fireEntityAdded(entity);
 	}
 
 	private void updateMobileEntity(MobileEntity<?> mobileEntity) {
+		if (this.mario != null) {
+			if (this.mario.distance(mobileEntity) > Game.SCENE_WIDTH/Game.SCALE)
+				return;
+		}
+
 		double accelerationX, accelerationY = 0, speedX, speedY, movementX, movementY;
 
 		if (mobileEntity instanceof AgentBody) {
@@ -104,6 +119,7 @@ public class World {
 			}
 
 			accelerationY += GRAVITY;
+
 
 			if (Math.abs(accelerationX) > mobileEntity.getMaxAcceleration().getX())
 				accelerationX = accelerationX / Math.abs(accelerationX) * mobileEntity.getMaxAcceleration().getX();

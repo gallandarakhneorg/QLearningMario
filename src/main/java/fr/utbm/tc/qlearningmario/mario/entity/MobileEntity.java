@@ -29,7 +29,7 @@ public class MobileEntity<T> extends Entity<T> {
 
 	private boolean isOnGround = true;
 
-	private Orientation orientation = Orientation.LEFT;
+	private Orientation orientation = Orientation.RIGHT;
 
 	public void setVelocity(Point2D velocity) {
 		assert (velocity != null) : "You must give a non-null velocity object"; //$NON-NLS-1$
