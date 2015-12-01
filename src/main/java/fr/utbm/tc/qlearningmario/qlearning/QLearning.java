@@ -30,8 +30,8 @@ import java.util.TreeMap;
 /** Q-Learning core algorithm.
  *
  * @param <Problem> is the type of the problem.
- * @author Jérôme BOULMIER
- * @mavengroupid fr.utbm.tc.tz20
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
  * @mavenartifactid QLearningMario
  */
 public class QLearning<Problem extends QProblem> {

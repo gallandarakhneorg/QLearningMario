@@ -25,8 +25,9 @@ import java.util.List;
 
 /** This is the abstraction of a Q-Learning problem.
  *
- * @author jerome
- *
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
+ * @mavenartifactid QLearningMario
  */
 public interface QProblem extends Cloneable, Serializable {
 

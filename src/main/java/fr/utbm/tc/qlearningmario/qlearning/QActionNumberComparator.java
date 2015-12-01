@@ -24,8 +24,8 @@ import java.util.Comparator;
 
 /** Comparator of QAction.
  *
- * @author Jérôme BOULMIER
- * @mavengroupid fr.utbm.tc.tz20
+ * @author Jérôme BOULMIER, Benoît CORTIER
+ * @mavengroupid fr.utbm.tc
  * @mavenartifactid QLearningMario
  */
 public class QActionNumberComparator implements Comparator<QAction> {
