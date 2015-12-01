@@ -17,11 +17,13 @@
  *    misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
+
 package fr.utbm.tc.qlearningmario.mario.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.utbm.tc.qlearningmario.mario.Game;
 import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.MarioBody;
 import fr.utbm.tc.qlearningmario.mario.entity.World;
@@ -45,33 +47,32 @@ public class MarioGUI extends AnimationTimer implements WorldListener {
 	@Override
 	public void handle(long now) {
 		this.gc.setFill(Color.WHITE);
-		this.gc.fillRect(0, 0, 256, 240);
+		this.gc.fillRect(0, 0, Game.SCENE_WIDTH, Game.SCENE_HEIGHT);
 
 		this.gc.setFill(Color.BLACK);
 		synchronized (this.entities) {
 			for (Entity<?> entity : this.entities) {
 				this.gc.fillRect(
-						entity.getLocation().getX() * 16 - this.cameraPos.getX(),
-						entity.getLocation().getY() * 16 - this.cameraPos.getY(),
-						entity.getHitbox().getWidth() * 16,
-						entity.getHitbox().getHeight() * 16
-						);
+						entity.getLocation().getX() * Game.SCALE - this.cameraPos.getX(),
+						entity.getLocation().getY() * Game.SCALE - this.cameraPos.getY(),
+						entity.getHitbox().getWidth() * Game.SCALE,
+						entity.getHitbox().getHeight() * Game.SCALE);
 			}
 		}
 	}
 
 	@Override
 	public void update(WorldEvent e) {
-		if (e.getType() == WorldEvent.Type.WORLD_UPDATE)
-		{
+		if (e.getType() == WorldEvent.Type.WORLD_UPDATE) {
 			World w = e.getSource();
 			synchronized (this.entities) {
 				this.entities.clear();
-				for (Entity<?> entity : w.getEntities())
-				{
+				for (Entity<?> entity : w.getEntities()) {
 					this.entities.add((Entity<?>) entity.clone());
-					if (entity instanceof MarioBody)
-						this.cameraPos = new Point2D((int)(entity.getLocation().getX() * 16 - 128 + 0.5), 0);
+					if (entity instanceof MarioBody) {
+						this.cameraPos = new Point2D((int)(entity.getLocation().getX() * Game.SCALE - Game.SCENE_WIDTH/2 + 0.5), 0);
+					}
+
 				}
 			}
 		}

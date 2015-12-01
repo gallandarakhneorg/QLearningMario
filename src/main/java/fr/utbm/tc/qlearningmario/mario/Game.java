@@ -45,15 +45,18 @@ import javafx.stage.WindowEvent;
  *
  */
 public class Game extends Application {
-	private static final int SCENE_HEIGHT;
+	public static final int SCENE_HEIGHT;
 
-	private static final int SCENE_WIDTH;
+	public static final int SCENE_WIDTH;
 
-	private static final int NUMBER_OF_THREAD = 5;
+	public static final int SCALE;
+
+	private static final int NUMBER_OF_THREAD = 2;
 
 	static {
 		SCENE_WIDTH = Integer.parseInt(Locale.getString(Game.class, "scene.width")); //$NON-NLS-1$
 		SCENE_HEIGHT = Integer.parseInt(Locale.getString(Game.class, "scene.height")); //$NON-NLS-1$
+		SCALE = Integer.parseInt(Locale.getString(Game.class, "scene.scale")); //$NON-NLS-1$
 	}
 
 	private final Logger log = Logger.getLogger(Game.class.getName());
