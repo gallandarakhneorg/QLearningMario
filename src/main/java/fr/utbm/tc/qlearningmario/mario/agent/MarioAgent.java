@@ -20,6 +20,9 @@
 
 package fr.utbm.tc.qlearningmario.mario.agent;
 
+import java.io.IOException;
+import java.net.URL;
+
 import org.arakhne.afc.vmutil.locale.Locale;
 
 import fr.utbm.tc.qlearningmario.mario.entity.MarioBody;
@@ -54,8 +57,28 @@ public class MarioAgent extends Agent<MarioBody> {
 	 */
 	public MarioAgent(MarioBody body) {
 		super(body);
-		this.problem.translateCurrentState(getBody(), getBody().getPerception());
-		this.qlearning.learn(100000);
+	}
+
+	public void saveQProblem(URL fileName) throws IOException {
+		synchronized (this.qlearning) {
+			this.qlearning.saveQValues(fileName);
+		}
+	}
+
+	public void loadQProblem(URL fileName) throws IOException, ClassNotFoundException {
+		synchronized (this.qlearning) {
+			this.qlearning.loadQValues(fileName);
+		}
+	}
+
+	/** Makes the agent learn on its own without updating world state.
+	 *
+	 * @param nbIterations
+	 */
+	public void mindLearn(int nbIterations) {
+		synchronized (this.qlearning) {
+			this.qlearning.learn(nbIterations);
+		}
 	}
 
 	/**
@@ -65,11 +88,15 @@ public class MarioAgent extends Agent<MarioBody> {
 	public void live() {
 		super.live();
 
-		this.problem.translateCurrentState(getBody(), getBody().getPerception());
-		this.qlearning.learn(NB_LEARNING_ITERATIONS);
+		MarioProblem.Action action;
 
-		QAction qAction = this.qlearning.getBestAction(this.problem.getCurrentState());
-		MarioProblem.Action action = MarioProblem.Action.fromQAction(qAction);
+		this.problem.translateCurrentState(getBody(), getBody().getPerception());
+		synchronized (this.qlearning) {
+			this.qlearning.learn(NB_LEARNING_ITERATIONS);
+
+			QAction qAction = this.qlearning.getBestAction(this.problem.getCurrentState());
+			action = MarioProblem.Action.fromQAction(qAction);
+		}
 
 		if (action == MarioProblem.Action.JUMP) {
 			getBody().askAcceleration(new Point2D(0, -getBody().getMaxAcceleration().getY()));
