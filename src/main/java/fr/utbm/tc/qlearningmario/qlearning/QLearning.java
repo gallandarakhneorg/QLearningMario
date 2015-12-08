@@ -67,22 +67,16 @@ public class QLearning<Problem extends QProblem> {
 		}
 	}
 
-	@SuppressWarnings("resource")
 	public void saveQValues(URL fileName) throws IOException {
-		FileOutputStream fos = new FileOutputStream(fileName.getPath());
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(this.qValues); // FIXME: TreeMaps cannot be serialized.
-		oos.close();
-		fos.close();
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName.getPath()))) {
+			oos.writeObject(this.qValues); // FIXME: TreeMaps cannot be serialized.
+		}
 	}
 
-	@SuppressWarnings("resource")
 	public void loadQValues(URL fileName) throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream(fileName.getPath());
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		this.qValues = (Map<QState, Map<QAction, Float>>) ois.readObject(); // FIXME: TreeMaps cannot be serialized.
-		ois.close();
-		fis.close();
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName.getPath()))) {
+			this.qValues = (Map<QState, Map<QAction, Float>>) ois.readObject(); // FIXME: TreeMaps cannot be serialized.
+		}
 	}
 
 	/** Algorithm learn with this method.
