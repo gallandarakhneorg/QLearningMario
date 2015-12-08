@@ -32,6 +32,7 @@ import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.World;
 import fr.utbm.tc.qlearningmario.mario.ui.MarioGUI;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -67,7 +68,10 @@ public class Game extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = new BorderPane();
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/MainWindow.fxml")); //$NON-NLS-1$
+
+			BorderPane root = (BorderPane) loader.load();
 
 			Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
@@ -75,7 +79,7 @@ public class Game extends Application {
 			primaryStage.setTitle(Locale.getString(getClass(), "frame.title")); //$NON-NLS-1$
 
 			Canvas canvas = new Canvas(SCENE_WIDTH, SCENE_HEIGHT);
-			root.getChildren().add(canvas);
+			root.setCenter(canvas);
 
 			GraphicsContext gc = canvas.getGraphicsContext2D();
 

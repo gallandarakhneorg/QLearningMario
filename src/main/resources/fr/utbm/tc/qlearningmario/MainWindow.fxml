@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar prefHeight="30.0" prefWidth="520.0" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Open..." />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <right>
+      <Accordion prefHeight="230.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="QLearning">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Slider layoutX="14.0" layoutY="32.0" AnchorPane.topAnchor="25.0" />
+                        <Label layoutX="14.0" layoutY="10.0" text="Alpha" AnchorPane.topAnchor="5.0" />
+                        <Label layoutX="15.0" layoutY="57.0" text="Gamma" AnchorPane.topAnchor="45.0" />
+                        <Label layoutX="15.0" layoutY="100.0" text="Rho" AnchorPane.topAnchor="85.0" />
+                        <Label layoutX="15.0" layoutY="136.0" text="Nu" AnchorPane.topAnchor="125.0" />
+                        <Slider layoutX="14.0" layoutY="78.0" AnchorPane.topAnchor="65.0" />
+                        <Slider layoutX="14.0" layoutY="115.0" AnchorPane.topAnchor="105.0" />
+                        <Slider layoutX="14.0" layoutY="153.0" AnchorPane.topAnchor="145.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="untitled 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </right>
+</BorderPane>
