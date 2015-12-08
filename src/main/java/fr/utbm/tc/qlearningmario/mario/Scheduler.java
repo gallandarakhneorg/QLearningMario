@@ -56,6 +56,8 @@ public class Scheduler implements Runnable, WorldListener {
 
 	private boolean running = true;
 
+	private boolean paused = false;
+
 	private int updatesPerSecond = Integer.parseInt(Locale.getString(Scheduler.class, "updates.per.second")); //$NON-NLS-1$
 
 	private final Logger log = Logger.getLogger(Scheduler.class.getName());
@@ -82,9 +84,11 @@ public class Scheduler implements Runnable, WorldListener {
 		while (this.running) {
 			start_millis = System.currentTimeMillis();
 
-			this.world.computePerceptions();
-			updateAgents();
-			this.world.update();
+			if (this.paused == false) {
+				this.world.computePerceptions();
+				updateAgents();
+				this.world.update();
+			}
 
 			elapsed_millis = System.currentTimeMillis() - start_millis;
 
@@ -101,10 +105,22 @@ public class Scheduler implements Runnable, WorldListener {
 		this.log.info(Locale.getString(Scheduler.this.getClass(), "scheduler.ended")); //$NON-NLS-1$
 	}
 
-	/** Stop the Scheduler.
+	/** Stop the scheduler.
 	 */
 	public void stop() {
 		this.running = false;
+	}
+
+	/** Pause the scheduler.
+	 */
+	public void pause() {
+		this.paused = true;
+	}
+
+	/** Unpause the scheduler.
+	 */
+	public void unpause() {
+		this.paused = false;
 	}
 
 	/** Update all agents.
@@ -135,6 +151,15 @@ public class Scheduler implements Runnable, WorldListener {
 			fireAgentRemoved(this.agents.get(event.getEntity().getID()));
 			this.agents.remove(event.getEntity().getID());
 		}
+	}
+
+	public MarioAgent getMarioAgent() {
+		for (Agent<?> agent : this.agents.values()) {
+			if (agent instanceof MarioAgent)
+				return (MarioAgent) agent;
+		}
+
+		return null;
 	}
 
 	public void addSchedulerListener(SchedulerListener schedulerListener) {

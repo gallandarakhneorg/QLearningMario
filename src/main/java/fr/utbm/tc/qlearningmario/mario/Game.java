@@ -30,6 +30,7 @@ import org.arakhne.afc.vmutil.locale.Locale;
 
 import fr.utbm.tc.qlearningmario.mario.entity.Entity;
 import fr.utbm.tc.qlearningmario.mario.entity.World;
+import fr.utbm.tc.qlearningmario.mario.ui.MainController;
 import fr.utbm.tc.qlearningmario.mario.ui.MarioGUI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -78,8 +79,8 @@ public class Game extends Application {
 
 			Canvas canvas = (Canvas) scene.lookup("#marioCanvas"); //$NON-NLS-1$
 
-			SCENE_WIDTH =  (int)canvas.getWidth();
-			SCENE_HEIGHT = (int)canvas.getHeight();
+			SCENE_WIDTH =  (int) canvas.getWidth();
+			SCENE_HEIGHT = (int) canvas.getHeight();
 
 			GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -104,6 +105,9 @@ public class Game extends Application {
 			// Run the scheduler.
 			executor.execute(scheduler);
 			executor.shutdown();
+
+			MainController.primaryStage = primaryStage;
+			MainController.scheduler = scheduler;
 
 			primaryStage.show();
 

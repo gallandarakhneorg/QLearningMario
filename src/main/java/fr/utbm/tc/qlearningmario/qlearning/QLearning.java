@@ -20,6 +20,12 @@
 
 package fr.utbm.tc.qlearningmario.qlearning;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +45,7 @@ import java.util.TreeMap;
 public class QLearning<Problem extends QProblem> {
 	private final Random randomGenerator = new Random();
 
-	private final Map<QState, Map<QAction, Float>> qValues = new TreeMap<>(new QStateNumberComparator());
+	private Map<QState, Map<QAction, Float>> qValues = new TreeMap<>(new QStateNumberComparator());
 
 	private final Problem problem;
 
@@ -59,6 +65,24 @@ public class QLearning<Problem extends QProblem> {
 				temp.put(action, 0f);
 			}
 		}
+	}
+
+	@SuppressWarnings("resource")
+	public void saveQValues(URL fileName) throws IOException {
+		FileOutputStream fos = new FileOutputStream(fileName.getPath());
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(this.qValues); // FIXME: TreeMaps cannot be serialized.
+		oos.close();
+		fos.close();
+	}
+
+	@SuppressWarnings("resource")
+	public void loadQValues(URL fileName) throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream(fileName.getPath());
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		this.qValues = (Map<QState, Map<QAction, Float>>) ois.readObject(); // FIXME: TreeMaps cannot be serialized.
+		ois.close();
+		fis.close();
 	}
 
 	/** Algorithm learn with this method.
