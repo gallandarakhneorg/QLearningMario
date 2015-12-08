@@ -106,6 +106,8 @@ public class MarioProblem implements QProblem {
 			this.states[i] = new QState();
 		}
 
+		this.currentState = this.states[0];
+
 		for (int i = 0; i < this.actions.length; ++i) {
 			this.actions[i] = new QAction();
 		}
