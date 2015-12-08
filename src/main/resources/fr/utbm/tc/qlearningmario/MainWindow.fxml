@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Pane prefHeight="260.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="260.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utbm.tc.qlearningmario.mario.ui.MainController">
    <children>
       <MenuBar prefHeight="30.0" prefWidth="520.0">
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Open..." />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save as..." />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOpenFile" text="Open..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveFile" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAsFile" text="Save as..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCloseAction" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
