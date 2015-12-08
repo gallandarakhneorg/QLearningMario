@@ -36,7 +36,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -49,17 +49,15 @@ import javafx.stage.WindowEvent;
  * @mavenartifactid $ArtifactId$
  */
 public class Game extends Application {
-	public static final int SCENE_HEIGHT;
+	public static int SCENE_HEIGHT;
 
-	public static final int SCENE_WIDTH;
+	public static int SCENE_WIDTH;
 
 	public static final int SCALE;
 
 	private static final int NUMBER_OF_THREAD = 2;
 
 	static {
-		SCENE_WIDTH = Integer.parseInt(Locale.getString(Game.class, "scene.width")); //$NON-NLS-1$
-		SCENE_HEIGHT = Integer.parseInt(Locale.getString(Game.class, "scene.height")); //$NON-NLS-1$
 		SCALE = Integer.parseInt(Locale.getString(Game.class, "scene.scale")); //$NON-NLS-1$
 	}
 
@@ -71,15 +69,17 @@ public class Game extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Resources.getResource(getClass(), "fr/utbm/tc/qlearningmario/MainWindow.fxml")); //$NON-NLS-1$
 
-			BorderPane root = (BorderPane) loader.load();
+			Pane root = (Pane) loader.load();
 
-			Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+			Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle(Locale.getString(getClass(), "frame.title")); //$NON-NLS-1$
 
-			Canvas canvas = new Canvas(SCENE_WIDTH, SCENE_HEIGHT);
-			root.setCenter(canvas);
+			Canvas canvas = (Canvas) scene.lookup("#marioCanvas"); //$NON-NLS-1$
+
+			SCENE_WIDTH =  (int)canvas.getWidth();
+			SCENE_HEIGHT = (int)canvas.getHeight();
 
 			GraphicsContext gc = canvas.getGraphicsContext2D();
 
