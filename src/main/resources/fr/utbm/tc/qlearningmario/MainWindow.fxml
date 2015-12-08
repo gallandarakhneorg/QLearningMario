@@ -12,9 +12,10 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
                   <MenuItem mnemonicParsing="false" text="Open..." />
                   <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save as..." />
+                  <MenuItem mnemonicParsing="false" text="Close" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
@@ -38,11 +39,15 @@
                         <Slider layoutX="14.0" layoutY="78.0" AnchorPane.topAnchor="65.0" />
                         <Slider layoutX="14.0" layoutY="115.0" AnchorPane.topAnchor="105.0" />
                         <Slider layoutX="14.0" layoutY="153.0" AnchorPane.topAnchor="145.0" />
+                        <Label fx:id="alphaValue" layoutX="154.0" layoutY="36.0" />
+                        <Label fx:id="gammaValue" layoutX="154.0" layoutY="76.0" />
+                        <Label fx:id="rhoValue" layoutX="154.0" layoutY="116.0" />
+                        <Label fx:id="nuValue" layoutX="154.0" layoutY="156.0" />
                      </children>
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane animated="false" text="untitled 2">
+            <TitledPane animated="false" text="Game Control">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
