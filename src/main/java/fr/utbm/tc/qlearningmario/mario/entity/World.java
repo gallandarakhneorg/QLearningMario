@@ -38,7 +38,6 @@ public class World {
 
 	private MarioBody mario;
 
-
 	private static final double GRAVITY = Double.parseDouble(Locale.getString(World.class, "gravity")); //$NON-NLS-1$
 
 	private final List<WorldListener> listeners = new ArrayList<>();
@@ -101,6 +100,11 @@ public class World {
 	}
 
 	private void updateMobileEntity(MobileEntity<?> mobileEntity) {
+		if (mobileEntity instanceof Damageable && mobileEntity.getLocation().getY() > 16) {
+			((Damageable) mobileEntity).kill();
+			return;
+		}
+
 		if (this.mario != null) {
 			if (this.mario.distance(mobileEntity) > Game.SCENE_WIDTH/Game.SCALE)
 				return;
