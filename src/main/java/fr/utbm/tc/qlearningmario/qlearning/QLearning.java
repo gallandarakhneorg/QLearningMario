@@ -30,9 +30,11 @@ import java.util.TreeMap;
 /** Q-Learning core algorithm.
  *
  * @param <Problem> is the type of the problem.
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class QLearning<Problem extends QProblem> {
 	private final Random randomGenerator = new Random();

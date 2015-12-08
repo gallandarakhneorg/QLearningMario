@@ -22,9 +22,11 @@ package fr.utbm.tc.qlearningmario.qlearning;
 
 /** Q-Action, used to represent an action.
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class QAction extends Counter implements QBase {
 	private static int numberOfQAction = 0;

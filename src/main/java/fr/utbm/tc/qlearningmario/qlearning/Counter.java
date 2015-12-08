@@ -22,9 +22,11 @@ package fr.utbm.tc.qlearningmario.qlearning;
 
 /** Counter of objects.
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 abstract class Counter {
 	private final int id;

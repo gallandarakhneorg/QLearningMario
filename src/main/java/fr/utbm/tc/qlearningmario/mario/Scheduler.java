@@ -40,9 +40,11 @@ import fr.utbm.tc.qlearningmario.mario.entity.WorldListener;
 
 /** Runnable class which handle world and agents.
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class Scheduler implements Runnable, WorldListener {
 	private static final int ONE_SECOND_IN_MILLIS = 1000;

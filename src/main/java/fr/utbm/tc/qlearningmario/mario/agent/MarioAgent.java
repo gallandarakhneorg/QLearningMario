@@ -31,9 +31,11 @@ import javafx.geometry.Point2D;
  *
  * <p>It makes use of the Q-Learning engine.
  *
- * @author Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class MarioAgent extends Agent<MarioBody> {
 	private static final int NB_LEARNING_ITERATIONS;
@@ -52,6 +54,8 @@ public class MarioAgent extends Agent<MarioBody> {
 	 */
 	public MarioAgent(MarioBody body) {
 		super(body);
+		this.problem.translateCurrentState(getBody(), getBody().getPerception());
+		this.qlearning.learn(100000);
 	}
 
 	/**

@@ -41,9 +41,11 @@ import javafx.stage.WindowEvent;
 
 /** Main class of the application.
  *
- * @author Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class Game extends Application {
 	public static final int SCENE_HEIGHT;

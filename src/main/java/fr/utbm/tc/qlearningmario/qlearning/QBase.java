@@ -24,9 +24,11 @@ import java.io.Serializable;
 
 /** Base interface for QAction and QBase.
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 interface QBase extends Cloneable, Serializable {
 	/** Used to represent a QAction or a QState.

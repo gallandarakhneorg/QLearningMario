@@ -25,9 +25,11 @@ import javafx.geometry.Point2D;
 /** Agent abstract class.
  *
  * @param <B> : is the type of body.
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public abstract class Agent<B extends Body> {
 	private final B body;

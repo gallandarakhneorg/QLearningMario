@@ -28,9 +28,11 @@ import javafx.geometry.Point2D;
 
 /** Agent for Goomba
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class GoombaAgent extends Agent<Goomba> {
 	/** Initialize the agent with a body.

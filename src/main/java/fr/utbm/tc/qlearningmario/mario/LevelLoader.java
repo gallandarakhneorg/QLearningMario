@@ -40,9 +40,11 @@ import javafx.scene.paint.Color;
 
 /** Contains static methods to load levels.
  *
- * @author Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class LevelLoader {
 

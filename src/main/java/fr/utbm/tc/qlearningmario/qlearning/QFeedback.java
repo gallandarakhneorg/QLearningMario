@@ -24,9 +24,11 @@ import java.io.Serializable;
 
 /** Represent the result of an action
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class QFeedback implements Cloneable, Serializable {
 	private static final long serialVersionUID = 2250229614069647240L;

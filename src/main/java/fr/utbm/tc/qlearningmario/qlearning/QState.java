@@ -22,9 +22,11 @@ package fr.utbm.tc.qlearningmario.qlearning;
 
 /** Q-State, used to represent a state of the world.
  *
- * @author Jérôme BOULMIER, Benoît CORTIER
- * @mavengroupid fr.utbm.tc
- * @mavenartifactid QLearningMario
+ * @author $Author: boulmier$
+ * @author $Author: cortier$
+ * @mavengroupid $GroupId$
+ * @version $FullVersion$
+ * @mavenartifactid $ArtifactId$
  */
 public class QState extends Counter implements QBase {
 	private static int numberOfQState;
