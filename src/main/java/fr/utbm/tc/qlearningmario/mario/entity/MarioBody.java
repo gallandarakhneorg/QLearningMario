@@ -89,21 +89,14 @@ public final class MarioBody extends MobileEntity<MarioBody> implements AgentBod
 			this.currentHealth -= amount;
 		}
 
+		setNoDamageTimestamp(1);
+
 		updateState();
 	}
 
 	@Override
 	public void damage(int amount, Entity<?> source) {
-		if (isInvincible())
-			return;
-
-		if (this.currentHealth < amount) {
-			this.currentHealth = 0;
-		} else {
-			this.currentHealth -= amount;
-		}
-
-		updateState();
+		damage(amount);
 	}
 
 	@Override
