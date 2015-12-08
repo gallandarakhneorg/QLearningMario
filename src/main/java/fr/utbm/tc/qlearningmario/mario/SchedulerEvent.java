@@ -18,41 +18,42 @@
  * 3. This notice may not be removed or altered from any source distribution.
  *******************************************************************************/
 
-package fr.utbm.tc.qlearningmario.mario.entity;
+package fr.utbm.tc.qlearningmario.mario;
 
 import java.util.EventObject;
 
-public class WorldEvent extends EventObject {
+import fr.utbm.tc.qlearningmario.mario.agent.Agent;
+
+public class SchedulerEvent extends EventObject {
 
 	public enum Type {
-		WORLD_UPDATE,
-		ENTITY_ADDED,
-		ENTITY_REMOVED
+		AGENT_ADDED,
+		AGENT_REMOVED
 	}
 
-	private static final long serialVersionUID = 8762395640426505158L;
+	private static final long serialVersionUID = -8396490884864538128L;
 
 	private final Type eventType;
 
-	private Entity<?> entity;
+	private Agent<?> agent;
 
-	public WorldEvent(World source, Type eventType) {
+	public SchedulerEvent(Scheduler source, Type eventType) {
 		super(source);
 		this.eventType = eventType;
 	}
 
-	public WorldEvent(World source, Entity<?> entity, Type eventType) {
+	public SchedulerEvent(Scheduler source, Agent<?> agent, Type eventType) {
 		this(source, eventType);
-		this.entity = entity;
+		this.agent = agent;
 	}
 
 	@Override
-	public World getSource() {
-		return (World) super.getSource();
+	public Scheduler getSource() {
+		return (Scheduler) super.getSource();
 	}
 
-	public Entity<?> getEntity() {
-		return this.entity;
+	public Agent<?> getAgent() {
+		return this.agent;
 	}
 
 	public Type getType() {
